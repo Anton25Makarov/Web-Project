@@ -1,4 +1,4 @@
-package com.epam.logic;
+package com.epam.model;
 
 public class Entity {
 }

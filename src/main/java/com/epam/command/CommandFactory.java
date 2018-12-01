@@ -1,4 +1,4 @@
-package com.epam.logic;
+package com.epam.command;
 
 public class CommandFactory {
     public static Command create(String command) {
@@ -6,7 +6,7 @@ public class CommandFactory {
             case "login":
                 return new LoginCommand();
             default:
-                throw new UnsupportedOperationException();
+                throw new UnsupportedOperationException("Unknown command: " + command);
         }
     }
 }

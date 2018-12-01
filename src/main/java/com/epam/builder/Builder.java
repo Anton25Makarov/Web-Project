@@ -1,6 +1,6 @@
 package com.epam.builder;
 
-import com.epam.logic.Entity;
+import com.epam.model.Entity;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

@@ -1,8 +1,8 @@
-package com.epam.logic;
+package com.epam.command;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public interface Command {
-    String execute(HttpServletRequest req, HttpServletResponse resp);
+    CommandResult execute(HttpServletRequest req, HttpServletResponse resp);
 }

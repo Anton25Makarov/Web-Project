@@ -1,7 +1,9 @@
 package com.epam.repositpry;
 
+import java.io.IOException;
+
 public class RepositoryFactory {
-    public static EmployeeRepository createEmployeeRepository() {
+    public static EmployeeRepository createEmployeeRepository() throws IOException {
         return new EmployeeRepository();
     }
 

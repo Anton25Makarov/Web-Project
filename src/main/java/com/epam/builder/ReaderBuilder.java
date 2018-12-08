@@ -12,8 +12,8 @@ public class ReaderBuilder implements Builder {
         Long id = resultSet.getLong("id");
         String name = resultSet.getString("name");
         String surname = resultSet.getString("surname");
-        String login = resultSet.getString("surname");
         String password = resultSet.getString("surname");
+        String login = resultSet.getString("surname");
         String telephoneNumber = resultSet.getString("telephone");
 
         return new Reader(id, name, surname, login, password, telephoneNumber);

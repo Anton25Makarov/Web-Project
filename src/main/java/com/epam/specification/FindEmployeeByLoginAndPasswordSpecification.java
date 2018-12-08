@@ -1,10 +1,17 @@
 package com.epam.specification;
 
+import com.epam.builder.Builder;
+import com.epam.builder.EmployeeBuilder;
 import com.epam.model.Employee;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Optional;
 
 public class FindEmployeeByLoginAndPasswordSpecification implements SqlSpecification<Employee> {
+    private static final String QUERY_SELECT = "select * from librarian where login = ? and password = ?;";
     private String login;
     private String password;
 
@@ -24,10 +31,24 @@ public class FindEmployeeByLoginAndPasswordSpecification implements SqlSpecifica
     }
 
     @Override
-    public String toSql() {
+    public Optional<Employee> toSql(Builder<Employee> employeeBuilder, Connection connection, String... strings)
+            throws SQLException {
 
-        String s = "select * from employee ";// + ...
+        try (PreparedStatement preparedStatement = connection.prepareStatement(QUERY_SELECT)) {
+            preparedStatement.setString(1, login);
+            preparedStatement.setString(2, password);
 
-        return null;
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            Employee employee = null;
+            if (resultSet.next()) {
+                employee = employeeBuilder.build(resultSet);
+
+            }
+
+            return Optional.ofNullable(employee);
+        } catch (SQLException e) {
+            throw new SQLException(); //own exception
+        }
     }
 }

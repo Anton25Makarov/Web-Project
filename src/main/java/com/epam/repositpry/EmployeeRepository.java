@@ -2,25 +2,33 @@ package com.epam.repositpry;
 
 import com.epam.builder.Builder;
 import com.epam.builder.EmployeeBuilder;
-import com.epam.model.Employee;
+import com.epam.model.Entity;
 import com.epam.specification.SqlSpecification;
 
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
-public class EmployeeRepository extends AbstractRepository {
+public class EmployeeRepository extends AbstractRepository<Entity> {
+    private static final String SELECT_QUERY = "select * from user where login = ? and password = ?;";
+
+    public EmployeeRepository() throws IOException {
+    }
 
     @Override
-    public List<Employee> query(SqlSpecification userSqlSpecification) {
+    public List<Entity> query(SqlSpecification userSqlSpecification) {
         return null;
     }
 
     @Override
-    public Optional<Employee> queryForSingleResult(SqlSpecification userSqlSpecification) {
-        return userSqlSpecification.specify();
+    public Optional<Entity> queryForSingleResult(SqlSpecification userSqlSpecification, String... sqlValues)
+            throws SQLException {
+        Builder<Entity> employeeBuilder = getBuilder();
+        return userSqlSpecification.toSql(employeeBuilder, connection, sqlValues);
     }
 
-    public Builder<Employee> getBuilder() {
+    protected Builder<Entity> getBuilder() {
         return new EmployeeBuilder();
     }
 }

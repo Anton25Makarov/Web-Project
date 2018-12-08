@@ -11,8 +11,8 @@ public class EmployeeBuilder implements Builder {
         Long id = resultSet.getLong("id");
         String name = resultSet.getString("name");
         String surname = resultSet.getString("surname");
-        String login = resultSet.getString("surname");
-        String password = resultSet.getString("surname");
+        String login = resultSet.getString("login");
+        String password = resultSet.getString("password");
         boolean admin = resultSet.getBoolean("is_admin");
 
         return new Employee(id, name, surname, login, password, admin);

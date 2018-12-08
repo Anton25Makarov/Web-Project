@@ -1,7 +1,10 @@
 package com.epam.specification;
 
+import com.epam.builder.Builder;
 import com.epam.model.Reader;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Optional;
 
 public class FindReaderByLoginAndPasswordSpecification implements SqlSpecification<Reader> {
@@ -22,7 +25,7 @@ public class FindReaderByLoginAndPasswordSpecification implements SqlSpecificati
     }
 
     @Override
-    public String toSql() {
-        return null;
+    public Optional<Reader> toSql(Builder<Reader> builder, Connection connection, String... strings) throws SQLException {
+        return Optional.empty();
     }
 }

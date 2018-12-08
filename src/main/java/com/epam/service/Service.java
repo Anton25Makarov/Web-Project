@@ -1,4 +1,4 @@
-package com.epam.logic;
+package com.epam.service;
 
 public class Service {
 

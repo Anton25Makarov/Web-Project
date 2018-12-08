@@ -15,9 +15,8 @@ import java.util.Optional;
 public abstract class AbstractRepository<T extends Entity> implements Repository<T> {
     protected Connection connection;
 
-    public AbstractRepository() throws IOException {
-        ConnectionPool connectionPool = ConnectionPool.getInstance();
-        this.connection = connectionPool.takeConnection();
+    public AbstractRepository(Connection connection) {
+        this.connection = connection;
     }
 
     @Override

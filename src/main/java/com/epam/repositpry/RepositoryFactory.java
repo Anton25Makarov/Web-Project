@@ -1,14 +1,13 @@
 package com.epam.repositpry;
 
-import java.io.IOException;
+import java.sql.Connection;
 
 public class RepositoryFactory {
-    public static EmployeeRepository createEmployeeRepository() throws IOException {
-        return new EmployeeRepository();
+    public static EmployeeRepository createEmployeeRepository(Connection connection) {
+        return new EmployeeRepository(connection);
     }
 
-    public static ReaderRepository createReaderRepository() {
-        return new ReaderRepository();
+    public static ReaderRepository createReaderRepository(Connection connection) {
+        return new ReaderRepository(connection);
     }
-
 }

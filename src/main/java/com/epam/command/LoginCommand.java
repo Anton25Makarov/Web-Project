@@ -19,18 +19,18 @@ public class LoginCommand implements Command {
         String login = req.getParameter("login");
         String password = req.getParameter("password");
 
-
         try {
-        HttpSession session = req.getSession();
+            HttpSession session = req.getSession();
+            session.removeAttribute("user");
 
             EmployeeService employeeService = new EmployeeService();
             Optional<Employee> employee = employeeService.login(login, password);
-            employee.ifPresent(e -> session.setAttribute("employee", e));
+            employee.ifPresent(e -> session.setAttribute("user", e));
 
-            ReaderService readerService = new ReaderService();
             if (!employee.isPresent()) {
+                ReaderService readerService = new ReaderService();
                 Optional<Reader> reader = readerService.login(login, password);
-                reader.ifPresent(r -> session.setAttribute("reader", r));
+                reader.ifPresent(r -> session.setAttribute("user", r));
             }
         } catch (SQLException e) {
             e.printStackTrace();

@@ -6,14 +6,15 @@ import com.epam.model.Entity;
 import com.epam.specification.SqlSpecification;
 
 import java.io.IOException;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
 public class EmployeeRepository extends AbstractRepository<Entity> {
-    private static final String SELECT_QUERY = "select * from user where login = ? and password = ?;";
 
-    public EmployeeRepository() throws IOException {
+    public EmployeeRepository(Connection connection) {
+        super(connection);
     }
 
     @Override

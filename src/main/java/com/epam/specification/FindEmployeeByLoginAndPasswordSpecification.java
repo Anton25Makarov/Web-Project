@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import java.util.Optional;
 
 public class FindEmployeeByLoginAndPasswordSpecification implements SqlSpecification<Employee> {
-    private static final String QUERY_SELECT = "select * from librarian where login = ? and password = ?;";
+    private static final String QUERY_SELECT = "select * from employee where login = ? and password = ?;";
     private String login;
     private String password;
 
@@ -52,3 +52,4 @@ public class FindEmployeeByLoginAndPasswordSpecification implements SqlSpecifica
         }
     }
 }
+// когда возращать connection

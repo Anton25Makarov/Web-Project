@@ -20,7 +20,7 @@
     <div id="right-panel-center">
         <div>
             <h3><i>Librarians</i></h3><br>
-            <b><%= session.getAttribute("employee") %>
+            <b><%= session.getAttribute("user") %>
             </b>
             <i>2: ${sessionScope.employee}</i>
         </div>

@@ -1133,8 +1133,8 @@
     </collation>
     <table id="286" parent="6" name="book"/>
     <table id="287" parent="6" name="book_author"/>
-    <table id="288" parent="6" name="genre_catalog"/>
-    <table id="289" parent="6" name="librarian"/>
+    <table id="288" parent="6" name="employee"/>
+    <table id="289" parent="6" name="genre_catalog"/>
     <table id="290" parent="6" name="order"/>
     <table id="291" parent="6" name="reader"/>
     <column id="292" parent="286" name="book_code">
@@ -1224,69 +1224,69 @@
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <column id="308" parent="288" name="genre_name">
-      <Position>2</Position>
-      <DataType>varchar(45)|0s</DataType>
-      <NotNull>1</NotNull>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <key id="309" parent="288" name="PRIMARY">
-      <NameSurrogate>1</NameSurrogate>
-      <ColNames>id</ColNames>
-      <Primary>1</Primary>
-    </key>
-    <column id="310" parent="289" name="id">
-      <Position>1</Position>
-      <DataType>int(11)|0s</DataType>
-      <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="311" parent="289" name="login">
+    <column id="308" parent="288" name="login">
       <Position>2</Position>
       <DataType>varchar(45)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="312" parent="289" name="password">
+    <column id="309" parent="288" name="password">
       <Position>3</Position>
       <DataType>varchar(45)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="313" parent="289" name="name">
+    <column id="310" parent="288" name="name">
       <Position>4</Position>
       <DataType>varchar(45)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="314" parent="289" name="surname">
+    <column id="311" parent="288" name="surname">
       <Position>5</Position>
       <DataType>varchar(45)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="315" parent="289" name="is_admin">
+    <column id="312" parent="288" name="is_admin">
       <Position>6</Position>
       <DataType>bit(1)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="316" parent="289" name="login_UNIQUE">
+    <index id="313" parent="288" name="login_UNIQUE">
       <ColNames>login</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <key id="317" parent="289" name="PRIMARY">
+    <key id="314" parent="288" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="318" parent="289" name="login_UNIQUE">
+    <key id="315" parent="288" name="login_UNIQUE">
       <ColNames>login</ColNames>
       <UnderlyingIndexName>login_UNIQUE</UnderlyingIndexName>
+    </key>
+    <column id="316" parent="289" name="id">
+      <Position>1</Position>
+      <DataType>int(11)|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="317" parent="289" name="genre_name">
+      <Position>2</Position>
+      <DataType>varchar(45)|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <key id="318" parent="289" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>id</ColNames>
+      <Primary>1</Primary>
     </key>
     <column id="319" parent="290" name="id">
       <Position>1</Position>
@@ -1340,7 +1340,7 @@
       <ColNames>reader_card</ColNames>
       <RefSchemaName>library</RefSchemaName>
       <RefTableName>reader</RefTableName>
-      <RefColNames>card</RefColNames>
+      <RefColNames>id</RefColNames>
     </foreign-key>
     <foreign-key id="329" parent="290" name="fk_order_book1">
       <ColNames>book_book_code</ColNames>
@@ -1348,7 +1348,7 @@
       <RefTableName>book</RefTableName>
       <RefColNames>book_code</RefColNames>
     </foreign-key>
-    <column id="330" parent="291" name="card">
+    <column id="330" parent="291" name="id">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
@@ -1387,7 +1387,7 @@
     </column>
     <key id="336" parent="291" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
-      <ColNames>card</ColNames>
+      <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
   </database-model>

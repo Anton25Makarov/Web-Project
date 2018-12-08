@@ -5,7 +5,6 @@
     Library
 </h1>
 <br/>
-<a href="${pageContext.servletContext.contextPath}/controller?command=showPrograms">Program's</a>
-<a href="${pageContext.servletContext.contextPath}/controller?command=paymentHistory">Payment history</a>
-
+<i>Language</i>
+<a href="${pageContext.servletContext.contextPath}/controller?command=logOut">log out</a>
 <br>

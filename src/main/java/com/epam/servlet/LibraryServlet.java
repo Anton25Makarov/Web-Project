@@ -16,13 +16,11 @@ public class LibraryServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         process(req, resp);
-//        super.doGet(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         process(req, resp);
-//        super.doPost(req, resp);
     }
 
     private void process(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -46,17 +44,21 @@ public class LibraryServlet extends HttpServlet {
 //            e.printStackTrace();
 //        }*/
 //        req.getRequestDispatcher(action.getPage()).forward(req, resp);
-
         String command = req.getParameter("command");
+
         Command action = CommandFactory.create(command);
-        action.execute(req, resp);
+
         CommandResult page = action.execute(req, resp);
-        req.getRequestDispatcher(page.getPage()).forward(req, resp);
+
+        dispatch(req, resp, page);
     }
 
-    private void dispatch(HttpServletRequest req, HttpServletResponse resp, CommandFactory page) throws ServletException, IOException {
-        // RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(page);
-        //dispatcher.forward(req, resp);
+    private void dispatch(HttpServletRequest req, HttpServletResponse resp, CommandResult page)
+            throws ServletException, IOException {
+        String pageToDispatch = page.getPage();
+        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(pageToDispatch);
+        dispatcher.forward(req, resp);
+
     }
 //name - controller
 }

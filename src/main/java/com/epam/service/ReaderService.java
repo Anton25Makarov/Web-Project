@@ -14,7 +14,8 @@ import java.util.Optional;
 
 public class ReaderService {
 
-    public Optional<Reader> login(String login, String password) throws SQLException, IOException {
+    public Optional<Reader> login(String login, String password)
+            throws SQLException, IOException, InterruptedException {
 
         ConnectionPool connectionPool = ConnectionPool.getInstance();
         Connection connection = connectionPool.takeConnection();

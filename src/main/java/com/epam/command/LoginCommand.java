@@ -36,6 +36,8 @@ public class LoginCommand implements Command {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
 
         return CommandResult.forward("/WEB-INF/pages/admin-main.jsp"); // страничка одна, там case или if проверять

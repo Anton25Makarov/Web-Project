@@ -14,7 +14,8 @@ import java.util.Optional;
 
 public class EmployeeService {
 
-    public Optional<Employee> login(String login, String password) throws SQLException, IOException {
+    public Optional<Employee> login(String login, String password)
+            throws SQLException, IOException, InterruptedException {
 
         ConnectionPool connectionPool = ConnectionPool.getInstance();
         Connection connection = connectionPool.takeConnection();

@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 public class ConnectionCreator {
-    private static final String DB_DRIVER = "driver.class.name";
+    private static final String DB_DRIVER = "driver";
     private static final String DB_URL = "url";
     private static final String DB_USER = "name";
     private static final String DB_PASS = "password";
@@ -23,8 +23,8 @@ public class ConnectionCreator {
             String dbUser = properties.getProperty(DB_USER);
             String dbPassword = properties.getProperty(DB_PASS);
 
-            Class.forName("com.mysql.jdbc.Driver");
-//            Class.forName(dbDriver);
+//            Class.forName("com.mysql.cj.jdbc.Driver");
+            Class.forName(dbDriver);
             return DriverManager.getConnection(dbUrl, dbUser, dbPassword);
         } catch (SQLException | ClassNotFoundException e) {
             throw new SQLException("Error connecting to the database", e);

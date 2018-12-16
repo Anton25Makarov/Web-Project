@@ -19,15 +19,41 @@ public abstract class AbstractRepository<T extends Entity> implements Repository
         this.connection = connection;
     }
 
+    /*private void takeConnection() {
+        try {
+            ConnectionPool connectionPool = ConnectionPool.getInstance();
+            connection = connectionPool.takeConnection();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void returnConnection() {
+        ConnectionPool connectionPool = ConnectionPool.getInstance();
+        connectionPool.returnConnection(connection);
+    }*/
+
     @Override
     public List<T> query(SqlSpecification sqlSpecification) {
         return null;
     }
 
     @Override
-    public Optional<T> queryForSingleResult(SqlSpecification sqlSpecification, String... sqlValues) throws SQLException {
+    public Optional<T> queryForSingleResult(SqlSpecification sqlSpecification) throws SQLException {
         return Optional.empty();
     }
+
+    @Override
+    public boolean save(Entity entity) {
+        return false;
+    }
+
+   /* public abstract T add(T entity);
+
+    public  abstract T delete(T entity);
+
+    public abstract T update(T entity);*/
+
 
     protected abstract Builder<T> getBuilder();
 

@@ -3,6 +3,7 @@
 <%--<jsp:include page="/WEB-INF/fragments/header.jsp"/>--%>
 <head>
     <%--<link rel="stylesheet" href="../style/style.css">--%>
+    <title>Authorisation</title>
     <style>
         <%@ include file="../style/style.css" %>
     </style>
@@ -14,17 +15,12 @@
     </div>
 </div>
 <div id="center-panel">
-    <%--<div id="left-panel-center">
-        <div id="menu">
-            <jsp:include page="../fragments/admin-menu.jsp"/>
-        </div>
-    </div>--%>
     <div id="right-panel-center">
         <div>
             <h3><i>Authorisation</i></h3><br>
             <form action="${pageContext.servletContext.contextPath}/controller?command=login" method="post">
-                <input type="text" name="login" placeholder="Login"/><br>
-                <input type="text" name="password" placeholder="Password"/><br>
+                <input type="text" name="login" placeholder="Login" required/><br>
+                <input type="password" name="password" placeholder="Password" required/><br>
                 <input type="submit" value="submit"/>
             </form>
         </div>
@@ -32,3 +28,9 @@
 </div>
 </body>
 </html>
+
+<%--pattern="[a-zA-Z\d]{6,20}"
+                       title="Login should contain only latin characters and numbers.
+                       Length between 6 and 20 chaacters"--%>
+<%-- pattern=".{6,20}"
+                       title="Password should contain between 6 and 20 characters"--%>

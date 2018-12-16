@@ -1,4 +1,4 @@
-package com.epam.servlet;
+package com.epam.controller;
 
 import com.epam.command.Command;
 import com.epam.command.CommandFactory;
@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class LibraryServlet extends HttpServlet {
+public class LibraryController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

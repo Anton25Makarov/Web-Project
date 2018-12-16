@@ -13,32 +13,23 @@ public class ConnectionPool {
     private static ConnectionPool instance;
     private static Queue<Connection> connections = new ArrayDeque<>();
 
-    static { // bad (how make it another way?)
-        try {
-            instance = new ConnectionPool();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    static {
+        instance = new ConnectionPool();
     }
 
     private final Semaphore semaphore = new Semaphore(CONNECTION_COUNT, true);
     private Lock takeLock = new ReentrantLock();
     private Lock returnLock = new ReentrantLock();
 
-    private ConnectionPool() throws IOException, SQLException {
+    private ConnectionPool() {
         init();
     }
 
-    public static ConnectionPool getInstance() throws IOException {
-        if (instance == null) {
-            throw new IOException("no instance");
-        }
+    public static ConnectionPool getInstance() {
         return instance;
     }
 
-    public Connection takeConnection() throws InterruptedException { // разве не нужны локи?
+    public Connection takeConnection() throws InterruptedException {
         semaphore.acquire();
         takeLock.lock();
         Connection connection;
@@ -60,10 +51,14 @@ public class ConnectionPool {
         semaphore.release();
     }
 
-    private void init() throws IOException, SQLException {
-        for (int i = 0; i < CONNECTION_COUNT; i++) {
-            Connection connection = ConnectionCreator.getConnection();
-            connections.add(connection);
+    private void init() {
+        try {
+            for (int i = 0; i < CONNECTION_COUNT; i++) {
+                Connection connection = ConnectionCreator.getConnection();
+                connections.add(connection);
+            }
+        } catch (IOException | SQLException e) {
+            throw new RuntimeException("Con not create connection to database", e);
         }
     }
 }

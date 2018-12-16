@@ -25,21 +25,25 @@ public class LoginCommand implements Command {
 
             EmployeeService employeeService = new EmployeeService();
             Optional<Employee> employee = employeeService.login(login, password);
-            employee.ifPresent(e -> session.setAttribute("user", e));
+            employee.ifPresent(e -> {
+                session.setAttribute("role", "employee");
+                session.setAttribute("user", e);
+            });
 
             if (!employee.isPresent()) {
                 ReaderService readerService = new ReaderService();
                 Optional<Reader> reader = readerService.login(login, password);
-                reader.ifPresent(r -> session.setAttribute("user", r));
+                reader.ifPresent(r -> {
+                    session.setAttribute("role", "reader");
+                    session.setAttribute("user", r);
+                });
             }
         } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-        return CommandResult.forward("/WEB-INF/pages/admin-main.jsp"); // страничка одна, там case или if проверять
+        return CommandResult.forward("/WEB-INF/pages/main.jsp");
     }
 }

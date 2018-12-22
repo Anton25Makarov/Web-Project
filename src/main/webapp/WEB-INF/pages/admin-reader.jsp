@@ -8,13 +8,13 @@
 <body>
 <div id="top-panel">
     <div id="header">
-        <jsp:include page="../fragments/header.jsp"/>
+        <jsp:include page="../fragments/header-label.jsp"/>
     </div>
 </div>
 <div id="center-panel">
     <div id="left-panel-center">
         <div id="menu">
-            <jsp:include page="../fragments/admin-menu.jsp"/>
+            <jsp:include page="../fragments/admin/admin-menu.jsp"/>
         </div>
     </div>
     <div id="right-panel-center">

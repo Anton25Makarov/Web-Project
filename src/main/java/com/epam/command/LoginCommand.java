@@ -18,10 +18,11 @@ public class LoginCommand implements Command {
 
         String login = req.getParameter("login");
         String password = req.getParameter("password");
-
+        // class stringUtils - там проверка на login == null || login.isEmpty
+        HttpSession session = req.getSession();
         try {
-            HttpSession session = req.getSession();
             session.removeAttribute("user");
+            session.removeAttribute("role");
 
             EmployeeService employeeService = new EmployeeService();
             Optional<Employee> employee = employeeService.login(login, password);
@@ -38,12 +39,17 @@ public class LoginCommand implements Command {
                     session.setAttribute("user", r);
                 });
             }
+
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        if (session.getAttribute("user") == null) {
+            req.setAttribute("errorLogin", "Wrong login or password");
+            return CommandResult.redirect("/WEB-INF/pages/login.jsp");
+        }
 
-        return CommandResult.forward("/WEB-INF/pages/main.jsp");
+        return CommandResult.forward("/WEB-INF/pages/main.jsp");//page - const
     }
 }

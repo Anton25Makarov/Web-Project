@@ -10,4 +10,8 @@ public class RepositoryFactory {
     public static ReaderRepository createReaderRepository(Connection connection) {
         return new ReaderRepository(connection);
     }
+
+    public static BookRepository createBookRepository(Connection connection) {
+        return new BookRepository(connection);
+    }
 }

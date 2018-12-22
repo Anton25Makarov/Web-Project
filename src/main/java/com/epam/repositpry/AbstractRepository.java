@@ -34,7 +34,8 @@ public abstract class AbstractRepository<T extends Entity> implements Repository
     }*/
 
     @Override
-    public List<T> query(SqlSpecification sqlSpecification) {
+    public List<T> query(SqlSpecification sqlSpecification) throws SQLException {
+        // ret execCuerry
         return null;
     }
 
@@ -43,8 +44,12 @@ public abstract class AbstractRepository<T extends Entity> implements Repository
         return Optional.empty();
     }
 
+    // get table name?
+
+
     @Override
     public boolean save(Entity entity) {
+        /* realisation */
         return false;
     }
 

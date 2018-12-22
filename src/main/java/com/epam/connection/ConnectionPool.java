@@ -10,12 +10,8 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class ConnectionPool {
     private static final int CONNECTION_COUNT = 5;
-    private static ConnectionPool instance;
     private static Queue<Connection> connections = new ArrayDeque<>();
-
-    static {
-        instance = new ConnectionPool();
-    }
+    private static ConnectionPool instance = new ConnectionPool();
 
     private final Semaphore semaphore = new Semaphore(CONNECTION_COUNT, true);
     private Lock takeLock = new ReentrantLock();
@@ -31,9 +27,9 @@ public class ConnectionPool {
 
     public Connection takeConnection() throws InterruptedException {
         semaphore.acquire();
-        takeLock.lock();
         Connection connection;
         try {
+            takeLock.lock();
             connection = connections.poll();
         } finally {
             takeLock.unlock();
@@ -42,8 +38,8 @@ public class ConnectionPool {
     }
 
     public void returnConnection(Connection connection) {
-        returnLock.lock();
         try {
+            returnLock.lock();
             connections.add(connection);
         } finally {
             returnLock.unlock();

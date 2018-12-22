@@ -61,4 +61,8 @@ public class LibraryController extends HttpServlet {
 
     }
 //name - controller
+
+    // Where serializable UISerialVersionId - нужно!!!
+
+    // filter?
 }

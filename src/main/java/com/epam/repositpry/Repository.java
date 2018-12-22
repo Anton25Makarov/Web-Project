@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface Repository<T extends Entity> {
-    List<T> query(SqlSpecification sqlSpecification);
+    List<T> query(SqlSpecification sqlSpecification) throws SQLException;
     Optional<T> queryForSingleResult(SqlSpecification sqlSpecification) throws SQLException;
     boolean save(T entity);
 }

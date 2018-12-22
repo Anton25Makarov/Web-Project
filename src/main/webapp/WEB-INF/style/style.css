@@ -4,7 +4,11 @@
     background-color: darkkhaki;
 }
 
-#left-panel-center {
+a {
+    text-decoration: none;
+}
+
+aside {
     display: flex;
     flex-direction: column;
     background-color: cadetblue;
@@ -12,22 +16,269 @@
     flex-grow: 1;
 }
 
-#right-panel-center {
+article {
     display: flex;
     flex-direction: row;
+    flex-grow: 5;
+    justify-content: center;
+}
+
+main {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
     background-color: cadetblue;
     color: crimson;
-    flex-grow: 3;
-    justify-content: center;
+    min-height: 480px;
 }
 
-#right-panel-center input {
-    margin: 5px;
-    padding: 5px;
-}
-
-#center-panel {
+#head {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+nav {
+    /*   display: flex;
+       flex-direction: row;
+       height: 50px;
+       color: white;
+       justify-content: right;*/
+
+    overflow: hidden;
+    background-color: #333;
+}
+
+nav * {
+    margin: 0;
+    padding: 0;
+}
+
+nav a {
+    float: right;
+    display: block;
+    color: #f2f2f2;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+nav ul {
+    list-style: none;
+}
+
+nav > ul {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: right;
+}
+
+nav > ul li a {
+    display: block;
+    background-color: #333;
+    padding: 15px 30px 15px 40px;
+    font-size: 14px;
+    width: 80px;
+    color: white;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+nav li ul {
+    position: absolute;
+    min-width: 100px;
+    display: none;
+}
+
+nav li:hover > ul {
+    display: block;
+}
+
+nav img {
+    height: 50px;
+    width: 50px;
+}
+
+nav a:hover {
+    background-color: #ddd;
+}
+
+a:hover {
+    color: black;
+}
+
+body {
+    font-family: Arial;
+    background: #f1f1f1;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    display: flex;
+    justify-content: center;
+    height: 100px;
+    background-color: white;
+}
+
+#authorisation {
+    display: flex;
+    flex-direction: column;
     justify-content: center;
 }
+
+
+/*************************Sing Up**********************/
+.user {
+    width: 90%;
+    max-width: 340px;
+    margin: 10vh auto;
+}
+
+.sign_up_header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: inherit;
+    text-align: center;
+    opacity: 0;
+    transform: translate3d(0, 500px, 0);
+    animation: arrive 500ms ease-in-out 0.7s forwards;
+
+}
+
+.sign_up_header img {
+    flex-grow: 3;
+}
+
+.sign_up_title {
+    flex-grow: 1;
+    font-size: 25px;
+    margin-bottom: -10px;
+    font-weight: 500;
+    color: white;
+    margin: 20px 0 50px;
+}
+
+.sign_up_form {
+    /*margin-top: 40px;*/
+    border-radius: 6px;
+    overflow: hidden;
+    opacity: 0;
+    transform: translate3d(0, 500px, 0);
+    animation: arrive 500ms ease-in-out 0.9s forwards;
+}
+
+.sign_up_form_group {
+
+}
+
+.form--no {
+    animation: NO 1s ease-in-out;
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+}
+
+.sign_up_input {
+    padding: 20px;
+    display: block;
+    width: 100%;
+    font-family: Roboto;
+    -webkit-appearance: none;
+    border: 0;
+    outline: 0;
+    transition: 0.3s;
+    font-size: 15px;
+}
+
+.sign_up_btn {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    font-family: Roboto;
+    -webkit-appearance: none;
+    outline: 0;
+    border: 0;
+    color: white;
+    background: #ABA194;
+    transition: 0.3s;
+    font-size: 20px;
+}
+
+.sign_up_btn:hover {
+    background-color: gray;
+}
+
+@keyframes NO {
+    from, to {
+        transform: translate3d(0, 0, 0);
+    }
+    10%, 30%, 50%, 70%, 90% {
+        transform: translate3d(-10px, 0, 0);
+    }
+    20%, 40%, 60%, 80% {
+        transform: translate3d(10px, 0, 0);
+    }
+}
+
+@keyframes arrive {
+    0% {
+        opacity: 0;
+        transform: translate3d(0, 50px, 0);
+    }
+    100% {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+@keyframes move {
+    0%, 100% {
+        background-position: 0 0
+    }
+    50% {
+        background-position: 100% 0
+    }
+}
+
+/**************************************************/
+.menu-box {
+    background-color: #333;
+    border-radius: 5px;
+    margin: 25px 10px 0 35px;
+    padding: 10px;
+    font-size: 16px;
+    width: 120px;
+}
+
+.menu-box:hover a {
+    color: white;
+}
+
+.menu a{
+    display: block;
+    padding: 15px;
+    margin: 25px 5px 0 35px;
+    text-decoration: none;
+    color: #DEDCCF;
+    text-transform: uppercase;
+    border-radius: 15px;
+    width: 150px;
+    background-color: #333;
+}
+
+
+
+.menu a:hover{
+    color: white;
+}
+
+#menu {
+    display: flex;
+    flex-direction: column;
+}
+
+
+
+
+

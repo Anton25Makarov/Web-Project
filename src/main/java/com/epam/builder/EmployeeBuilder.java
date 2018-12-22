@@ -5,7 +5,7 @@ import com.epam.model.Employee;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class EmployeeBuilder implements Builder {
+public class EmployeeBuilder implements Builder<Employee> {
     @Override
     public Employee build(ResultSet resultSet) throws SQLException {
         Long id = resultSet.getLong("id");

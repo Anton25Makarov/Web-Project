@@ -3,10 +3,8 @@ package com.epam.repositpry;
 import com.epam.builder.Builder;
 import com.epam.builder.EmployeeBuilder;
 import com.epam.model.Employee;
-import com.epam.model.Entity;
 import com.epam.specification.SqlSpecification;
 
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -26,6 +24,8 @@ public class EmployeeRepository extends AbstractRepository<Employee> {
         return null;
     }
 
+    //map<Str, obj> fields
+    // fields.put(NAME_OF_COLUMN, employee.getId);
     @Override
     public Optional<Employee> queryForSingleResult(SqlSpecification specification)
             throws SQLException {
@@ -56,7 +56,6 @@ public class EmployeeRepository extends AbstractRepository<Employee> {
             Employee employee = null;
             if (resultSet.next()) {
                 employee = builder.build(resultSet);
-
             }
 
             return Optional.ofNullable(employee);

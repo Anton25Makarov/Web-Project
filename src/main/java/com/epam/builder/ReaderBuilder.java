@@ -6,7 +6,7 @@ import com.epam.model.Reader;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class ReaderBuilder implements Builder {
+public class ReaderBuilder implements Builder<Reader> {
     @Override
     public Reader build(ResultSet resultSet) throws SQLException {
         Long id = resultSet.getLong("id");

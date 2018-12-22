@@ -1,31 +1,55 @@
 <%@ page contentType="text/html; charset=utf-8" pageEncoding="UTF-8" isELIgnored="false" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
-<%--<jsp:include page="/WEB-INF/fragments/header.jsp"/>--%>
+<%--<jsp:include page="/WEB-INF/fragments/header-label.jsp"/>--%>
 <head>
-    <%--<link rel="stylesheet" href="../style/style.css">--%>
     <title>Authorisation</title>
     <style>
         <%@ include file="../style/style.css" %>
     </style>
 </head>
 <body>
-<div id="top-panel">
-    <div id="header">
-        <jsp:include page="../fragments/header.jsp"/>
-    </div>
+<div id="head">
+    <header>
+        <jsp:include page="../fragments/header-label.jsp"/>
+    </header>
+    <nav>
+        <ul>
+            <jsp:include page="../fragments/nav-language.jsp"/>
+        </ul>
+    </nav>
 </div>
-<div id="center-panel">
-    <div id="right-panel-center">
-        <div>
-            <h3><i>Authorisation</i></h3><br>
-            <form action="${pageContext.servletContext.contextPath}/controller?command=login" method="post">
-                <input type="text" name="login" placeholder="Login" required/><br>
-                <input type="password" name="password" placeholder="Password" required/><br>
-                <input type="submit" value="submit"/>
+<main>
+    <article>
+        <div class="user">
+
+            <header class="sign_up_header">
+                <img src="${pageContext.servletContext.contextPath}/resource/images/book2.png"
+                     height="50" width="50" alt="Sign up (book)"/>
+
+                <h1 class="sign_up_title">Sign in</h1>
+            </header>
+
+            <form class="sign_up_form" method="post"
+                  action="${pageContext.servletContext.contextPath}/controller?command=login">
+                <div class="sign_up_form_group">
+                    <input type="text" name="login" placeholder="Login" required class="sign_up_input"/>
+                </div>
+
+                <div class="sign_up_form_group">
+                    <input type="password" name="password" placeholder="Password" required class="sign_up_input"/>
+                </div>
+
+                <button class="sign_up_btn" type="submit">Submit</button>
             </form>
+            
+            <div class="errorSignIn">
+                ${requestScope.errorLogin}
+            </div>
         </div>
-    </div>
-</div>
+
+    </article>
+</main>
 </body>
 </html>
 

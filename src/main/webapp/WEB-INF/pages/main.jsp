@@ -1,28 +1,52 @@
 <%@ page contentType="text/html; charset=utf-8" pageEncoding="UTF-8" isELIgnored="false" %>
-<%--<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>--%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
     <style>
         <%@ include file="../style/style.css" %>
     </style>
+    <script type="text/javascript"
+            src="${pageContext.servletContext.contextPath}/resource/js/jquery-3.3.1.js"></script>
+    <script type="text/javascript"
+            src="${pageContext.servletContext.contextPath}/resource/js/modal.js"></script>
+
+    <title>Menu</title>
 </head>
 <body>
-<div id="top-panel">
-    <div id="header">
-        <jsp:include page="../fragments/header.jsp"/>
-    </div>
+<div id="head">
+    <header>
+        <jsp:include page="../fragments/header-label.jsp"/>
+    </header>
+    <nav>
+        <ul>
+            <jsp:include page="../fragments/nav-language.jsp"/>
+            <jsp:include page="../fragments/nav-logout.jsp"/>
+        </ul>
+    </nav>
 </div>
-<div id="center-panel">
-    <div id="left-panel-center">
-        <div id="menu">
-            <jsp:include page="../fragments/admin-menu.jsp"/>
+<main>
+    <aside>
+        <div class="menu">
+            <%-- <c:out value="${sessionScope.role}"/>--%>
+            <c:choose>
+                <c:when test="${sessionScope.role == 'employee' and sessionScope.user.admin}">
+                    <jsp:include page="../fragments/admin/admin-menu.jsp"/>
+                </c:when>
+                <c:when test="${sessionScope.role == 'employee' and !sessionScope.user.admin}">
+
+                </c:when>
+                <c:when test="${sessionScope.role == 'reader'}">
+                    <jsp:include page="../fragments/reader/reader-menu.jsp"/>
+                </c:when>
+            </c:choose>
         </div>
-    </div>
-    <div id="right-panel-center">
+    </aside>
+
+    <article>
         <div>
-            <h3><i>Welcome Admin</i></h3><br>
+            <h3><i>You are Welcome!</i></h3><br>
         </div>
-    </div>
-</div>
+    </article>
+</main>
 </body>
 </html>

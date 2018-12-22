@@ -3,7 +3,6 @@ package com.epam.model;
 import java.io.Serializable;
 
 public class Employee extends Entity implements Serializable {
-    private Long id;
     private String name;
     private String surname;
     private String login;
@@ -11,7 +10,15 @@ public class Employee extends Entity implements Serializable {
     private boolean admin;
 
     public Employee(Long id, String name, String surname, String login, String password, boolean admin) {
-        this.id = id;
+        super(id);
+        this.name = name;
+        this.surname = surname;
+        this.login = login;
+        this.password = password;
+        this.admin = admin;
+    }
+
+    public Employee(String name, String surname, String login, String password, boolean admin) {
         this.name = name;
         this.surname = surname;
         this.login = login;
@@ -20,7 +27,7 @@ public class Employee extends Entity implements Serializable {
     }
 
     public Long getId() {
-        return id;
+        return super.getId();
     }
 
     public String getName() {
@@ -46,8 +53,7 @@ public class Employee extends Entity implements Serializable {
     @Override
     public String toString() {
         return "Employee{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
+                "name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
                 ", login='" + login + '\'' +
                 ", password='" + password + '\'' +

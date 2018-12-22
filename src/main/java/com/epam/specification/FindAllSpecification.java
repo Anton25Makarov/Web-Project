@@ -1,16 +1,18 @@
 package com.epam.specification;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class FindAllSpecification implements SqlSpecification {
+    private static final String EMPTY_CONDITION = ";";
 
     @Override
     public String toSql() {
-        return null;
+        return EMPTY_CONDITION;
     }
 
     @Override
     public List<String> getParameters() {
-        return null;
+        return new ArrayList<>();
     }
 }

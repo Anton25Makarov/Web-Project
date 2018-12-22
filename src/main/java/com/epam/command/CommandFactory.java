@@ -5,8 +5,8 @@ public class CommandFactory {
         switch (command) {
             case "login":
                 return new LoginCommand();
-            case "adminBook":
-                return new AdminBookCommand();
+            case "addBookWindow":
+                return new AddBookCommand();
             case "adminLibrarian":
                 return new AdminLibrarianCommand();
             case "adminReaders":

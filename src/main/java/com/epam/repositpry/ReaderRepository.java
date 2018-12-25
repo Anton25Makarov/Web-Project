@@ -40,6 +40,16 @@ public class ReaderRepository extends AbstractRepository {
         return executeQueryForSingleResult(builder, query, parameters);
     }
 
+    @Override
+    public boolean save(Entity entity) throws SQLException {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public boolean remove(Entity entity) throws SQLException {
+        throw new UnsupportedOperationException();
+    }
+
 
     @Override
     protected Builder<Reader> getBuilder() {

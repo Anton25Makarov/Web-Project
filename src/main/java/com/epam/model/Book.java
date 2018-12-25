@@ -5,9 +5,9 @@ public class Book extends Entity {
     private int year;
     private int count;
     private Author author;
-    private String genre;
+    private BookGenre genre;
 
-    public Book(Long id, String title, int year, int count, Author author, String genre) {
+    public Book(Long id, String title, int year, int count, Author author, BookGenre genre) {
         super(id);
         this.title = title;
         this.year = year;
@@ -16,12 +16,16 @@ public class Book extends Entity {
         this.genre = genre;
     }
 
-    public Book(String title, int year, int count, Author author, String genre) {
+    public Book(String title, int year, int count, Author author, BookGenre genre) {
         this.title = title;
         this.year = year;
         this.count = count;
         this.author = author;
         this.genre = genre;
+    }
+
+    public Book(Long id) {
+        super(id);
     }
 
     public String getTitle() {
@@ -40,7 +44,7 @@ public class Book extends Entity {
         return author;
     }
 
-    public String getGenre() {
+    public BookGenre getGenre() {
         return genre;
     }
 }

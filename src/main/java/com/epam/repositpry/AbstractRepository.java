@@ -43,23 +43,15 @@ public abstract class AbstractRepository<T extends Entity> implements Repository
     public Optional<T> queryForSingleResult(SqlSpecification sqlSpecification) throws SQLException {
         return Optional.empty();
     }
-
     // get table name?
-
+    
+    @Override
+    public abstract boolean save(T t) throws SQLException;
 
     @Override
-    public boolean save(Entity entity) {
-        /* realisation */
-        return false;
-    }
-
-   /* public abstract T add(T entity);
-
-    public  abstract T delete(T entity);
-
-    public abstract T update(T entity);*/
-
-
+    public abstract boolean remove(T t) throws SQLException;
+    
     protected abstract Builder<T> getBuilder();
+
 
 }

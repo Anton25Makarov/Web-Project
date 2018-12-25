@@ -2,6 +2,7 @@ package com.epam.builder;
 
 import com.epam.model.Author;
 import com.epam.model.Book;
+import com.epam.model.BookGenre;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,7 +19,8 @@ public class BookBuilder implements Builder<Book> {
         String authorSurname = resultSet.getString("surname");
 
         Author author = new Author(authorName, authorSurname);
+        BookGenre bookGenre = new BookGenre(genre);
 
-        return new Book(id, title, year, count, author, genre);
+        return new Book(id, title, year, count, author, bookGenre);
     }
 }

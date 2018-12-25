@@ -1,7 +1,9 @@
 package com.epam.service;
 
 import com.epam.connection.ConnectionPool;
+import com.epam.model.Author;
 import com.epam.model.Book;
+import com.epam.model.BookGenre;
 import com.epam.model.Employee;
 import com.epam.repositpry.AbstractRepository;
 import com.epam.repositpry.RepositoryFactory;
@@ -46,4 +48,84 @@ public class EmployeeService {
         connectionPool.returnConnection(connection);
         return books;
     }
+
+    public List<BookGenre> takeGenres() throws InterruptedException, SQLException {
+        ConnectionPool connectionPool = ConnectionPool.getInstance();// create block finally and add returnConnection
+        Connection connection = connectionPool.takeConnection();
+
+        AbstractRepository<BookGenre> genreRepository = RepositoryFactory.createBookGenreRepository(connection);
+
+        SqlSpecification specification = new FindAllSpecification();//????
+        List<BookGenre> genres = genreRepository.query(specification);
+
+        connectionPool.returnConnection(connection);
+        return genres;
+    }
+
+    public List<Author> takeAuthors() throws InterruptedException, SQLException {
+        ConnectionPool connectionPool = ConnectionPool.getInstance();// create block finally and add returnConnection
+        Connection connection = connectionPool.takeConnection();
+
+        AbstractRepository<Author> authorRepository = RepositoryFactory.createAuthorRepository(connection);
+
+        SqlSpecification specification = new FindAllSpecification();//????
+        List<Author> authors = authorRepository.query(specification);
+
+        connectionPool.returnConnection(connection);
+        return authors;
+    }
+
+    public boolean saveBook(Book book) throws InterruptedException, SQLException {
+        ConnectionPool connectionPool = ConnectionPool.getInstance();// create block finally and add returnConnection
+        Connection connection = connectionPool.takeConnection();
+
+        AbstractRepository<Book> bookRepository = RepositoryFactory.createBookRepository(connection);
+
+        boolean result = bookRepository.save(book);
+
+        connectionPool.returnConnection(connection);
+
+        return result;
+    }
+
+    public boolean saveGenre(BookGenre genre) throws InterruptedException, SQLException {
+        ConnectionPool connectionPool = ConnectionPool.getInstance();// create block finally and add returnConnection
+        Connection connection = connectionPool.takeConnection();
+
+        AbstractRepository<BookGenre> genreRepository = RepositoryFactory.createBookGenreRepository(connection);
+
+        boolean result = genreRepository.save(genre);
+
+        connectionPool.returnConnection(connection);
+
+        return result;
+    }
+
+    public boolean saveAuthor(Author author) throws InterruptedException, SQLException {
+        ConnectionPool connectionPool = ConnectionPool.getInstance();// create block finally and add returnConnection
+        Connection connection = connectionPool.takeConnection();
+
+        AbstractRepository<Author> authorRepository = RepositoryFactory.createAuthorRepository(connection);
+
+        boolean result = authorRepository.save(author);
+
+        connectionPool.returnConnection(connection);
+
+        return result;
+    }
+
+    public boolean removeBook(Book book) throws InterruptedException, SQLException {
+        ConnectionPool connectionPool = ConnectionPool.getInstance();// create block finally and add returnConnection
+        Connection connection = connectionPool.takeConnection();
+
+        AbstractRepository<Book> bookRepository = RepositoryFactory.createBookRepository(connection);
+
+        boolean result = bookRepository.remove(book);
+
+        connectionPool.returnConnection(connection);
+
+        return result;
+    }
+
+
 }

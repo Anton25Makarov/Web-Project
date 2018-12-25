@@ -5,11 +5,16 @@
     <style>
         <%@ include file="../style/style.css" %>
         <%@ include file="../style/modal.css" %>
+        <%@ include file="../style/table.css"%>
     </style>
     <script type="text/javascript"
             src="${pageContext.servletContext.contextPath}/resource/js/jquery-3.3.1.js"></script>
     <script type="text/javascript"
+            src="${pageContext.servletContext.contextPath}/resource/js/jquery-datatable.js"></script>
+    <script type="text/javascript"
             src="${pageContext.servletContext.contextPath}/resource/js/modal.js"></script>
+    <script type="text/javascript"
+            src="${pageContext.servletContext.contextPath}/resource/js/hideInfo.js"></script>
 
     <title>Menu</title>
 </head>
@@ -44,16 +49,20 @@
 
     <article>
         <div>
-            <table>
-                <tbody>
+            <table id="bookTable">
+                <thead>
                 <tr>
-                    <th>№</th>
+                    <th>Id</th>
                     <th>Book name</th>
                     <th>Book author</th>
                     <th>Genre</th>
                     <th>Year</th>
                     <th>Count</th>
+                    <th>Edit</th>
+                    <th>Remove</th>
                 </tr>
+                </thead>
+                <tbody>
                 <c:forEach var="book" items="${requestScope.books}">
                     <tr>
                         <td><c:out value="${book.id}"/></td>
@@ -62,45 +71,159 @@
                             <c:out value="${book.author.name}"/>
                             <c:out value="${book.author.surname}"/>
                         </td>
-                        <td><c:out value="${book.genre}"/></td>
+                        <td><c:out value="${book.genre.genre}"/></td>
                         <td><c:out value="${book.year}"/></td>
                         <td><c:out value="${book.count}"/></td>
+                        <td>
+                            <div id="modal-wrapper-book" class="modal">
+
+                                <form class="modal-content animate" method="post"
+                                      action="${pageContext.servletContext.contextPath}/controller?command=saveBook">
+                                    <div class="imgContainer">
+                                        <span class="close modalCross" title="Close">&times;</span>
+                                        <img src="${pageContext.servletContext.contextPath}/resource/images/add-book.png"
+                                             alt="Add book"
+                                             class="addBookImage"/>
+                                        <h1 style="text-align:center">Adding book</h1>
+                                    </div>
+
+                                    <div class="container">
+                                        <input type="text" placeholder="Title" name="bookTitle" required
+                                               pattern="[a-zA-Z\d]{2,15}">
+
+                                        <select name="selectedGenreId" required>
+                                            <c:forEach items="${requestScope.genres}" var="genre">
+                                                <option value="${genre.id}"><c:out value="${genre.genre}"/></option>
+                                            </c:forEach>
+                                        </select>
+                                        <select name="selectedAuthorId" title="authors" required>
+                                            <c:forEach items="${requestScope.authors}" var="author">
+                                                <option value="${author.id}">
+                                                    <c:out value="${author.name}"/>
+                                                    <c:out value="${author.surname}"/>
+                                                </option>
+                                            </c:forEach>
+                                        </select>
+                                        <input type="text" placeholder="Count" name="bookCount" required pattern="\d+">
+                                        <input type="text" placeholder="Year" name="bookYear" required pattern="\d+">
+                                        <input type="hidden" value="${book.id}" name="bookId">
+                                        <button type="submit">Save book</button>
+                                    </div>
+                                </form>
+
+                            </div>
+                                <%-- <input type="hidden" value="${book.id}" name="bookId">--%>
+                            <button type="submit" class="saveEditBookButton">Edit</button>
+                        </td>
+                        <td>
+                            <form class="form-for-button" method="post"
+                                  action="${pageContext.servletContext.contextPath}/controller?command=removeBook">
+                                <input type="hidden" value="${book.id}" name="bookId">
+                                <button type="submit" class="saveRemoveBookButton">Remove</button>
+                            </form>
+                                <%-- <input type="hidden" value="${book.id}" name="bookId">--%>
+                        </td>
                     </tr>
                 </c:forEach>
                 </tbody>
             </table>
         </div>
-        <button id="addBookButton">
-            Add book
-        </button>
-        <div id="modal-wrapper" class="modal">
+
+        <div class="vertical-direction">
+            <div class="button-info">
+                <button id="saveBookButton">Add book</button>
+                <span><c:out value="${requestScope.insertBookInfo}"/></span>
+            </div>
+            <div class="button-info">
+                <button id="addAuthorButton">Add author</button>
+                <span> <c:out value="${requestScope.insertAuthorInfo}"/></span>
+            </div>
+            <div class="button-info">
+                <button id="addGenreButton">Add genre</button>
+                <span> <c:out value="${requestScope.insertGenreInfo}"/></span>
+            </div>
+        </div>
+
+        <div id="modal-wrapper-author" class="modal">
 
             <form class="modal-content animate" method="post"
-                  action="${pageContext.servletContext.contextPath}/controller?command=addBook">
+                  action="${pageContext.servletContext.contextPath}/controller?command=addAuthor">
 
-                <div class="imgcontainer">
-                    <span id="modalCross" class="close" title="Close">&times;</span>
-                    <img src="${pageContext.servletContext.contextPath}/resource/images/add-book.png" alt="Add book"
+                <div class="imgContainer">
+                    <span class="close modalCross" title="Close">&times;</span>
+                    <img src="${pageContext.servletContext.contextPath}/resource/images/add-book.png" alt="Add author"
                          class="addBookImage"/>
-                    <h1 style="text-align:center">Adding book</h1>
+                    <h1 style="text-align:center">Adding author</h1>
                 </div>
 
                 <div class="container">
-                    <input type="text" placeholder="Title" name="bookTitle" required pattern="[a-zA-Z\\d]{2,15}">
-                    <input type="text" placeholder="Genre" name="bookGenre" required pattern="[a-zA-Z]{2,15}">
-                    <input type="text" placeholder="Author name" name="bookAuthorName" required
+                    <input type="text" placeholder="Author name" name="authorBookName" required
                            pattern="[a-zA-Z]{2,15}">
-                    <input type="text" placeholder="Author surname" name="bookAuthorSurname" required
+                    <input type="text" placeholder="Author surname" name="authorBookSurname" required
                            pattern="[a-zA-Z]{2,15}">
-                    <input type="text" placeholder="Count" name="bookCount" required pattern="\d+">
-                    <button type="submit">Add book</button>
+                    <button type="submit">Add author</button>
                 </div>
 
             </form>
 
         </div>
 
+        <div id="modal-wrapper-genre" class="modal">
 
+            <form class="modal-content animate" method="post"
+                  action="${pageContext.servletContext.contextPath}/controller?command=addGenre">
+
+                <div class="imgContainer">
+                    <span class="close modalCross" title="Close">&times;</span>
+                    <img src="${pageContext.servletContext.contextPath}/resource/images/add-book.png" alt="Add genre"
+                         class="addBookImage"/>
+                    <h1 style="text-align:center">Adding genre</h1>
+                </div>
+                <div class="container">
+                    <input type="text" placeholder="Genre" name="bookGenre" required pattern="[a-zA-Z]{2,15}">
+                    <button type="submit">Add genre</button>
+                </div>
+
+            </form>
+
+        </div>
+
+        <%--<div id="modal-wrapper-book" class="modal">
+
+            <form class="modal-content animate" method="post"
+                  action="${pageContext.servletContext.contextPath}/controller?command=saveBook">
+
+                <div class="imgContainer">
+                    <span class="close modalCross" title="Close">&times;</span>
+                    <img src="${pageContext.servletContext.contextPath}/resource/images/add-book.png" alt="Add book"
+                         class="addBookImage"/>
+                    <h1 style="text-align:center">Adding book</h1>
+                </div>
+
+                <div class="container">
+                    <input type="text" placeholder="Title" name="bookTitle" required pattern="[a-zA-Z\d]{2,15}">
+
+                    <select name="selectedGenreId" required>
+                        <c:forEach items="${requestScope.genres}" var="genre">
+                            <option value="${genre.id}"><c:out value="${genre.genre}"/></option>
+                        </c:forEach>
+                    </select>
+                    <select name="selectedAuthorId" title="authors" required>
+                        <c:forEach items="${requestScope.authors}" var="author">
+                            <option value="${author.id}">
+                                <c:out value="${author.name}"/>
+                                <c:out value="${author.surname}"/>
+                            </option>
+                        </c:forEach>
+                    </select>
+                    <input type="text" placeholder="Count" name="bookCount" required pattern="\d+">
+                    <input type="text" placeholder="Year" name="bookYear" required pattern="\d+">
+                    <button type="submit">Save book</button>
+                </div>
+
+            </form>
+
+        </div>--%>
     </article>
 </main>
 </body>

@@ -42,9 +42,9 @@
 
                 <button class="sign_up_btn" type="submit">Submit</button>
             </form>
-            
-            <div class="errorSignIn">
-                ${requestScope.errorLogin}
+
+            <div class="errorInfo">
+                <c:out value="${requestScope.errorLogin}"/>
             </div>
         </div>
 

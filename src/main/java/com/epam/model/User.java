@@ -2,7 +2,7 @@ package com.epam.model;
 
 import java.io.Serializable;
 
-public class User extends Entity implements Serializable {
+public class User extends Entity implements Serializable, Cloneable {
     private String name;
     private String surname;
     private String login;
@@ -30,5 +30,10 @@ public class User extends Entity implements Serializable {
 
     public String getRole() {
         return role;
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 }

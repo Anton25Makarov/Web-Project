@@ -1,5 +1,5 @@
 /* Full-width input fields */
-input[type=text], input[type=password] {
+input[type=text], option, select {
     width: 90%;
     padding: 12px 20px;
     margin: 8px 26px;
@@ -10,7 +10,7 @@ input[type=text], input[type=password] {
 }
 
 /* Set a style for all buttons */
-.container button, #addBookButton {
+.container button, #saveBookButton, #addAuthorButton, #addGenreButton {
     background-color: #ABA194;
     color: white;
     padding: 14px 20px;
@@ -22,17 +22,19 @@ input[type=text], input[type=password] {
     border-radius: 10px;
 }
 
-.container input {
+
+
+.container input, .container option {
     border-radius: 5px;
 }
 
-.containerbutton:hover, #addBookButton:hover {
+.container button:hover, #saveBookButton:hover, #addAuthorButton:hover, #addGenreButton:hover {
     opacity: 0.8;
     background-color: gray;
 }
 
 /* Center the image and position the close button */
-.imgcontainer {
+.imgContainer {
     text-align: center;
     margin: 24px 0 12px 0;
     position: relative;
@@ -81,8 +83,9 @@ input[type=text], input[type=password] {
     cursor: pointer;
 }
 
-#addBookButton {
+#saveBookButton, #addAuthorButton, #addGenreButton {
     width: 200px;
+    max-height: 70px;
     margin: 30px 20px;
 }
 

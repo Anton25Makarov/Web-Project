@@ -38,6 +38,16 @@ public class EmployeeRepository extends AbstractRepository<Employee> {
         return executeQueryForSingleResult(builder, query, parameters);
     }
 
+    @Override
+    public boolean save(Employee employee) throws SQLException {
+        return false;
+    }
+
+    @Override
+    public boolean remove(Employee employee) throws SQLException {
+        throw new UnsupportedOperationException();
+    }
+
     protected Builder<Employee> getBuilder() {
         return new EmployeeBuilder();
     }

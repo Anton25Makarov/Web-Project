@@ -1,26 +1,3 @@
-/*
-$(function () {
-    let modal = document.getElementById('myModal');
-
-    let btn = document.getElementById("myBtn");
-
-    let span = document.getElementById("closeModal");
-
-    btn.onclick = function () {
-        modal.style.display = "block";
-    };
-
-    span.onclick = function () {
-        modal.style.display = "none";
-    };
-
-    window.onclick = function (event) {
-        if (event.target === modal) {
-            modal.style.display = "none";
-        }
-    }
-});*/
-
 $(document).ready(function () {
     let modalBook = document.getElementById('modal-wrapper-book');
     let modalAuthor = document.getElementById('modal-wrapper-author');
@@ -40,47 +17,6 @@ $(document).ready(function () {
         }
     };
 
-    /* $('#userTable').on('click', 'tbody tr', function (event) {
-         $(this).addClass('highlight').siblings().removeClass('highlight');
-     });
-
-     $('#btnRowClick').click(function (e) {
-         var rows = getHighlightRow();
-         if (rows != undefined) {
-             alert(rows.attr('id'));
-         }
-     });
-
-     var getHighlightRow = function () {
-         return $('table > tbody > tr.highlight');
-     };
-
-     $('#saveEditBookButton').on('click', 'tbody tr', function () {
-         $(this).addClass('highlight').siblings().removeClass('highlight');
-
-         let rows = $('table > tbody > tr.highlight');
-         if (rows !== undefined) {
-             alert(rows.attr('id'));
-         }
-
-         $('#modal-wrapper-book input[name="bookTitle"]').val("Hello value");
-         $('#modal-wrapper-book').css('display', 'block');
-     });*/
-
-    /*$(".saveEditBookButton").click(function () {
-        let item = $(this).closest("tr")   // Finds the closest row <tr>
-        // Gets a descendent with class="nr"
-            .text();         // Retrieves the text within <td>
-
-        alert(item);
-    });*/
-
-    /* let table = $('#example');
-
-     $('table tbody').on('click', '.saveEditBookButton', function () {
-         var data = table.row($(this).parents('tr')).data();
-         alert(data[0] + "'s salary is: " + data[1]);
-     });*/
 
     let table = $('#bookTable').DataTable();
 
@@ -106,11 +42,19 @@ $(document).ready(function () {
         $('#modal-wrapper-genre').css('display', 'block');
     });
 
-    $('.modalCross').on('click', function () {
+    $('#bookTable').on('click', '.modalCross', function () { // for second page
         $('#modal-wrapper-book').css('display', 'none');
         $('#modal-wrapper-author').css('display', 'none');
         $('#modal-wrapper-genre').css('display', 'none');
         $('.container input').val('');
     });
-})
-;
+
+    $('.modalCross').on('click', function () {
+        alert("Cross");
+        $('#modal-wrapper-book').css('display', 'none');
+        $('#modal-wrapper-author').css('display', 'none');
+        $('#modal-wrapper-genre').css('display', 'none');
+        $('.container input').val('');
+    });
+
+});

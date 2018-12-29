@@ -2,19 +2,17 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
-    <style>
-        <%@ include file="../style/style.css" %>
-        <%@ include file="../style/modal.css" %>
-        <%@ include file="../style/table.css"%>
-    </style>
+    <link type="text/css" rel="stylesheet" href='${pageContext.servletContext.contextPath}/resource/style/style.css'/>
+    <link type="text/css" rel="stylesheet" href='${pageContext.servletContext.contextPath}/resource/style/modal.css'/>
+    <link type="text/css" rel="stylesheet" href='${pageContext.servletContext.contextPath}/resource/style/table.css'/>
     <script type="text/javascript"
             src="${pageContext.servletContext.contextPath}/resource/js/jquery-3.3.1.js"></script>
     <script type="text/javascript"
             src="${pageContext.servletContext.contextPath}/resource/js/jquery-datatable.js"></script>
     <script type="text/javascript"
-            src="${pageContext.servletContext.contextPath}/resource/js/modal.js"></script>
+            src="${pageContext.servletContext.contextPath}/resource/js/modal.js?newversion"></script>
     <script type="text/javascript"
-            src="${pageContext.servletContext.contextPath}/resource/js/hideInfo.js"></script>
+            src="${pageContext.servletContext.contextPath}/resource/js/hideInfo.js?newversion"></script>
 
     <title>Menu</title>
 </head>
@@ -132,16 +130,14 @@
         <div class="vertical-direction">
             <div class="button-info">
                 <button id="saveBookButton">Add book</button>
-                <span><c:out value="${requestScope.insertBookInfo}"/></span>
             </div>
             <div class="button-info">
                 <button id="addAuthorButton">Add author</button>
-                <span> <c:out value="${requestScope.insertAuthorInfo}"/></span>
             </div>
             <div class="button-info">
                 <button id="addGenreButton">Add genre</button>
-                <span> <c:out value="${requestScope.insertGenreInfo}"/></span>
             </div>
+            <span> <c:out value="${param.save}"/></span>
         </div>
 
         <div id="modal-wrapper-author" class="modal">

@@ -2,9 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
-    <style>
-        <%@ include file="../style/style.css" %>
-    </style>
+    <link type="text/css" rel="stylesheet" href='${pageContext.servletContext.contextPath}/resource/style/style.css'/>
     <script type="text/javascript"
             src="${pageContext.servletContext.contextPath}/resource/js/jquery-3.3.1.js"></script>
     <script type="text/javascript"

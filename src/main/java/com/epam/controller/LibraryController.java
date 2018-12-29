@@ -51,14 +51,20 @@ public class LibraryController extends HttpServlet {
         CommandResult page = action.execute(req, resp);
 
         dispatch(req, resp, page);
+        return;
     }
 
     private void dispatch(HttpServletRequest req, HttpServletResponse resp, CommandResult page)
             throws ServletException, IOException {
         String pageToDispatch = page.getPage();
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(pageToDispatch);
-        dispatcher.forward(req, resp);
 
+        if (page.isRedirect()) {
+            resp.sendRedirect(req.getContextPath() + pageToDispatch);
+//            resp.sendRedirect(req.getContextPath() + pageToDispatch);
+        } else {
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(pageToDispatch);
+            dispatcher.forward(req, resp);
+        }
     }
 //name - controller
 

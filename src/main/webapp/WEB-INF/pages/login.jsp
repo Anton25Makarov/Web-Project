@@ -1,15 +1,23 @@
 <%@ page contentType="text/html; charset=utf-8" pageEncoding="UTF-8" isELIgnored="false" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <%--<jsp:include page="/WEB-INF/fragments/header-label.jsp"/>--%>
 <head>
+    <fmt:setLocale value="ru_RU" scope="session"/>
+    <%--<fmt:setBundle basename="resource."/>--%>
+    <fmt:setBundle basename="pagecontent" var="rb"/>
     <title>Authorisation</title>
-    <style>
-        <%@ include file="../style/style.css" %>
-    </style>
+    <link type="text/css" rel="stylesheet" href='${pageContext.servletContext.contextPath}/resource/style/style.css'/>
 </head>
 <body>
 <div id="head">
+    Привет, Мария!
+    <div>
+        <fmt:message key="title" bundle="${rb}"/>
+        <fmt:message key="title"/>
+    </div>
+
     <header>
         <jsp:include page="../fragments/header-label.jsp"/>
     </header>

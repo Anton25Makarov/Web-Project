@@ -1,22 +1,22 @@
-<%@ page contentType="text/html; charset=utf-8" pageEncoding="UTF-8" isELIgnored="false" %>
+<%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8" isELIgnored="false" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<fmt:setLocale value="${sessionScope.local}" scope="session"/>
+<fmt:setBundle basename="locale" var="loc"/>
 <html>
-<%--<jsp:include page="/WEB-INF/fragments/header-label.jsp"/>--%>
 <head>
-    <fmt:setLocale value="ru_RU" scope="session"/>
-    <%--<fmt:setBundle basename="resource."/>--%>
-    <fmt:setBundle basename="pagecontent" var="rb"/>
-    <title>Authorisation</title>
+    <title>
+        <fmt:message bundle="${loc}" key="tab.login.title"/>
+    </title>
     <link type="text/css" rel="stylesheet" href='${pageContext.servletContext.contextPath}/resource/style/style.css'/>
 </head>
 <body>
 <div id="head">
-    Привет, Мария!
-    <div>
-        <fmt:message key="title" bundle="${rb}"/>
-        <fmt:message key="title"/>
-    </div>
+    <%--   <div>
+           <fmt:message key="title" bundle="${loc}"/>
+           <fmt:message key="title"/>
+       </div>--%>
 
     <header>
         <jsp:include page="../fragments/header-label.jsp"/>
@@ -35,20 +35,26 @@
                 <img src="${pageContext.servletContext.contextPath}/resource/images/book2.png"
                      height="50" width="50" alt="Sign up (book)"/>
 
-                <h1 class="sign_up_title">Sign in</h1>
+                <h1 class="sign_up_title">
+                    <fmt:message bundle="${loc}" key="label.signIn"/>
+                </h1>
             </header>
 
             <form class="sign_up_form" method="post"
                   action="${pageContext.servletContext.contextPath}/controller?command=login">
                 <div class="sign_up_form_group">
-                    <input type="text" name="login" placeholder="Login" required class="sign_up_input"/>
+                    <fmt:message bundle="${loc}" key="input.placeholder.login" var="login"/>
+                    <input type="text" name="login" placeholder="${login}" required class="sign_up_input"/>
                 </div>
 
                 <div class="sign_up_form_group">
-                    <input type="password" name="password" placeholder="Password" required class="sign_up_input"/>
+                    <fmt:message bundle="${loc}" key="input.placeholder.password" var="password"/>
+                    <input type="password" name="password" placeholder="${password}" required class="sign_up_input"/>
                 </div>
 
-                <button class="sign_up_btn" type="submit">Submit</button>
+                <button class="sign_up_btn" type="submit">
+                    <fmt:message bundle="${loc}" key="button.submit"/>
+                </button>
             </form>
 
             <div class="errorInfo">

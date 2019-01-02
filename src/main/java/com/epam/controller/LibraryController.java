@@ -46,12 +46,14 @@ public class LibraryController extends HttpServlet {
 //        req.getRequestDispatcher(action.getPage()).forward(req, resp);
         String command = req.getParameter("command");
 
+        // command = null - Обработать
+        // сделать команду для смены языка
+
         Command action = CommandFactory.create(command);
 
         CommandResult page = action.execute(req, resp);
 
         dispatch(req, resp, page);
-        return;
     }
 
     private void dispatch(HttpServletRequest req, HttpServletResponse resp, CommandResult page)

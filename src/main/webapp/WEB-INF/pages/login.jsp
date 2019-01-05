@@ -23,7 +23,9 @@
     </header>
     <nav>
         <ul>
-            <jsp:include page="../fragments/nav-language.jsp"/>
+            <jsp:include page="../fragments/nav-language.jsp">
+                <jsp:param name="page" value="login"/>
+            </jsp:include>
         </ul>
     </nav>
 </div>

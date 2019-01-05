@@ -23,7 +23,9 @@
     </header>
     <nav>
         <ul>
-            <jsp:include page="../fragments/nav-language.jsp"/>
+            <jsp:include page="../fragments/nav-language.jsp">
+                <jsp:param name="page" value="addBook"/>
+            </jsp:include>
             <jsp:include page="../fragments/nav-logout.jsp"/>
         </ul>
     </nav>

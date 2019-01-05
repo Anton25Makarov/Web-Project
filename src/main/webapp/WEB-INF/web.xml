@@ -12,13 +12,14 @@
 
     <servlet>
         <servlet-name>libraryServlet</servlet-name>
-        <servlet-class>com.epam.controller.LibraryController</servlet-class>
+        <servlet-class>com.epam.library.controller.LibraryController</servlet-class>
     </servlet>
 
     <servlet-mapping>
         <servlet-name>libraryServlet</servlet-name>
         <url-pattern>/controller</url-pattern>
     </servlet-mapping>
+
 
     <jsp-config>
         <jsp-property-group>
@@ -29,7 +30,7 @@
 
     <filter>
         <filter-name>encodingFilter</filter-name>
-        <filter-class>com.epam.filter.EncodingFilter</filter-class>
+        <filter-class>com.epam.library.filter.EncodingFilter</filter-class>
         <init-param>
             <param-name>encoding</param-name>
             <param-value>UTF-8</param-value>
@@ -41,14 +42,5 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
-    <filter>
-        <filter-name>languageFilter</filter-name>
-        <filter-class>com.epam.filter.LanguageFilter</filter-class>
-    </filter>
-
-    <filter-mapping>
-        <filter-name>languageFilter</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
 
 </web-app>

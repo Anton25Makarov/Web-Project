@@ -11,12 +11,12 @@
     </a>
     <ul>
         <li>
-            <a href="${pageContext.servletContext.contextPath}/?lang=en_gb">
-                <fmt:message bundle="${loc}" key="label.language.en.uk"/>
+            <a href="${pageContext.servletContext.contextPath}/controller?command=changeLanguage&lang=en_gb&page=${param.page}">
+                <fmt:message bundle="${loc}" key="label.language.en.gb"/>
             </a>
         </li>
         <li>
-            <a href="?lang=ru_ru">
+            <a href="${pageContext.servletContext.contextPath}/controller?command=changeLanguage&lang=ru_ru&page=${param.page}">
                 <fmt:message bundle="${loc}" key="label.language.ru.ru"/>
             </a>
         </li>

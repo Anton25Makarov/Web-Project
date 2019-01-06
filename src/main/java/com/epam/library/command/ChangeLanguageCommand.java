@@ -19,15 +19,10 @@ public class ChangeLanguageCommand implements Command {
                 case "ru_ru":
                     session.setAttribute("local", "ru_RU");
                     break;
+                case "be_by":
+                    session.setAttribute("local", "be_BY");
+                    break;
             }
-
-//            return CommandResult.redirect(req.getRequestURL().toString());
-//            return CommandResult.redirect("/controller?command=addBookWindow");
-
-//            return CommandResult.forward("/WEB-INF/pages/login.jsp");
-//            return CommandResult.forward(req.getRequestURI());
-//            resp.sendRedirect(req.getRequestURI());
-//            System.out.println("hello");
         }
 
         String page = req.getParameter("page");
@@ -36,23 +31,15 @@ public class ChangeLanguageCommand implements Command {
             switch (page) {
                 case "login":
                     return CommandResult.forward("/WEB-INF/pages/login.jsp");
-//                    pageToShow = "/";
-//                    break;
                 case "main":
                     return CommandResult.forward("/WEB-INF/pages/main.jsp");
-//                    pageToShow = "/controller?command=login";
-//                    break;
                 case "addBook":
                     return CommandResult.redirect("/controller?command=addBookWindow");
-//                pageToShow = "/controller?command=addBookWindow";
-//                break;
                 default:
                     throw new UnsupportedOperationException("unknown page: " + page);
             }
         }
 
         return CommandResult.redirect(pageToShow);
-//        return CommandResult.redirect("/WEB-INF/pages/admin-book.jsp");
-//        return CommandResult.forward("/WEB-INF/pages/admin-book.jsp");
     }
 }

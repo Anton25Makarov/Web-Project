@@ -14,13 +14,12 @@ public class RemoveBookCommand implements Command {
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) {
 
-        EmployeeService employeeService = new EmployeeService();
 
         Long bookId = Long.parseLong(req.getParameter("bookId"));
 
         Book book = new Book(bookId);
 
-        try {
+        try (EmployeeService employeeService = new EmployeeService()) {
             boolean result = employeeService.removeBook(book);
 
             if (result) {

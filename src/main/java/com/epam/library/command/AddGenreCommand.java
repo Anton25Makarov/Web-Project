@@ -14,15 +14,13 @@ public class AddGenreCommand implements Command {
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) {
 
-        EmployeeService employeeService = new EmployeeService();
-
 
         String bookGenre = req.getParameter("bookGenre");
 
         BookGenre genre = new BookGenre(bookGenre);
 
 
-        try {
+        try (EmployeeService employeeService = new EmployeeService()) {
             boolean result = employeeService.saveGenre(genre);
 
             if (result) {

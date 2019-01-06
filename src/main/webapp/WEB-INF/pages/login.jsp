@@ -1,6 +1,8 @@
 <%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8" isELIgnored="false" %>
+
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib uri="tableTag" prefix="tbl" %>
 
 <fmt:setLocale value="${sessionScope.local}" scope="session"/>
 <fmt:setBundle basename="locale" var="loc"/>
@@ -12,12 +14,8 @@
     <link type="text/css" rel="stylesheet" href='${pageContext.servletContext.contextPath}/resource/style/style.css'/>
 </head>
 <body>
-<div id="head">
-    <%--   <div>
-           <fmt:message key="title" bundle="${loc}"/>
-           <fmt:message key="title"/>
-       </div>--%>
 
+<div id="head">
     <header>
         <jsp:include page="../fragments/header-label.jsp"/>
     </header>

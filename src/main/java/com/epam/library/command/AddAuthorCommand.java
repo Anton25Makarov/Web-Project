@@ -14,15 +14,12 @@ public class AddAuthorCommand implements Command {
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) {
 
-        EmployeeService employeeService = new EmployeeService();
-
-
         String authorBookName = req.getParameter("authorBookName");
         String authorBookSurname = req.getParameter("authorBookSurname");
 
         Author author = new Author(authorBookName, authorBookSurname);
 
-        try {
+        try (EmployeeService employeeService = new EmployeeService()) {
             boolean result = employeeService.saveAuthor(author);
 
             if (result) {

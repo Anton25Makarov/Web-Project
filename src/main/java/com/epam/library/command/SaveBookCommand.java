@@ -14,8 +14,6 @@ public class SaveBookCommand implements Command {
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) {
 
-        EmployeeService employeeService = new EmployeeService();
-
         String bookIdParameter = req.getParameter("bookId");
         Long bookId = null;
         if (bookIdParameter != null && !bookIdParameter.isEmpty()) {
@@ -35,7 +33,7 @@ public class SaveBookCommand implements Command {
 
         Book book = new Book(bookId, title, year, count, author, bookGenre);
 
-        try {
+        try (EmployeeService employeeService = new EmployeeService()) {
             boolean result = employeeService.saveBook(book);
 
             if (result) {

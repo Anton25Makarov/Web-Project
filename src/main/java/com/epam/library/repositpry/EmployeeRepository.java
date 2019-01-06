@@ -24,11 +24,8 @@ public class EmployeeRepository extends AbstractRepository<Employee> {
         return null;
     }
 
-    //map<Str, obj> fields
-    // fields.put(NAME_OF_COLUMN, employee.getId);
     @Override
-    public Optional<Employee> queryForSingleResult(SqlSpecification specification)
-            throws SQLException {
+    public Optional<Employee> queryForSingleResult(SqlSpecification specification) throws SQLException {
 
         String query = SELECT_QUERY + specification.toSql();
         List<String> parameters = specification.getParameters();
@@ -40,7 +37,7 @@ public class EmployeeRepository extends AbstractRepository<Employee> {
 
     @Override
     public boolean save(Employee employee) throws SQLException {
-        return false;
+        throw new UnsupportedOperationException();
     }
 
     @Override
@@ -51,26 +48,6 @@ public class EmployeeRepository extends AbstractRepository<Employee> {
     protected Builder<Employee> getBuilder() {
         return new EmployeeBuilder();
     }
-
-    private Optional<Employee> executeQueryForSingleResult(
-            Builder<Employee> builder, String query, List<String> parameters) throws SQLException {
-
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            int i = 1;
-            for (String parameter : parameters) {
-                preparedStatement.setString(i++, parameter);
-            }
-
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            Employee employee = null;
-            if (resultSet.next()) {
-                employee = builder.build(resultSet);
-            }
-
-            return Optional.ofNullable(employee);
-        } catch (SQLException e) {
-            throw new SQLException(); //own exception
-        }
-    }
 }
+//map<Str, obj> fields
+// fields.put(NAME_OF_COLUMN, employee.getId);

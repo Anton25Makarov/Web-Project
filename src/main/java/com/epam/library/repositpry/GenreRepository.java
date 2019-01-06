@@ -3,7 +3,6 @@ package com.epam.library.repositpry;
 import com.epam.library.builder.Builder;
 import com.epam.library.builder.GenreBuilder;
 import com.epam.library.model.BookGenre;
-import com.epam.library.model.Book;
 import com.epam.library.specification.SqlSpecification;
 
 import java.sql.*;
@@ -42,33 +41,33 @@ public class GenreRepository extends AbstractRepository<BookGenre> {
         return new GenreBuilder();
     }
 
-    private Optional<Book> executeQueryForSingleResult(
-            Builder<Book> builder, String query, List<String> parameters) {
+    protected Optional<BookGenre> executeQueryForSingleResult(
+            Builder<BookGenre> builder, String query, List<String> parameters) {
         throw new UnsupportedOperationException(); // add text error as parameter
     }
 
-    private List<BookGenre> executeQuery(Builder<BookGenre> builder, String query, List<String> parameters)
-            throws SQLException {
-
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            int i = 1;
-            for (String parameter : parameters) {
-                preparedStatement.setString(i++, parameter);
-            }
-
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            List<BookGenre> genres = new ArrayList<>();
-            while (resultSet.next()) {
-                BookGenre bookGenre = builder.build(resultSet);
-                genres.add(bookGenre);
-            }
-
-            return genres;
-        } catch (SQLException e) {
-            throw new SQLException(); //own exception
-        }
-    }
+//    private List<BookGenre> executeQuery(Builder<BookGenre> builder, String query, List<String> parameters)
+//            throws SQLException {
+//
+//        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+//            int i = 1;
+//            for (String parameter : parameters) {
+//                preparedStatement.setString(i++, parameter);
+//            }
+//
+//            ResultSet resultSet = preparedStatement.executeQuery();
+//
+//            List<BookGenre> genres = new ArrayList<>();
+//            while (resultSet.next()) {
+//                BookGenre bookGenre = builder.build(resultSet);
+//                genres.add(bookGenre);
+//            }
+//
+//            return genres;
+//        } catch (SQLException e) {
+//            throw new SQLException(); //own exception
+//        }
+//    }
 
     @Override
     public boolean save(BookGenre genre) throws SQLException {

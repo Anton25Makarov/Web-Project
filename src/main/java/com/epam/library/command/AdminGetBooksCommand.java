@@ -14,8 +14,7 @@ public class AdminGetBooksCommand implements Command {
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) {
 
-        EmployeeService employeeService = new EmployeeService();
-        try {
+        try (EmployeeService employeeService = new EmployeeService()) {
             List<Book> books = employeeService.takeBooks();
             req.setAttribute("books", books);
 

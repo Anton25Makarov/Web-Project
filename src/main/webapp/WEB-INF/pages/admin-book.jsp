@@ -186,42 +186,6 @@
 
         </div>
 
-        <%--<div id="modal-wrapper-book" class="modal">
-
-            <form class="modal-content animate" method="post"
-                  action="${pageContext.servletContext.contextPath}/controller?command=saveBook">
-
-                <div class="imgContainer">
-                    <span class="close modalCross" title="Close">&times;</span>
-                    <img src="${pageContext.servletContext.contextPath}/resource/images/add-book.png" alt="Add book"
-                         class="addBookImage"/>
-                    <h1 style="text-align:center">Adding book</h1>
-                </div>
-
-                <div class="container">
-                    <input type="text" placeholder="Title" name="bookTitle" required pattern="[a-zA-Z\d]{2,15}">
-
-                    <select name="selectedGenreId" required>
-                        <c:forEach items="${requestScope.genres}" var="genre">
-                            <option value="${genre.id}"><c:out value="${genre.genre}"/></option>
-                        </c:forEach>
-                    </select>
-                    <select name="selectedAuthorId" title="authors" required>
-                        <c:forEach items="${requestScope.authors}" var="author">
-                            <option value="${author.id}">
-                                <c:out value="${author.name}"/>
-                                <c:out value="${author.surname}"/>
-                            </option>
-                        </c:forEach>
-                    </select>
-                    <input type="text" placeholder="Count" name="bookCount" required pattern="\d+">
-                    <input type="text" placeholder="Year" name="bookYear" required pattern="\d+">
-                    <button type="submit">Save book</button>
-                </div>
-
-            </form>
-
-        </div>--%>
     </article>
 </main>
 </body>

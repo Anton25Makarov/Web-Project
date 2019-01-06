@@ -1,5 +1,5 @@
 <%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8" isELIgnored="false" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <fmt:setLocale value="${sessionScope.local}" scope="session"/>
@@ -18,6 +18,11 @@
         <li>
             <a href="${pageContext.servletContext.contextPath}/controller?command=changeLanguage&lang=ru_ru&page=${param.page}">
                 <fmt:message bundle="${loc}" key="label.language.ru.ru"/>
+            </a>
+        </li>
+        <li>
+            <a href="${pageContext.servletContext.contextPath}/controller?command=changeLanguage&lang=be_by&page=${param.page}">
+                <fmt:message bundle="${loc}" key="label.language.be.by"/>
             </a>
         </li>
     </ul>

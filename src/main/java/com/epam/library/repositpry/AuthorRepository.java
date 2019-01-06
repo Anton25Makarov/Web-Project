@@ -43,32 +43,9 @@ public class AuthorRepository extends AbstractRepository<Author> {
         return new AuthorBuilder();
     }
 
-    private Optional<Author> executeQueryForSingleResult(
+    protected Optional<Author> executeQueryForSingleResult(
             Builder<Author> builder, String query, List<String> parameters) {
         throw new UnsupportedOperationException(); // add text error as parameter
-    }
-
-    private List<Author> executeQuery(Builder<Author> builder, String query, List<String> parameters)
-            throws SQLException {
-
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            int i = 1;
-            for (String parameter : parameters) {
-                preparedStatement.setString(i++, parameter);
-            }
-
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            List<Author> authors = new ArrayList<>();
-            while (resultSet.next()) {
-                Author author = builder.build(resultSet);
-                authors.add(author);
-            }
-
-            return authors;
-        } catch (SQLException e) {
-            throw new SQLException(); //own exception
-        }
     }
 
     @Override
@@ -93,6 +70,4 @@ public class AuthorRepository extends AbstractRepository<Author> {
     public boolean remove(Author author) throws SQLException {
         throw new UnsupportedOperationException();
     }
-
-
 }

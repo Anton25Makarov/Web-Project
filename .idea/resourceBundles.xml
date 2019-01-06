@@ -6,6 +6,7 @@
     <file url="file://$PROJECT_DIR$/src/main/resources/locale_ru_RU.properties" />
     <custom-resource-bundle>
       <file value="file://$PROJECT_DIR$/src/main/resources/locale.properties" />
+      <file value="file://$PROJECT_DIR$/src/main/resources/locale_be_BY.properties" />
       <file value="file://$PROJECT_DIR$/src/main/resources/locale_en_GB.properties" />
       <file value="file://$PROJECT_DIR$/src/main/resources/locale_ru_RU.properties" />
       <base-name>locale</base-name>

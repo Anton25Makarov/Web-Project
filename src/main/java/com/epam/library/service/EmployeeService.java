@@ -1,6 +1,5 @@
 package com.epam.library.service;
 
-import com.epam.library.connection.ConnectionPool;
 import com.epam.library.model.Author;
 import com.epam.library.model.BookGenre;
 import com.epam.library.repositpry.AbstractRepository;
@@ -12,120 +11,69 @@ import com.epam.library.repositpry.RepositoryFactory;
 import com.epam.library.specification.FindAllBookSpecification;
 import com.epam.library.specification.FindAllSpecification;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
-public class EmployeeService {
+public class EmployeeService extends Service {
 
-    public Optional<Employee> login(String login, String password)
-            throws SQLException, InterruptedException {
+    public EmployeeService() throws InterruptedException {
+        super();
+    }
 
-        ConnectionPool connectionPool = ConnectionPool.getInstance();// create block finally and add returnConnection
-        Connection connection = connectionPool.takeConnection();
-
+    public Optional<Employee> login(String login, String password) throws SQLException {
         AbstractRepository<Employee> employeeRepository = RepositoryFactory.createEmployeeRepository(connection);
 
         SqlSpecification specification = new FindUserByLoginAndPasswordSpecification(login, password);
 
-        Optional<Employee> employee = employeeRepository.queryForSingleResult(specification);
-
-        connectionPool.returnConnection(connection);
-
-        return employee;
+        return employeeRepository.queryForSingleResult(specification);
     }
 
-    public List<Book> takeBooks() throws InterruptedException, SQLException {
-        ConnectionPool connectionPool = ConnectionPool.getInstance();// create block finally and add returnConnection
-        Connection connection = connectionPool.takeConnection();
-
+    public List<Book> takeBooks() throws SQLException {
         AbstractRepository<Book> bookRepository = RepositoryFactory.createBookRepository(connection);
 
         SqlSpecification specification = new FindAllBookSpecification();
-        List<Book> books = bookRepository.query(specification);
 
-        connectionPool.returnConnection(connection);
-        return books;
+        return bookRepository.query(specification);
     }
 
-    public List<BookGenre> takeGenres() throws InterruptedException, SQLException {
-        ConnectionPool connectionPool = ConnectionPool.getInstance();// create block finally and add returnConnection
-        Connection connection = connectionPool.takeConnection();
-
+    public List<BookGenre> takeGenres() throws SQLException {
         AbstractRepository<BookGenre> genreRepository = RepositoryFactory.createBookGenreRepository(connection);
 
-        SqlSpecification specification = new FindAllSpecification();//????
-        List<BookGenre> genres = genreRepository.query(specification);
+        SqlSpecification specification = new FindAllSpecification();
 
-        connectionPool.returnConnection(connection);
-        return genres;
+        return genreRepository.query(specification);
     }
 
-    public List<Author> takeAuthors() throws InterruptedException, SQLException {
-        ConnectionPool connectionPool = ConnectionPool.getInstance();// create block finally and add returnConnection
-        Connection connection = connectionPool.takeConnection();
-
+    public List<Author> takeAuthors() throws SQLException {
         AbstractRepository<Author> authorRepository = RepositoryFactory.createAuthorRepository(connection);
 
-        SqlSpecification specification = new FindAllSpecification();//????
-        List<Author> authors = authorRepository.query(specification);
+        SqlSpecification specification = new FindAllSpecification();
 
-        connectionPool.returnConnection(connection);
-        return authors;
+        return authorRepository.query(specification);
     }
 
-    public boolean saveBook(Book book) throws InterruptedException, SQLException {
-        ConnectionPool connectionPool = ConnectionPool.getInstance();// create block finally and add returnConnection
-        Connection connection = connectionPool.takeConnection();
-
+    public boolean saveBook(Book book) throws SQLException {
         AbstractRepository<Book> bookRepository = RepositoryFactory.createBookRepository(connection);
 
-        boolean result = bookRepository.save(book);
-
-        connectionPool.returnConnection(connection);
-
-        return result;
+        return bookRepository.save(book);
     }
 
-    public boolean saveGenre(BookGenre genre) throws InterruptedException, SQLException {
-        ConnectionPool connectionPool = ConnectionPool.getInstance();// create block finally and add returnConnection
-        Connection connection = connectionPool.takeConnection();
-
+    public boolean saveGenre(BookGenre genre) throws SQLException {
         AbstractRepository<BookGenre> genreRepository = RepositoryFactory.createBookGenreRepository(connection);
 
-        boolean result = genreRepository.save(genre);
-
-        connectionPool.returnConnection(connection);
-
-        return result;
+        return genreRepository.save(genre);
     }
 
-    public boolean saveAuthor(Author author) throws InterruptedException, SQLException {
-        ConnectionPool connectionPool = ConnectionPool.getInstance();// create block finally and add returnConnection
-        Connection connection = connectionPool.takeConnection();
-
+    public boolean saveAuthor(Author author) throws SQLException {
         AbstractRepository<Author> authorRepository = RepositoryFactory.createAuthorRepository(connection);
 
-        boolean result = authorRepository.save(author);
-
-        connectionPool.returnConnection(connection);
-
-        return result;
+        return authorRepository.save(author);
     }
 
-    public boolean removeBook(Book book) throws InterruptedException, SQLException {
-        ConnectionPool connectionPool = ConnectionPool.getInstance();// create block finally and add returnConnection
-        Connection connection = connectionPool.takeConnection();
-
+    public boolean removeBook(Book book) throws SQLException {
         AbstractRepository<Book> bookRepository = RepositoryFactory.createBookRepository(connection);
 
-        boolean result = bookRepository.remove(book);
-
-        connectionPool.returnConnection(connection);
-
-        return result;
+        return bookRepository.remove(book);
     }
-
-
 }

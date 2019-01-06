@@ -53,35 +53,35 @@ public class BookRepository extends AbstractRepository<Book> {
         return new BookBuilder();
     }
 
-    private Optional<Book> executeQueryForSingleResult(
+    protected Optional<Book> executeQueryForSingleResult(
             Builder<Book> builder, String query, List<String> parameters) {
         throw new UnsupportedOperationException(); // add text error as parameter
     }
 
-    private List<Book> executeQuery(Builder<Book> builder, String query, List<String> parameters)
-            throws SQLException {
-
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            int i = 1;
-            for (String parameter : parameters) {
-                preparedStatement.setString(i++, parameter);
-            }
-
-            List<Book> books = new ArrayList<>();
-            try(ResultSet resultSet = preparedStatement.executeQuery()) {
-                while (resultSet.next()) {
-                    Book book = builder.build(resultSet);
-                    books.add(book);
-                }
-            }
-//            ResultSet resultSet = preparedStatement.executeQuery();
-
-
-            return books;
-        } catch (SQLException e) {
-            throw new SQLException(); //own exception
-        }
-    }
+//   /* private List<Book> executeQuery(Builder<Book> builder, String query, List<String> parameters)
+//            throws SQLException {
+//
+//        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+//            int i = 1;
+//            for (String parameter : parameters) {
+//                preparedStatement.setString(i++, parameter);
+//            }
+//
+//            List<Book> books = new ArrayList<>();
+//            try(ResultSet resultSet = preparedStatement.executeQuery()) {
+//                while (resultSet.next()) {
+//                    Book book = builder.build(resultSet);
+//                    books.add(book);
+//                }
+//            }
+////            ResultSet resultSet = preparedStatement.executeQuery();
+//
+//
+//            return books;
+//        } catch (SQLException e) {
+//            throw new SQLException(); //own exception
+//        }
+//    }*/
 
     @Override
     public boolean save(Book book) throws SQLException {

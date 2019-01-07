@@ -1,21 +1,15 @@
 package com.epam.library.service;
 
-import com.epam.library.model.Author;
-import com.epam.library.model.BookGenre;
+import com.epam.library.model.*;
 import com.epam.library.repositpry.AbstractRepository;
-import com.epam.library.specification.FindUserByLoginAndPasswordSpecification;
-import com.epam.library.specification.SqlSpecification;
-import com.epam.library.model.Book;
-import com.epam.library.model.Employee;
+import com.epam.library.specification.*;
 import com.epam.library.repositpry.RepositoryFactory;
-import com.epam.library.specification.FindAllBookSpecification;
-import com.epam.library.specification.FindAllSpecification;
 
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
-public class EmployeeService extends Service {
+public class EmployeeService extends Service { // Check all Parameters !!!!!!!!!
 
     public EmployeeService() throws InterruptedException {
         super();
@@ -71,9 +65,45 @@ public class EmployeeService extends Service {
         return authorRepository.save(author);
     }
 
+    public boolean saveEmployee(Employee employee) throws SQLException {
+        AbstractRepository<Employee> employeeRepository = RepositoryFactory.createEmployeeRepository(connection);
+
+        return employeeRepository.save(employee);
+    }
+
     public boolean removeBook(Book book) throws SQLException {
         AbstractRepository<Book> bookRepository = RepositoryFactory.createBookRepository(connection);
 
         return bookRepository.remove(book);
+    }
+
+    public boolean isEmployeeExist(String login) throws SQLException {
+        AbstractRepository<Employee> employeeRepository = RepositoryFactory.createEmployeeRepository(connection);
+
+        SqlSpecification specification = new FindUserByLoginSpecification(login);
+
+        return employeeRepository.queryForSingleResult(specification).isPresent();
+    }
+
+    public boolean isReaderExist(String login) throws SQLException {
+        AbstractRepository<Reader> readerRepository = RepositoryFactory.createReaderRepository(connection);
+
+        SqlSpecification specification = new FindUserByLoginSpecification(login);
+
+        return readerRepository.queryForSingleResult(specification).isPresent();
+    }
+
+    public List<Employee> takeLibrarians() throws SQLException {
+        AbstractRepository<Employee> employeeRepository = RepositoryFactory.createEmployeeRepository(connection);
+
+        SqlSpecification specification = new FindAllLibrariansSpecification();
+
+        return employeeRepository.query(specification);
+    }
+
+    public boolean removeLibrarian(Employee employee) throws SQLException{
+        AbstractRepository<Employee> employeeRepository = RepositoryFactory.createEmployeeRepository(connection);
+
+        return employeeRepository.remove(employee);
     }
 }

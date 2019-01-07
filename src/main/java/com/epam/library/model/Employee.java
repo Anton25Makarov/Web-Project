@@ -26,6 +26,10 @@ public class Employee extends Entity implements Serializable {
         this.admin = admin;
     }
 
+    public Employee(Long id) {
+        super(id);
+    }
+
     public Long getId() {
         return super.getId();
     }

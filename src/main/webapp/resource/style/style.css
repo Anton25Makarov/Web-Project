@@ -304,7 +304,7 @@ header {
     margin: 0;
 }
 
-.saveEditBookButton, .saveRemoveBookButton {
+.saveEditBookButton, .saveRemoveBookButton, .removeLibrarianButton {
     background-color: #4CAF50;
     border: 0;
     color: white;
@@ -314,6 +314,6 @@ header {
     border-radius: 5px;
 }
 
-.saveEditBookButton:hover, .saveRemoveBookButton:hover {
+.saveEditBookButton:hover, .saveRemoveBookButton:hover, .removeLibrarianButton:hover {
     background-color: #3e8e41;
 }

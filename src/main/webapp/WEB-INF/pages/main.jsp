@@ -6,7 +6,7 @@
     <script type="text/javascript"
             src="${pageContext.servletContext.contextPath}/resource/js/jquery-3.3.1.js"></script>
     <script type="text/javascript"
-            src="${pageContext.servletContext.contextPath}/resource/js/modal.js"></script>
+            src="${pageContext.servletContext.contextPath}/resource/js/modal-book.js"></script>
 
     <title>Menu</title>
 </head>
@@ -27,7 +27,6 @@
 <main>
     <aside>
         <div class="menu">
-            <%-- <c:out value="${sessionScope.role}"/>--%>
             <c:choose>
                 <c:when test="${sessionScope.role == 'employee' and sessionScope.user.admin}">
                     <jsp:include page="../fragments/admin/admin-menu.jsp"/>

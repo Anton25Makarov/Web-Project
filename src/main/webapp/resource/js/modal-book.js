@@ -1,8 +1,13 @@
 $(document).ready(function () {
+    let modalBookInsert = document.getElementById('modal-wrapper-book-insert');
     let modalBook = document.getElementById('modal-wrapper-book');
     let modalAuthor = document.getElementById('modal-wrapper-author');
     let modalGenre = document.getElementById('modal-wrapper-genre');
     window.onclick = function (event) {
+        if (event.target === modalBookInsert) {
+            modalBookInsert.style.display = "none";
+            $('.container input').val('');
+        }
         if (event.target === modalBook) {
             modalBook.style.display = "none";
             $('.container input').val('');
@@ -18,9 +23,9 @@ $(document).ready(function () {
     };
 
 
-    let table = $('#bookTable').DataTable();
+    let table = $('#table').DataTable();
 
-    $('#bookTable tbody').on('click', '.saveEditBookButton', function () {
+    $('#table tbody').on('click', '.saveEditBookButton', function () {
         let data = table.row($(this).parents('tr')).data();
         let inputs = $('#modal-wrapper-book input');
         inputs[0].value = data[1]; // title
@@ -31,9 +36,9 @@ $(document).ready(function () {
     });
 
     $('#saveBookButton').on('click', function () {
-        let inputs = $('#modal-wrapper-book input');
-        inputs[3].value = null; // id
-        $('#modal-wrapper-book').css('display', 'block');
+        /*let inputs = $('#modal-wrapper-book-insert input');
+        inputs[3].value = null; // id*/
+        $('#modal-wrapper-book-insert').css('display', 'block');
     });
     $('#addAuthorButton').on('click', function () {
         $('#modal-wrapper-author').css('display', 'block');
@@ -42,7 +47,7 @@ $(document).ready(function () {
         $('#modal-wrapper-genre').css('display', 'block');
     });
 
-    $('#bookTable').on('click', '.modalCross', function () { // for second page
+    $('#table').on('click', '.modalCross', function () { // for second page
         $('#modal-wrapper-book').css('display', 'none');
         $('#modal-wrapper-author').css('display', 'none');
         $('#modal-wrapper-genre').css('display', 'none');
@@ -50,7 +55,7 @@ $(document).ready(function () {
     });
 
     $('.modalCross').on('click', function () {
-        alert("Cross");
+        $('#modal-wrapper-book-insert').css('display', 'none');
         $('#modal-wrapper-book').css('display', 'none');
         $('#modal-wrapper-author').css('display', 'none');
         $('#modal-wrapper-genre').css('display', 'none');

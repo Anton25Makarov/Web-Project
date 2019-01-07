@@ -92,7 +92,7 @@ public class BookRepository extends AbstractRepository<Book> {
         Author author = book.getAuthor();
         BookGenre genre = book.getGenre();
 
-        if (book.getId() == null) {
+        if (book.getId() == null) { // Duplicate ???
 
             try (PreparedStatement preparedStatement = connection.prepareStatement(INSERT_QUERY)) {
 
@@ -139,77 +139,4 @@ public class BookRepository extends AbstractRepository<Book> {
 
         return true;
     }
-
 }
-
-///* private int getBookAuthorId(Author author) throws SQLException {
-//        int authorId = 0;
-//        try (PreparedStatement preparedStatement = connection.prepareStatement(
-//                "select id from book_author where name = ? and surname  = ?")) {
-//
-//            preparedStatement.setString(1, author.getName());
-//            preparedStatement.setString(2, author.getSurname());
-//
-//            ResultSet resultSet = preparedStatement.executeQuery();
-//
-//            if (resultSet.next()) {
-//                authorId = resultSet.getInt("id");
-//            }
-//        }
-//        return authorId;
-//    }
-//
-//    private int getGenreId(String genre) throws SQLException {
-//        int genreId = 0;
-//        try (PreparedStatement preparedStatement = connection.prepareStatement(
-//                "select id from genre_catalog where genre = ?")) {
-//
-//            preparedStatement.setString(1, genre);
-//
-//            ResultSet resultSet = preparedStatement.executeQuery();
-//
-//            if (resultSet.next()) {
-//                genreId = resultSet.getInt("id");
-//            }
-//        }
-//        return genreId;
-//    }
-//
-//    private int saveAuthor(Author author) throws SQLException {
-//        int authorId = 0;
-//        try (PreparedStatement preparedStatement = connection.prepareStatement(
-//                "insert into book_author (name, surname)\n" +
-//                        "values (?, ?);", Statement.RETURN_GENERATED_KEYS)) {
-//
-//            preparedStatement.setString(1, author.getName());
-//            preparedStatement.setString(2, author.getSurname());
-//
-//            preparedStatement.executeUpdate();
-//
-//            ResultSet resultSet = preparedStatement.getGeneratedKeys();
-//
-//            if (resultSet.next()) {
-//                authorId = resultSet.getInt(1);
-//            }
-//        }
-//        return authorId;
-//    }
-//
-//    private int saveGenre(String genre) throws SQLException {
-//        int genreId = 0;
-//        try (PreparedStatement preparedStatement = connection.prepareStatement(
-//                "insert into genre_catalog (genre)\n" +
-//                        "values (?);", Statement.RETURN_GENERATED_KEYS)) {
-//
-//            preparedStatement.setString(1, genre);
-//
-//            preparedStatement.executeUpdate();
-//
-//            ResultSet resultSet = preparedStatement.getGeneratedKeys();
-//
-//            if (resultSet.next()) {
-//                genreId = resultSet.getInt(1);
-//            }
-//        }
-//        return genreId;
-//    }*/

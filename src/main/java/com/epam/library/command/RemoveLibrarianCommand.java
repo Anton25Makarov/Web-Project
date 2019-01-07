@@ -3,6 +3,7 @@ package com.epam.library.command;
 import com.epam.library.model.Author;
 import com.epam.library.model.Book;
 import com.epam.library.model.BookGenre;
+import com.epam.library.model.Employee;
 import com.epam.library.service.EmployeeService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,25 +11,31 @@ import javax.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
 import java.util.List;
 
-public class AdminGetBooksCommand implements Command {
+public class RemoveLibrarianCommand implements Command {
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) {
 
+
+        Long librarianId = Long.parseLong(req.getParameter("librarianId"));
+
+        Employee employee = new Employee(librarianId);
+
         try (EmployeeService employeeService = new EmployeeService()) {
-            List<Book> books = employeeService.takeBooks();
-            req.setAttribute("books", books);
+            boolean result = employeeService.removeLibrarian(employee);
 
-            List<BookGenre> genres = employeeService.takeGenres();
-            req.setAttribute("genres", genres);
+            if (result) {
+                return CommandResult.redirect("/controller?command=getLibrariansWindow&save=success");
+            } else {
+                return CommandResult.redirect("/controller?command=getLibrariansWindow&save=fail");
+            }
 
-            List<Author> authors = employeeService.takeAuthors();
-            req.setAttribute("authors", authors);
+
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return CommandResult.forward("/WEB-INF/pages/admin-book.jsp");
+        return CommandResult.redirect("/controller?command=getLibrariansWindow&save=fail");
     }
 }

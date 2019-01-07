@@ -3,6 +3,10 @@ package com.epam.library.repositpry;
 import java.sql.Connection;
 
 public class RepositoryFactory {
+
+    private RepositoryFactory() {
+    }
+
     public static EmployeeRepository createEmployeeRepository(Connection connection) {
         return new EmployeeRepository(connection);
     }

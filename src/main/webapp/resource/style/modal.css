@@ -1,5 +1,5 @@
 /* Full-width input fields */
-input[type=text], option, select {
+input[type=text], input[type=password], option, select {
     width: 90%;
     padding: 12px 20px;
     margin: 8px 26px;
@@ -10,7 +10,9 @@ input[type=text], option, select {
 }
 
 /* Set a style for all buttons */
-.container button, #saveBookButton, #addAuthorButton, #addGenreButton {
+.container button, #saveBookButton,
+#addAuthorButton, #addGenreButton,
+#saveLibrarianButton {
     background-color: #ABA194;
     color: white;
     padding: 14px 20px;
@@ -23,12 +25,13 @@ input[type=text], option, select {
 }
 
 
-
 .container input, .container option {
     border-radius: 5px;
 }
 
-.container button:hover, #saveBookButton:hover, #addAuthorButton:hover, #addGenreButton:hover {
+.container button:hover,
+#saveBookButton:hover, #addAuthorButton:hover,
+#addGenreButton:hover, #saveLibrarianButton:hover {
     opacity: 0.8;
     background-color: gray;
 }
@@ -40,7 +43,7 @@ input[type=text], option, select {
     position: relative;
 }
 
-.addBookImage {
+.addingImage {
     width: 100px;
     height: 100px;
     border-radius: 10%;
@@ -83,7 +86,7 @@ input[type=text], option, select {
     cursor: pointer;
 }
 
-#saveBookButton, #addAuthorButton, #addGenreButton {
+#saveBookButton, #addAuthorButton, #addGenreButton, #saveLibrarianButton {
     width: 200px;
     max-height: 70px;
     margin: 30px 20px;

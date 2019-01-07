@@ -23,6 +23,12 @@ public class CommandFactory {
                 return new SaveLibrarianCommand();
             case "removeLibrarian":
                 return new RemoveLibrarianCommand();
+            case "getReadersWindow":
+                return new GetReadersCommand();
+            case "saveReader":
+                return new SaveReaderCommand();
+            case "removeReader":
+                return new RemoveReaderCommand();
             default:
                 throw new UnsupportedOperationException("Unknown command: " + command);
         }

@@ -6,6 +6,6 @@
 <a class="menu-ref" href="${pageContext.servletContext.contextPath}/controller?command=getLibrariansWindow">
     Librarian
 </a>
-<a class="menu-ref" href="${pageContext.servletContext.contextPath}/controller?command=adminReaders">
+<a class="menu-ref" href="${pageContext.servletContext.contextPath}/controller?command=getReadersWindow">
     Readers
 </a>

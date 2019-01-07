@@ -22,7 +22,8 @@ public class EmployeeRepository extends AbstractRepository<Employee> {
                     "set login    = ?,\n" +
                     "    password = ?,\n" +
                     "    name     = ?,\n" +
-                    "    surname  = ?\n" +
+                    "    surname  = ?,\n" +
+                    "    is_admin = ?\n" +
                     "where id = ?;";
 
     public EmployeeRepository(Connection connection) {
@@ -77,7 +78,8 @@ public class EmployeeRepository extends AbstractRepository<Employee> {
                 preparedStatement.setString(2, password);
                 preparedStatement.setString(3, name);
                 preparedStatement.setString(4, surname);
-                preparedStatement.setLong(5, employee.getId());
+                preparedStatement.setBoolean(5, isAdmin);
+                preparedStatement.setLong(6, employee.getId());
 
                 preparedStatement.executeUpdate();
             } catch (SQLException e) {
@@ -90,7 +92,7 @@ public class EmployeeRepository extends AbstractRepository<Employee> {
     @Override
     public boolean remove(Employee employee) throws SQLException {
         try (PreparedStatement preparedStatement = connection.prepareStatement(REMOVE_QUERY)) {
-            preparedStatement.setLong(1, employee.getId());
+            preparedStatement.setLong(FIRST_COLUMN, employee.getId());
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {

@@ -101,9 +101,29 @@ public class EmployeeService extends Service { // Check all Parameters !!!!!!!!!
         return employeeRepository.query(specification);
     }
 
-    public boolean removeLibrarian(Employee employee) throws SQLException{
+    public boolean removeLibrarian(Employee employee) throws SQLException {
         AbstractRepository<Employee> employeeRepository = RepositoryFactory.createEmployeeRepository(connection);
 
         return employeeRepository.remove(employee);
+    }
+
+    public List<Reader> takeReaders() throws SQLException {
+        AbstractRepository<Reader> readerRepository = RepositoryFactory.createReaderRepository(connection);
+
+        SqlSpecification specification = new FindAllSpecification();
+
+        return readerRepository.query(specification);
+    }
+
+    public boolean saveReader(Reader reader) throws SQLException {
+        AbstractRepository<Reader> readerRepository = RepositoryFactory.createReaderRepository(connection);
+
+        return readerRepository.save(reader);
+    }
+
+    public boolean removeReader(Reader reader) throws SQLException {
+        AbstractRepository<Reader> readerRepository = RepositoryFactory.createReaderRepository(connection);
+
+        return readerRepository.remove(reader);
     }
 }

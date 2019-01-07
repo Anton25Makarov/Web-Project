@@ -108,7 +108,7 @@ a:hover {
 }
 
 body {
-    font-family: Arial;
+    font-family: Arial, serif;
     background: #f1f1f1;
     margin: 0;
     padding: 0;
@@ -183,7 +183,7 @@ header {
     padding: 20px;
     display: block;
     width: 100%;
-    font-family: Roboto;
+    font-family: Roboto, serif;
     -webkit-appearance: none;
     border: 0;
     outline: 0;
@@ -195,7 +195,7 @@ header {
     display: block;
     width: 100%;
     padding: 10px;
-    font-family: Roboto;
+    font-family: Roboto, serif;
     -webkit-appearance: none;
     outline: 0;
     border: 0;
@@ -304,7 +304,7 @@ header {
     margin: 0;
 }
 
-.saveEditBookButton, .saveRemoveBookButton, .removeLibrarianButton {
+.saveEditBookButton, .saveRemoveBookButton, .removeLibrarianButton, .removeReaderButton {
     background-color: #4CAF50;
     border: 0;
     color: white;
@@ -314,6 +314,6 @@ header {
     border-radius: 5px;
 }
 
-.saveEditBookButton:hover, .saveRemoveBookButton:hover, .removeLibrarianButton:hover {
+.saveEditBookButton:hover, .saveRemoveBookButton:hover, .removeLibrarianButton:hover, .removeReaderButton:hover {
     background-color: #3e8e41;
 }

@@ -57,22 +57,24 @@
                     <th>Surname</th>
                     <th>Login</th>
                     <th>Password</th>
+                    <th>Telephone</th>
                     <th>Remove</th>
                 </tr>
                 </thead>
                 <tbody>
-                <c:forEach var="librarian" items="${requestScope.librarians}">
+                <c:forEach var="reader" items="${requestScope.readers}">
                     <tr>
-                        <td><c:out value="${librarian.id}"/></td>
-                        <td><c:out value="${librarian.name}"/></td>
-                        <td><c:out value="${librarian.surname}"/></td>
-                        <td><c:out value="${librarian.login}"/></td>
-                        <td><c:out value="${librarian.password}"/></td>
+                        <td><c:out value="${reader.id}"/></td>
+                        <td><c:out value="${reader.name}"/></td>
+                        <td><c:out value="${reader.surname}"/></td>
+                        <td><c:out value="${reader.login}"/></td>
+                        <td><c:out value="${reader.password}"/></td>
+                        <td><c:out value="${reader.telephoneNumber}"/></td>
                         <td>
                             <form class="form-for-button" method="post"
-                                  action="${pageContext.servletContext.contextPath}/controller?command=removeLibrarian">
-                                <input type="hidden" value="${librarian.id}" name="librarianId">
-                                <button type="submit" class="removeLibrarianButton">Remove</button>
+                                  action="${pageContext.servletContext.contextPath}/controller?command=removeReader">
+                                <input type="hidden" value="${reader.id}" name="readerId">
+                                <button type="submit" class="removeReaderButton">Remove</button>
                             </form>
                         </td>
                     </tr>
@@ -83,7 +85,7 @@
 
         <div class="vertical-direction">
             <div class="button-info">
-                <button id="saveLibrarianButton">Add librarian</button>
+                <button id="saveLibrarianButton">Add reader</button>
             </div>
             <span><c:out value="${param.save}"/></span>
         </div>
@@ -91,13 +93,13 @@
         <div id="modal-wrapper-librarian-insert" class="modal">
 
             <form class="modal-content animate" method="post"
-                  action="${pageContext.servletContext.contextPath}/controller?command=saveLibrarian">
+                  action="${pageContext.servletContext.contextPath}/controller?command=saveReader">
                 <div class="imgContainer">
                     <span class="close modalCross" title="Close">&times;</span>
                     <img src="${pageContext.servletContext.contextPath}/resource/images/add-book.png"
-                         alt="Add librarian"
+                         alt="Add reader"
                          class="addingImage"/>
-                    <h1 style="text-align:center">Adding librarian</h1>
+                    <h1 style="text-align:center">Adding reader</h1>
                 </div>
 
                 <div class="container">
@@ -106,6 +108,8 @@
                     <input type="text" placeholder="Surname" name="surname" required pattern="[a-zA-Z]{2,15}">
                     <input type="text" placeholder="Login" name="login" required pattern="[a-zA-Z]{2,15}">
                     <input type="password" placeholder="Password" name="password" required pattern="[a-zA-Z]{2,15}">
+                    <input type="tel" placeholder="Telephone number" name="telephoneNumber" required
+                           pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" title="'123-456-7890'">
 
                     <button type="submit">Save librarian</button>
                 </div>

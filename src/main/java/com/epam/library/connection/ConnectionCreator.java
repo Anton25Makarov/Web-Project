@@ -23,7 +23,6 @@ public class ConnectionCreator {
             String dbUser = properties.getProperty(DB_USER);
             String dbPassword = properties.getProperty(DB_PASS);
 
-//            Class.forName("com.mysql.cj.jdbc.Driver");
             Class.forName(dbDriver);
             return DriverManager.getConnection(dbUrl, dbUser, dbPassword);
         } catch (SQLException | ClassNotFoundException e) {

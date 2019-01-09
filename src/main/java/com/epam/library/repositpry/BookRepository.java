@@ -14,10 +14,10 @@ import java.util.Optional;
 
 public class BookRepository extends AbstractRepository<Book> {
     private static final String SELECT_QUERY = "select * from book ";
+    private static final String REMOVE_QUERY = "delete from book where id = ?";
     private static final String INSERT_QUERY =
             "insert into book (title, year, count, book_author_id, genre_catalog_id)\n" +
                     "values (?, ?, ?, ?, ?);";
-    private static final String REMOVE_QUERY = "delete from book where id = ?";
     private static final String UPDATE_QUERY =
             "update book\n" +
                     "set title            = ?,\n" +
@@ -57,31 +57,6 @@ public class BookRepository extends AbstractRepository<Book> {
             Builder<Book> builder, String query, List<String> parameters) {
         throw new UnsupportedOperationException(); // add text error as parameter
     }
-
-//   /* private List<Book> executeQuery(Builder<Book> builder, String query, List<String> parameters)
-//            throws SQLException {
-//
-//        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-//            int i = 1;
-//            for (String parameter : parameters) {
-//                preparedStatement.setString(i++, parameter);
-//            }
-//
-//            List<Book> books = new ArrayList<>();
-//            try(ResultSet resultSet = preparedStatement.executeQuery()) {
-//                while (resultSet.next()) {
-//                    Book book = builder.build(resultSet);
-//                    books.add(book);
-//                }
-//            }
-////            ResultSet resultSet = preparedStatement.executeQuery();
-//
-//
-//            return books;
-//        } catch (SQLException e) {
-//            throw new SQLException(); //own exception
-//        }
-//    }*/
 
     @Override
     public boolean save(Book book) throws SQLException {
@@ -128,15 +103,6 @@ public class BookRepository extends AbstractRepository<Book> {
 
     @Override
     public boolean remove(Book book) throws SQLException {
-        try (PreparedStatement preparedStatement = connection.prepareStatement(REMOVE_QUERY)) {
-
-            preparedStatement.setLong(1, book.getId());
-
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw new SQLException(); //own exception
-        }
-
-        return true;
+        return executeRemove(book, REMOVE_QUERY);
     }
 }

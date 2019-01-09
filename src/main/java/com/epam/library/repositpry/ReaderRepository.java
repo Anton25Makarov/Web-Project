@@ -95,15 +95,7 @@ public class ReaderRepository extends AbstractRepository<Reader> {
 
     @Override
     public boolean remove(Reader reader) throws SQLException {
-        try (PreparedStatement preparedStatement = connection.prepareStatement(REMOVE_QUERY)) {
-            preparedStatement.setLong(FIRST_COLUMN, reader.getId());
-
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw new SQLException(); //own exception
-        }
-
-        return true;
+        return executeRemove(reader, REMOVE_QUERY);
     }
 
     @Override

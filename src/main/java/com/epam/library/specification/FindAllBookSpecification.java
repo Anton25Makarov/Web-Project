@@ -6,7 +6,7 @@ import java.util.List;
 public class FindAllBookSpecification implements SqlSpecification {
     private static final String QUERY_JOINS =
             "join book_author ba on book.book_author_id = ba.id\n" +
-            "join genre_catalog gc on book.genre_catalog_id = gc.id;";
+                    "join genre_catalog gc on book.genre_catalog_id = gc.id;";
 
     @Override
     public String toSql() {

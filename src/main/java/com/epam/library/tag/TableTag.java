@@ -25,7 +25,7 @@ public class TableTag extends TagSupport {
     public int doStartTag() throws JspException {
         try {
             JspWriter out = pageContext.getOut();
-            out.write("<tbody>");
+            out.write("<select name='selectedGenreId' required>");
             for (Book book : books) {
                 Author author = book.getAuthor();
                 BookGenre genre = book.getGenre();

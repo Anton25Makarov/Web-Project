@@ -19,7 +19,6 @@ public class EncodingFilter implements Filter {
             request.setCharacterEncoding(code);
             response.setCharacterEncoding(code);
         }
-//        System.out.println("Filter");
         chain.doFilter(request, response);
     }
 

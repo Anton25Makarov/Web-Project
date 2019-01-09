@@ -10,12 +10,14 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class ConnectionPool {
     private static final int CONNECTION_COUNT = 5;
-    private static Queue<Connection> connections = new ArrayDeque<>();
+
     private static ConnectionPool instance = new ConnectionPool();
 
-    private final Semaphore semaphore = new Semaphore(CONNECTION_COUNT, true);
+    private Semaphore semaphore = new Semaphore(CONNECTION_COUNT, true);
     private Lock takeLock = new ReentrantLock();
     private Lock returnLock = new ReentrantLock();
+
+    private Queue<Connection> connections = new ArrayDeque<>();
 
     private ConnectionPool() {
         init();

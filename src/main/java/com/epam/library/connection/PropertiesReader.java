@@ -15,13 +15,8 @@ public class PropertiesReader {
 
     public Properties getProperty() throws IOException {
         try {
-        InputStream inputStream = ConnectionCreator.class.getClassLoader().getResourceAsStream(PROPERTIES_FILE);
-//        System.out.printf("1))))): " + ConnectionCreator.class);
-//        System.out.printf("2))))): " + ConnectionCreator.class.getResourceAsStream(PROPERTIES_FILE));
-        /*if (inputStream == null) {
-            System.out.printf("Cannot read properties file to connect to db");
-            throw new IOException("Cannot read properties file to connect to db");
-        }*/
+            InputStream inputStream = ConnectionCreator.class.getClassLoader().getResourceAsStream(PROPERTIES_FILE);
+
             properties.load(inputStream);
         } catch (IOException e) {
             throw new IOException("Cannot read properties file to connect to db", e);

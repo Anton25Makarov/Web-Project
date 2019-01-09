@@ -91,15 +91,7 @@ public class EmployeeRepository extends AbstractRepository<Employee> {
 
     @Override
     public boolean remove(Employee employee) throws SQLException {
-        try (PreparedStatement preparedStatement = connection.prepareStatement(REMOVE_QUERY)) {
-            preparedStatement.setLong(FIRST_COLUMN, employee.getId());
-
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw new SQLException(); //own exception
-        }
-
-        return true;
+        return executeRemove(employee, REMOVE_QUERY);
     }
 
     protected Builder<Employee> getBuilder() {

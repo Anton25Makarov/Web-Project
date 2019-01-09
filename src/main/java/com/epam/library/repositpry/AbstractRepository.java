@@ -21,44 +21,31 @@ public abstract class AbstractRepository<T extends Entity> implements Repository
         this.connection = connection;
     }
 
-    /*private void takeConnection() {
-        try {
-            ConnectionPool connectionPool = ConnectionPool.getInstance();
-            connection = connectionPool.takeConnection();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void returnConnection() {
-        ConnectionPool connectionPool = ConnectionPool.getInstance();
-        connectionPool.returnConnection(connection);
-    }*/
-
-    @Override
-    public List<T> query(SqlSpecification sqlSpecification) throws SQLException {
-        // ret execQuery
-        return null;
-    }
-
-    @Override
-    public Optional<T> queryForSingleResult(SqlSpecification sqlSpecification) throws SQLException {
-        return Optional.empty();
-    }
     // get table name?
+   /* @Override
+    public abstract boolean save(T t) throws SQLException;*/
 
-    @Override
-    public abstract boolean save(T t) throws SQLException;
+    /*@Override
+    public abstract boolean remove(T t) throws SQLException;*/
 
-    @Override
-    public abstract boolean remove(T t) throws SQLException;
+    protected boolean executeRemove(T t, String removeQuery) throws SQLException {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(removeQuery)) {
+            preparedStatement.setLong(FIRST_COLUMN, t.getId());
+
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new SQLException(); //own exception
+        }
+
+        return true;
+    }
 
     protected abstract Builder<T> getBuilder();
 
     protected Optional<T> executeQueryForSingleResult(Builder<T> builder, String query, List<String> parameters)
             throws SQLException {
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            int i = 1;
+            int i = FIRST_COLUMN;
             for (String parameter : parameters) {
                 preparedStatement.setString(i++, parameter);
             }

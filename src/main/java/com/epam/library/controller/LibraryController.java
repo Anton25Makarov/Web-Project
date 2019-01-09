@@ -47,8 +47,6 @@ public class LibraryController extends HttpServlet {
         String command = req.getParameter("command");
 
         // command = null - Обработать
-        // сделать команду для смены языка
-
         Command action = CommandFactory.create(command);
 
         CommandResult page = action.execute(req, resp);
@@ -62,15 +60,10 @@ public class LibraryController extends HttpServlet {
 
         if (page.isRedirect()) {
             resp.sendRedirect(req.getContextPath() + pageToDispatch);
-//            resp.sendRedirect(req.getContextPath() + pageToDispatch);
         } else {
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(pageToDispatch);
             dispatcher.forward(req, resp);
         }
     }
-//name - controller
-
-    // Where serializable UISerialVersionId - нужно!!!
-
-    // filter?
+    //UISerialVersionId !!!
 }

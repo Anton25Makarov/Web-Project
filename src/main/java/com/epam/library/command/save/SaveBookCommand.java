@@ -1,5 +1,7 @@
-package com.epam.library.command;
+package com.epam.library.command.save;
 
+import com.epam.library.command.Command;
+import com.epam.library.command.CommandResult;
 import com.epam.library.model.Author;
 import com.epam.library.model.Book;
 import com.epam.library.model.BookGenre;
@@ -35,6 +37,9 @@ public class SaveBookCommand implements Command {
 
         try (EmployeeService employeeService = new EmployeeService()) {
             boolean result = employeeService.saveBook(book);
+
+
+            // if book exist ... (in save count increase) !!!!!!!
 
             if (result) {
                 req.setAttribute("insertBookInfo", "Inserting is successful");

@@ -1,5 +1,7 @@
-package com.epam.library.command;
+package com.epam.library.command.remove;
 
+import com.epam.library.command.Command;
+import com.epam.library.command.CommandResult;
 import com.epam.library.model.Author;
 import com.epam.library.model.Book;
 import com.epam.library.model.BookGenre;

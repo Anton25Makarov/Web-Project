@@ -154,7 +154,7 @@ header {
 .sign_up_title {
     flex-grow: 1;
     font-size: 25px;
-    margin-bottom: -10px;
+    /*margin-bottom: -10px;*/
     font-weight: 500;
     color: white;
     margin: 20px 0 50px;
@@ -304,7 +304,9 @@ header {
     margin: 0;
 }
 
-.saveEditBookButton, .saveRemoveBookButton, .removeLibrarianButton, .removeReaderButton {
+.saveEditBookButton, .saveRemoveBookButton,
+.removeLibrarianButton, .removeReaderButton,
+.issueBook {
     background-color: #4CAF50;
     border: 0;
     color: white;
@@ -314,6 +316,8 @@ header {
     border-radius: 5px;
 }
 
-.saveEditBookButton:hover, .saveRemoveBookButton:hover, .removeLibrarianButton:hover, .removeReaderButton:hover {
+.saveEditBookButton:hover, .saveRemoveBookButton:hover,
+.removeLibrarianButton:hover, .removeReaderButton:hover,
+.issueBook:hover {
     background-color: #3e8e41;
 }

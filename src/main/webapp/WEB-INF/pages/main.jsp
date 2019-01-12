@@ -32,7 +32,7 @@
                     <jsp:include page="../fragments/admin/admin-menu.jsp"/>
                 </c:when>
                 <c:when test="${sessionScope.role == 'employee' and !sessionScope.user.admin}">
-
+                    <jsp:include page="../fragments/librarian/librarian-menu.jsp"/>
                 </c:when>
                 <c:when test="${sessionScope.role == 'reader'}">
                     <jsp:include page="../fragments/reader/reader-menu.jsp"/>

@@ -27,4 +27,8 @@ public class RepositoryFactory {
         return new AuthorRepository(connection);
     }
 
+    public static OrderRepository createOrderRepository(Connection connection) {
+        return new OrderRepository(connection);
+    }
+
 }

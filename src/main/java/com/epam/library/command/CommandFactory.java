@@ -1,5 +1,14 @@
 package com.epam.library.command;
 
+import com.epam.library.command.get.GetBooksCommand;
+import com.epam.library.command.get.GetLibrariansCommand;
+import com.epam.library.command.get.GetOrdersCommand;
+import com.epam.library.command.get.GetReadersCommand;
+import com.epam.library.command.remove.RemoveBookCommand;
+import com.epam.library.command.remove.RemoveLibrarianCommand;
+import com.epam.library.command.remove.RemoveReaderCommand;
+import com.epam.library.command.save.*;
+
 public class CommandFactory {
     public static Command create(String command) { // class for commands
         switch (command) {
@@ -29,6 +38,8 @@ public class CommandFactory {
                 return new SaveReaderCommand();
             case "removeReader":
                 return new RemoveReaderCommand();
+            case "getAllOrders":
+                return new GetOrdersCommand();
             default:
                 throw new UnsupportedOperationException("Unknown command: " + command);
         }

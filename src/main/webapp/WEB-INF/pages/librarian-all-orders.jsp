@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=utf-8" pageEncoding="UTF-8" isELIgnored="false" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <html>
 <head>
     <link type="text/css" rel="stylesheet" href='${pageContext.servletContext.contextPath}/resource/style/style.css'/>
@@ -37,7 +38,7 @@
                     <jsp:include page="../fragments/admin/admin-menu.jsp"/>
                 </c:when>
                 <c:when test="${sessionScope.role == 'employee' and !sessionScope.user.admin}">
-                    <jsp:include page="../fragments/admin/admin-menu.jsp"/>
+                    <jsp:include page="../fragments/librarian/librarian-menu.jsp"/>
                 </c:when>
                 <c:when test="${sessionScope.role == 'reader'}">
                     <jsp:include page="../fragments/reader/reader-menu.jsp"/>
@@ -57,7 +58,6 @@
                     <th>Return Date</th>
                     <th>Book id</th>
                     <th>Reader id</th>
-                    <th>To issue</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -96,13 +96,6 @@
                         </td>
                         <td><c:out value="${order.book.id}"/></td>
                         <td><c:out value="${order.reader.id}"/></td>
-                        <td>
-                            <form class="form-for-button" method="post"
-                                  action="${pageContext.servletContext.contextPath}/controller?command=issueBook">
-                                <input type="hidden" value="${order.id}" name="orderId">
-                                <button type="submit" class="issueBook">Issue</button>
-                            </form>
-                        </td>
                     </tr>
                 </c:forEach>
                 </tbody>

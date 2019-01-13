@@ -34,11 +34,17 @@ public class LibrarianService extends Service {
         return orderRepository.query(specification);
     }
 
-    public Optional<Order> takeOrdersToIssue() throws SQLException {
+    public List<Order> takeOrdersToIssue() throws SQLException {
         AbstractRepository<Order> orderRepository = RepositoryFactory.createOrderRepository(connection);
 
         SqlSpecification specification = new FindOrdersToIssueSpecification();
 
-        return orderRepository.queryForSingleResult(specification);
+        return orderRepository.query(specification);
+    }
+
+    public void saveOrder(Order order) throws SQLException {
+        AbstractRepository<Order> orderRepository = RepositoryFactory.createOrderRepository(connection);
+
+        orderRepository.save(order);
     }
 }

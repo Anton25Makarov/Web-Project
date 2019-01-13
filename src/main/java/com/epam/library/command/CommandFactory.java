@@ -1,9 +1,6 @@
 package com.epam.library.command;
 
-import com.epam.library.command.get.GetBooksCommand;
-import com.epam.library.command.get.GetLibrariansCommand;
-import com.epam.library.command.get.GetOrdersCommand;
-import com.epam.library.command.get.GetReadersCommand;
+import com.epam.library.command.get.*;
 import com.epam.library.command.remove.RemoveBookCommand;
 import com.epam.library.command.remove.RemoveLibrarianCommand;
 import com.epam.library.command.remove.RemoveReaderCommand;
@@ -40,6 +37,10 @@ public class CommandFactory {
                 return new RemoveReaderCommand();
             case "getAllOrders":
                 return new GetOrdersCommand();
+            case "issueBook":
+                return new IssueBookCommand();
+            case "getOrdersToIssue":
+                return new GetOrdersToIssueCommand();
             default:
                 throw new UnsupportedOperationException("Unknown command: " + command);
         }

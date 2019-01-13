@@ -10,12 +10,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
 import java.util.List;
 
-public class GetOrdersCommand implements Command {
+public class GetOrdersToIssueCommand implements Command {
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) {
 
         try (LibrarianService service = new LibrarianService()) {
-            List<Order> orders = service.takeOrders();
+            List<Order> orders = service.takeOrdersToIssue();
 
             req.setAttribute("orders", orders);
         } catch (InterruptedException e) {
@@ -24,6 +24,6 @@ public class GetOrdersCommand implements Command {
             e.printStackTrace();
         }
 
-        return CommandResult.forward("/WEB-INF/pages/librarian-all-orders.jsp");
+        return CommandResult.forward("/WEB-INF/pages/librarian-issue-orders.jsp");
     }
 }

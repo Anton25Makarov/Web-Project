@@ -451,21 +451,22 @@ table select {
     padding: 5px;
 }
 
-.dataTables_length label{
+.dataTables_length label {
     display: flex;
     flex-direction: inherit;
     align-items: center;
 }
 
-.dataTables_length select{
+.dataTables_length select {
     padding: 2px;
     border-radius: 4px;
 }
 
-#bookTable_filter{
+#bookTable_filter {
     margin: 10px 0;
 }
-#bookTable_filter input{
+
+#bookTable_filter input {
     padding: 2px;
     border-radius: 4px;
 }

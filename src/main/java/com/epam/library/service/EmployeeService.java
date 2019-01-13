@@ -126,4 +126,20 @@ public class EmployeeService extends Service { // Check all Parameters !!!!!!!!!
 
         return readerRepository.remove(reader);
     }
+
+    public boolean isBookInStock(Long bookId) throws SQLException {
+        AbstractRepository<Book> bookRepository = RepositoryFactory.createBookRepository(connection);
+
+        SqlSpecification specification = new FindByIdSpecification(bookId);
+
+        return bookRepository.queryForSingleResult(specification).isPresent();
+    }
+
+    public Optional<Book> getBook(Long bookId) throws SQLException {
+        AbstractRepository<Book> bookRepository = RepositoryFactory.createBookRepository(connection);
+
+        SqlSpecification specification = new FindByIdSpecification(bookId);
+
+        return bookRepository.queryForSingleResult(specification);
+    }
 }

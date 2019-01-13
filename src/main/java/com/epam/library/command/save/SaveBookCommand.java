@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 
 public class SaveBookCommand implements Command {
     @Override
@@ -36,25 +37,27 @@ public class SaveBookCommand implements Command {
         Book book = new Book(bookId, title, year, count, author, bookGenre);
 
         try (EmployeeService employeeService = new EmployeeService()) {
-            boolean result = employeeService.saveBook(book);
+
+
+            employeeService.saveBook(book);
 
 
             // if book exist ... (in save count increase) !!!!!!!
 
-            if (result) {
+            /*if (result) {
                 req.setAttribute("insertBookInfo", "Inserting is successful");
             } else {
                 req.setAttribute("insertBookInfo", "Inserting is failed");
-            }
+            }*/
 
-            List<Book> books = employeeService.takeBooks();
+           /* List<Book> books = employeeService.takeBooks();
             req.setAttribute("books", books);
 
             List<BookGenre> genres = employeeService.takeGenres();
             req.setAttribute("genres", genres);
 
             List<Author> authors = employeeService.takeAuthors();
-            req.setAttribute("authors", authors);
+            req.setAttribute("authors", authors);*/
 
         } catch (InterruptedException e) {
             e.printStackTrace();

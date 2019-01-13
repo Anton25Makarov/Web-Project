@@ -45,7 +45,7 @@ public class LoginCommand implements Command {
         }
         if (session.getAttribute("user") == null) {
             req.setAttribute("errorLogin", "Wrong login or password");
-            return CommandResult.redirect("/WEB-INF/pages/login.jsp");
+            return CommandResult.forward("/WEB-INF/pages/login.jsp");
         }
 
         return CommandResult.forward("/WEB-INF/pages/main.jsp");//page - const

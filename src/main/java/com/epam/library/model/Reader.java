@@ -26,6 +26,15 @@ public class Reader extends Entity implements Serializable {
         this.telephoneNumber = telephoneNumber;
     }
 
+    public Reader(Long id, String login) {
+        super(id);
+        this.login = login;
+    }
+
+    public Reader(String login) {
+        this.login = login;
+    }
+
     public Reader(Long id) {
         super(id);
     }

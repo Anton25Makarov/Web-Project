@@ -45,18 +45,19 @@ public class BookRepository extends AbstractRepository<Book> {
     //map<Str, obj> fields
     // fields.put(NAME_OF_COLUMN, employee.getId);
     @Override
-    public Optional<Book> queryForSingleResult(SqlSpecification specification) {
-        throw new UnsupportedOperationException();
+    public Optional<Book> queryForSingleResult(SqlSpecification specification) throws SQLException {
+        String query = SELECT_QUERY + specification.toSql();
+        List<String> parameters = specification.getParameters();
+
+        Builder<Book> builder = getBuilder();
+
+        return executeQueryForSingleResult(builder, query, parameters);
     }
 
     protected Builder<Book> getBuilder() {
         return new BookBuilder();
     }
 
-    protected Optional<Book> executeQueryForSingleResult(
-            Builder<Book> builder, String query, List<String> parameters) {
-        throw new UnsupportedOperationException(); // add text error as parameter
-    }
 
     @Override
     public boolean save(Book book) throws SQLException {

@@ -46,18 +46,19 @@ public class OrderRepository extends AbstractRepository<Order> {
     //map<Str, obj> fields
     // fields.put(NAME_OF_COLUMN, employee.getId);
     @Override
-    public Optional<Order> queryForSingleResult(SqlSpecification specification) {
-        throw new UnsupportedOperationException();
+    public Optional<Order> queryForSingleResult(SqlSpecification specification) throws SQLException {
+        String query = SELECT_QUERY + specification.toSql();
+        List<String> parameters = specification.getParameters();
+
+        Builder<Order> builder = getBuilder();
+
+        return executeQueryForSingleResult(builder, query, parameters);
     }
 
     protected Builder<Order> getBuilder() {
         return new OrderBuilder();
     }
 
-    protected Optional<Order> executeQueryForSingleResult(
-            Builder<Order> builder, String query, List<String> parameters) {
-        throw new UnsupportedOperationException(); // add text error as parameter
-    }
 
     @Override
     public boolean save(Order order) throws SQLException {
@@ -72,7 +73,7 @@ public class OrderRepository extends AbstractRepository<Order> {
             takingDateSql = new Date(order.getTakingDate().getTime());
         }
         if (returnDate != null) {
-            returnDateSql = new Date(order.getTakingDate().getTime());
+            returnDateSql = new Date(order.getReturnDate().getTime());
         }
         Book book = order.getBook();
         Reader reader = order.getReader();

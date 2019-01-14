@@ -22,28 +22,17 @@ public class AddAuthorCommand implements Command {
         Author author = new Author(authorBookName, authorBookSurname);
 
         try (EmployeeService employeeService = new EmployeeService()) {
-            boolean result = employeeService.saveAuthor(author);
 
-            if (result) {
-                req.setAttribute("insertAuthorInfo", "Inserting is successful");
-            } else {
-                req.setAttribute("insertAuthorInfo", "Inserting is failed");
-            }
+            employeeService.saveAuthor(author);
 
-            List<Book> books = employeeService.takeBooks();
-            req.setAttribute("books", books);
 
-            List<BookGenre> genres = employeeService.takeGenres();
-            req.setAttribute("genres", genres);
-
-            List<Author> authors = employeeService.takeAuthors();
-            req.setAttribute("authors", authors);
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return CommandResult.redirect("/controller?command=addBookWindow&save=success");
 
-        return CommandResult.forward("/WEB-INF/pages/admin-book.jsp");
+        /*return CommandResult.forward("/WEB-INF/pages/admin-book.jsp");*/
     }
 }

@@ -55,7 +55,6 @@ public abstract class AbstractRepository<T extends Entity> implements Repository
             T entity = null;
             if (resultSet.next()) {
                 entity = builder.build(resultSet);
-
             }
 
             return Optional.ofNullable(entity);

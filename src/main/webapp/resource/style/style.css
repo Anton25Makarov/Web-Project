@@ -12,7 +12,7 @@ aside {
     display: flex;
     flex-direction: column;
     background-color: cadetblue;
-    color: crimson;
+    color: mediumblue;
     flex-grow: 1;
 }
 
@@ -29,7 +29,7 @@ main {
     justify-content: center;
     align-items: flex-start;
     background-color: cadetblue;
-    color: crimson;
+    color: mediumblue;
     min-height: 480px;
 }
 
@@ -320,4 +320,38 @@ header {
 .removeLibrarianButton:hover, .removeReaderButton:hover,
 .issueBook:hover {
     background-color: #3e8e41;
+}
+
+/*******************reader find books********/
+.find-line {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+#main-books {
+    /* The main container div */
+    position: relative;
+    /*margin: 50px auto;*/
+    /*width: 410px;*/
+    /*border: 1px solid #CCCCCC;*/
+    /*padding: 70px 25px 60px;*/
+
+    /* CSS3 rounded cornenrs */
+
+   /* -moz-border-radius: 12px;
+    -webkit-border-radius: 12px;
+    border-radius: 12px;*/
+}
+
+#holder {
+    width: 700px;
+    overflow: hidden;
+    position: relative;
+    padding-bottom: 40px;
+}
+
+.swControls {
+    position: absolute;
+    margin-top: 10px;
 }

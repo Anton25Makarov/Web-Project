@@ -24,6 +24,12 @@ public class Book extends Entity {
         this.genre = genre;
     }
 
+    public Book(String title, Author author, BookGenre genre) {
+        this.title = title;
+        this.author = author;
+        this.genre = genre;
+    }
+
     public Book(Long id) {
         super(id);
     }
@@ -38,6 +44,10 @@ public class Book extends Entity {
 
     public int getCount() {
         return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
     }
 
     public Author getAuthor() {

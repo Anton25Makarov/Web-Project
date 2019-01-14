@@ -42,8 +42,16 @@ public class Order extends Entity {
         return returnDate;
     }
 
+    public void setReturnDate(Date returnDate) {
+        this.returnDate = returnDate;
+    }
+
     public Book getBook() {
         return book;
+    }
+
+    public void setBook(Book book) {
+        this.book = book;
     }
 
     public Reader getReader() {

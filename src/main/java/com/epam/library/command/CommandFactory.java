@@ -12,7 +12,7 @@ public class CommandFactory {
             case "login":
                 return new LoginCommand();
             case "addBookWindow":
-                return new GetBooksCommand();
+                return new GetBooksAuthorsGenresCommand();
             case "saveBook":
                 return new SaveBookCommand();
             case "addGenre":
@@ -41,6 +41,16 @@ public class CommandFactory {
                 return new IssueBookCommand();
             case "getOrdersToIssue":
                 return new GetOrdersToIssueCommand();
+            case "readersAllBooks":
+                return new GetBooksCommand();
+            case "readerSelectBook":
+                return new GetChosenBooksCommand();
+            case "readerOrderBook":
+                return new OrderBookCommand();
+            case "readersBooks":
+                return new GetOrderedBooksCommand();
+            case "readerReturnBook":
+                return new ReturnBookCommand();
             default:
                 throw new UnsupportedOperationException("Unknown command: " + command);
         }

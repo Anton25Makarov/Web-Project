@@ -20,14 +20,8 @@ public class RemoveReaderCommand implements Command {
         Reader reader = new Reader(readerId);
 
         try (EmployeeService employeeService = new EmployeeService()) {
-            boolean result = employeeService.removeReader(reader);
 
-            if (result) {
-                return CommandResult.redirect("/controller?command=getReadersWindow&save=success");
-            } else {
-                return CommandResult.redirect("/controller?command=getReadersWindow&save=fail");
-            }
-
+            employeeService.removeReader(reader);
 
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -35,6 +29,6 @@ public class RemoveReaderCommand implements Command {
             e.printStackTrace();
         }
 
-        return CommandResult.redirect("/controller?command=getReadersWindow&save=fail");
+        return CommandResult.redirect("/controller?command=getReadersWindow&save=success");
     }
 }

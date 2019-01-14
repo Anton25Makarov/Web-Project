@@ -1,4 +1,4 @@
-package com.epam.library.command.remove;
+package com.epam.library.command.get;
 
 import com.epam.library.command.Command;
 import com.epam.library.command.CommandResult;
@@ -6,32 +6,34 @@ import com.epam.library.model.Author;
 import com.epam.library.model.Book;
 import com.epam.library.model.BookGenre;
 import com.epam.library.service.EmployeeService;
+import com.epam.library.service.ReaderService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
 import java.util.List;
 
-public class RemoveBookCommand implements Command {
+public class GetChosenBooksCommand implements Command {
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) {
 
+        String authorName = req.getParameter("authorName");
+        String authorSurname = req.getParameter("authorSurname");
+        String bookTitle = req.getParameter("BookTitle");
+        String bookGenre = req.getParameter("bookGenre");
 
-        Long bookId = Long.parseLong(req.getParameter("bookId"));
+        try (ReaderService service = new ReaderService()) {
 
-        Book book = new Book(bookId);
+            List<Book> books = service.getBooks(bookTitle, authorName, authorSurname, bookGenre);
 
-        try (EmployeeService employeeService = new EmployeeService()) {
-
-            employeeService.removeBook(book);
-
+            req.setAttribute("books", books);
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return CommandResult.redirect("/controller?command=addBookWindow&save=success");
 
-//        return CommandResult.forward("/WEB-INF/pages/admin-book.jsp");
+        return CommandResult.forward("/WEB-INF/pages/reader-find-books.jsp");
     }
+
 }

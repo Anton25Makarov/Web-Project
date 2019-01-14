@@ -31,6 +31,14 @@ public class EmployeeService extends Service { // Check all Parameters !!!!!!!!!
         return bookRepository.query(specification);
     }
 
+    public List<Book> takeBooksInStock() throws SQLException {
+        AbstractRepository<Book> bookRepository = RepositoryFactory.createBookRepository(connection);
+
+        SqlSpecification specification = new FindAllBooksInStockSpecification();
+
+        return bookRepository.query(specification);
+    }
+
     public List<BookGenre> takeGenres() throws SQLException {
         AbstractRepository<BookGenre> genreRepository = RepositoryFactory.createBookGenreRepository(connection);
 
@@ -135,11 +143,5 @@ public class EmployeeService extends Service { // Check all Parameters !!!!!!!!!
         return bookRepository.queryForSingleResult(specification).isPresent();
     }
 
-    public Optional<Book> getBook(Long bookId) throws SQLException {
-        AbstractRepository<Book> bookRepository = RepositoryFactory.createBookRepository(connection);
 
-        SqlSpecification specification = new FindByIdSpecification(bookId);
-
-        return bookRepository.queryForSingleResult(specification);
-    }
 }

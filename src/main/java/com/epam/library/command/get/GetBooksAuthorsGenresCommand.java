@@ -1,4 +1,4 @@
-package com.epam.library.command.remove;
+package com.epam.library.command.get;
 
 import com.epam.library.command.Command;
 import com.epam.library.command.CommandResult;
@@ -12,26 +12,25 @@ import javax.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
 import java.util.List;
 
-public class RemoveBookCommand implements Command {
+public class GetBooksAuthorsGenresCommand implements Command {
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) {
 
-
-        Long bookId = Long.parseLong(req.getParameter("bookId"));
-
-        Book book = new Book(bookId);
-
         try (EmployeeService employeeService = new EmployeeService()) {
+            List<Book> books = employeeService.takeBooks();
+            req.setAttribute("books", books);
 
-            employeeService.removeBook(book);
+            List<BookGenre> genres = employeeService.takeGenres();
+            req.setAttribute("genres", genres);
 
+            List<Author> authors = employeeService.takeAuthors();
+            req.setAttribute("authors", authors);
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return CommandResult.redirect("/controller?command=addBookWindow&save=success");
 
-//        return CommandResult.forward("/WEB-INF/pages/admin-book.jsp");
+        return CommandResult.forward("/WEB-INF/pages/admin-book.jsp");
     }
 }

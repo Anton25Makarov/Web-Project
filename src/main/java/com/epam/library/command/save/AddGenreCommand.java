@@ -23,27 +23,16 @@ public class AddGenreCommand implements Command {
 
 
         try (EmployeeService employeeService = new EmployeeService()) {
-            boolean result = employeeService.saveGenre(genre);
 
-            if (result) {
-                req.setAttribute("insertGenreInfo", "Inserting is successful");
-            } else {
-                req.setAttribute("insertGenreInfo", "Inserting is failed");
-            }
+            employeeService.saveGenre(genre);
 
-            List<Book> books = employeeService.takeBooks();
-            req.setAttribute("books", books);
-
-            List<BookGenre> genres = employeeService.takeGenres();
-            req.setAttribute("genres", genres);
-
-            List<Author> authors = employeeService.takeAuthors();
-            req.setAttribute("authors", authors);
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return CommandResult.forward("/WEB-INF/pages/admin-book.jsp");
+        return CommandResult.redirect("/controller?command=addBookWindow&save=success");
+
+//        return CommandResult.forward("/WEB-INF/pages/admin-book.jsp");
     }
 }

@@ -4,6 +4,8 @@ import com.epam.library.builder.Builder;
 import com.epam.library.builder.ReaderBuilder;
 import com.epam.library.model.Reader;
 import com.epam.library.specification.SqlSpecification;
+import org.apache.commons.codec.cli.Digest;
+import org.apache.commons.codec.digest.DigestUtils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -55,10 +57,10 @@ public class ReaderRepository extends AbstractRepository<Reader> {
 
     @Override
     public boolean save(Reader reader) throws SQLException {
+        String login = reader.getLogin();
         String name = reader.getName();
         String surname = reader.getSurname();
-        String login = reader.getLogin();
-        String password = reader.getPassword();
+        String password = DigestUtils.md5Hex(reader.getPassword());
         String telephoneNumber = reader.getTelephoneNumber();
 
         int i = FIRST_COLUMN;

@@ -56,7 +56,6 @@
                     <th>Name</th>
                     <th>Surname</th>
                     <th>Login</th>
-                    <th>Password</th>
                     <th>Telephone</th>
                     <th>Remove</th>
                 </tr>
@@ -68,7 +67,6 @@
                         <td><c:out value="${reader.name}"/></td>
                         <td><c:out value="${reader.surname}"/></td>
                         <td><c:out value="${reader.login}"/></td>
-                        <td><c:out value="${reader.password}"/></td>
                         <td><c:out value="${reader.telephoneNumber}"/></td>
                         <td>
                             <form class="form-for-button" method="post"

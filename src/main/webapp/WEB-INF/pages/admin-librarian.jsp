@@ -56,7 +56,6 @@
                     <th>Name</th>
                     <th>Surname</th>
                     <th>Login</th>
-                    <th>Password</th>
                     <th>Remove</th>
                 </tr>
                 </thead>
@@ -67,7 +66,6 @@
                         <td><c:out value="${librarian.name}"/></td>
                         <td><c:out value="${librarian.surname}"/></td>
                         <td><c:out value="${librarian.login}"/></td>
-                        <td><c:out value="${librarian.password}"/></td>
                         <td>
                             <form class="form-for-button" method="post"
                                   action="${pageContext.servletContext.contextPath}/controller?command=removeLibrarian">

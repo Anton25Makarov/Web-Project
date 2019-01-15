@@ -4,6 +4,7 @@ import com.epam.library.builder.Builder;
 import com.epam.library.builder.EmployeeBuilder;
 import com.epam.library.model.Employee;
 import com.epam.library.specification.SqlSpecification;
+import org.apache.commons.codec.digest.DigestUtils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -56,7 +57,8 @@ public class EmployeeRepository extends AbstractRepository<Employee> {
         String name = employee.getName();
         String surname = employee.getSurname();
         String login = employee.getLogin();
-        String password = employee.getPassword();
+//        String password = employee.getPassword();
+        String password = DigestUtils.md5Hex(employee.getPassword());
         boolean isAdmin = employee.isAdmin();
 
         if (employee.getId() == null) {

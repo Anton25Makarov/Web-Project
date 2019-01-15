@@ -1,5 +1,7 @@
 package com.epam.library.specification;
 
+import org.apache.commons.codec.digest.DigestUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,7 +13,8 @@ public class FindUserByLoginAndPasswordSpecification implements SqlSpecification
 
     public FindUserByLoginAndPasswordSpecification(String login, String password) {
         this.login = login;
-        this.password = password;
+        this.password = DigestUtils.md5Hex(password);
+//        this.password = password;
     }
 
     @Override

@@ -1,4 +1,3 @@
-
 <%@ page contentType="text/html; charset=utf-8" pageEncoding="UTF-8" isELIgnored="false" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
@@ -92,19 +91,23 @@
                                         <input type="text" placeholder="Title" name="bookTitle" required
                                                pattern="[a-zA-Z\d]{2,15}">
 
-                                        <select name="selectedGenreId" required>
-                                            <c:forEach items="${requestScope.genres}" var="genre">
-                                                <option value="${genre.id}"><c:out value="${genre.genre}"/></option>
-                                            </c:forEach>
-                                        </select>
-                                        <select name="selectedAuthorId" title="authors" required>
-                                            <c:forEach items="${requestScope.authors}" var="author">
-                                                <option value="${author.id}">
-                                                    <c:out value="${author.name}"/>
-                                                    <c:out value="${author.surname}"/>
-                                                </option>
-                                            </c:forEach>
-                                        </select>
+                                        <label>Genre
+                                            <select name="selectedGenreId" required>
+                                                <c:forEach items="${requestScope.genres}" var="genre">
+                                                    <option value="${genre.id}"><c:out value="${genre.genre}"/></option>
+                                                </c:forEach>
+                                            </select>
+                                        </label>
+                                        <label>Author
+                                            <select name="selectedAuthorId" title="authors" required>
+                                                <c:forEach items="${requestScope.authors}" var="author">
+                                                    <option value="${author.id}">
+                                                        <c:out value="${author.name}"/>
+                                                        <c:out value="${author.surname}"/>
+                                                    </option>
+                                                </c:forEach>
+                                            </select>
+                                        </label>
                                         <input type="text" placeholder="Count" name="bookCount" required pattern="\d+">
                                         <input type="text" placeholder="Year" name="bookYear" required pattern="\d+">
                                         <input type="hidden" value="${book.id}" name="bookId">
@@ -158,19 +161,23 @@
                 <div class="container">
                     <input type="text" placeholder="Title" name="bookTitle" required pattern="[a-zA-Z\d]{2,15}"/>
 
-                    <select name="selectedGenreId" required>
-                        <c:forEach items="${requestScope.genres}" var="genre">
-                            <option value="${genre.id}"><c:out value="${genre.genre}"/></option>
-                        </c:forEach>
-                    </select>
-                    <select name="selectedAuthorId" title="authors" required>
-                        <c:forEach items="${requestScope.authors}" var="author">
-                            <option value="${author.id}">
-                                <c:out value="${author.name}"/>
-                                <c:out value="${author.surname}"/>
-                            </option>
-                        </c:forEach>
-                    </select>
+                    <label>
+                        <select name="selectedGenreId" required>
+                            <c:forEach items="${requestScope.genres}" var="genre">
+                                <option value="${genre.id}"><c:out value="${genre.genre}"/></option>
+                            </c:forEach>
+                        </select>
+                    </label>
+                    <label>
+                        <select name="selectedAuthorId" title="authors" required>
+                            <c:forEach items="${requestScope.authors}" var="author">
+                                <option value="${author.id}">
+                                    <c:out value="${author.name}"/>
+                                    <c:out value="${author.surname}"/>
+                                </option>
+                            </c:forEach>
+                        </select>
+                    </label>
                     <input type="text" placeholder="Count" name="bookCount" required pattern="\d+">
                     <input type="text" placeholder="Year" name="bookYear" required pattern="\d+">
                     <button type="submit">Save book</button>

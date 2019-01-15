@@ -2,9 +2,9 @@
 <taglib>
     <tlib-version>1.0</tlib-version>
     <jsp-version>1.2</jsp-version>
-    <short-name>table</short-name>
+    <short-name>display</short-name>
 
-    <uri>tableTag</uri>
+    <uri>displayTag</uri>
 
     <tag>
         <name>table-body</name>

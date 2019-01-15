@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class BookRepository extends AbstractRepository<Book> {
+    private static final String SHOW_COLUMNS_QUERY = "show columns from `book`";
     private static final String SELECT_QUERY = "select * from book ";
     private static final String REMOVE_QUERY = "delete from book where id = ?";
     private static final String INSERT_QUERY =
@@ -106,4 +107,8 @@ public class BookRepository extends AbstractRepository<Book> {
     public boolean remove(Book book) throws SQLException {
         return executeRemove(book, REMOVE_QUERY);
     }
+
+    @Override
+    public List<String> queryColumnsNames() throws SQLException {
+        return executeQueryColumnsNames(SHOW_COLUMNS_QUERY);    }
 }

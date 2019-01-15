@@ -17,7 +17,10 @@ public class GetOrdersCommand implements Command {
         try (LibrarianService service = new LibrarianService()) {
             List<Order> orders = service.takeOrders();
 
+            List<String> columns = service.getOrderTableColumns();
+
             req.setAttribute("orders", orders);
+            req.setAttribute("header", columns);
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (SQLException e) {

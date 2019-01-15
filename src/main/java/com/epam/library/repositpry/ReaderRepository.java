@@ -15,6 +15,7 @@ import java.util.Optional;
 
 public class ReaderRepository extends AbstractRepository<Reader> {
     public static final int FIRST_COLUMN = 1;
+    private static final String SHOW_COLUMNS_QUERY = "show columns from `reader`";
     private static final String SELECT_QUERY = "select * from reader ";
     private static final String REMOVE_QUERY = "delete from reader where id = ?";
     private static final String INSERT_QUERY =
@@ -104,4 +105,8 @@ public class ReaderRepository extends AbstractRepository<Reader> {
     protected Builder<Reader> getBuilder() {
         return new ReaderBuilder();
     }
+
+    @Override
+    public List<String> queryColumnsNames() throws SQLException {
+        return executeQueryColumnsNames(SHOW_COLUMNS_QUERY);    }
 }

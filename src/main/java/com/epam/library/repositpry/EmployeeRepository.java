@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class EmployeeRepository extends AbstractRepository<Employee> {
+    private static final String SHOW_COLUMNS_QUERY = "show columns from `employee`";
     private static final String SELECT_QUERY = "select * from employee ";
     private static final String REMOVE_QUERY = "delete from employee where id = ?";
     private static final String INSERT_QUERY =
@@ -99,6 +100,10 @@ public class EmployeeRepository extends AbstractRepository<Employee> {
     protected Builder<Employee> getBuilder() {
         return new EmployeeBuilder();
     }
+
+    @Override
+    public List<String> queryColumnsNames() throws SQLException {
+        return executeQueryColumnsNames(SHOW_COLUMNS_QUERY);    }
 }
 //map<Str, obj> fields
 // fields.put(NAME_OF_COLUMN, employee.getId);

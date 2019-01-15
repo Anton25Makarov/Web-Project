@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class GenreRepository extends AbstractRepository<BookGenre> {
+    private static final String SHOW_COLUMNS_QUERY = "show columns from `genre_catalog`";
     private static final String SELECT_QUERY = "select * from genre_catalog ";
     private static final String INSERT_QUERY =
             "insert into genre_catalog (genre)\n" +
@@ -91,5 +92,7 @@ public class GenreRepository extends AbstractRepository<BookGenre> {
         throw new UnsupportedOperationException();
     }
 
-
+    @Override
+    public List<String> queryColumnsNames() throws SQLException {
+        return executeQueryColumnsNames(SHOW_COLUMNS_QUERY);    }
 }

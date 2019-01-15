@@ -1,6 +1,8 @@
 <%@ page contentType="text/html; charset=utf-8" pageEncoding="UTF-8" isELIgnored="false" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
+<%@ taglib uri="customTag" prefix="ctg" %>
+
 <html>
 <head>
     <link type="text/css" rel="stylesheet" href='${pageContext.servletContext.contextPath}/resource/style/style.css'/>
@@ -76,24 +78,10 @@
                             </c:choose>
                         </td>
                         <td>
-                            <c:choose>
-                                <c:when test="${order.takingDate != null}">
-                                    <c:out value="${order.takingDate}"/>
-                                </c:when>
-                                <c:when test="${order.takingDate == null}">
-                                    -
-                                </c:when>
-                            </c:choose>
+                            <ctg:show-of-null value="${order.takingDate}" replace="-"/>
                         </td>
                         <td>
-                            <c:choose>
-                                <c:when test="${order.returnDate != null}">
-                                    <c:out value="${order.returnDate}"/>
-                                </c:when>
-                                <c:when test="${order.returnDate == null}">
-                                    -
-                                </c:when>
-                            </c:choose>
+                            <ctg:show-of-null value="${order.returnDate}" replace="-"/>
                         </td>
                         <td><c:out value="${order.book.id}"/></td>
                         <td><c:out value="${order.reader.id}"/></td>

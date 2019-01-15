@@ -47,4 +47,10 @@ public class LibrarianService extends Service {
 
         orderRepository.save(order);
     }
+
+    public List<String> getOrderTableColumns() throws SQLException {
+        AbstractRepository<Order> orderRepository = RepositoryFactory.createOrderRepository(connection);
+
+        return orderRepository.queryColumnsNames();
+    }
 }

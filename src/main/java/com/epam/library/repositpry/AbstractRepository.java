@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 public abstract class AbstractRepository<T extends Entity> implements Repository<T> {
-    public static final int FIRST_COLUMN = 1;
+    private static final int FIRST_COLUMN = 1;
     protected Connection connection;
 
     public AbstractRepository(Connection connection) {
@@ -80,4 +80,19 @@ public abstract class AbstractRepository<T extends Entity> implements Repository
         }
     }
 
+    protected List<String> executeQueryColumnsNames(String showTableColumnsQuery) throws SQLException {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(showTableColumnsQuery)) {
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            List<String> columns = new ArrayList<>();
+
+            while (resultSet.next()) {
+                String column = resultSet.getString("Field");
+                columns.add(column);
+            }
+
+            return columns;
+        }
+    }
 }

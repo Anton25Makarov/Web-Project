@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<taglib>
+    <tlib-version>1.0</tlib-version>
+    <jsp-version>1.2</jsp-version>
+    <short-name>display</short-name>
+
+    <uri>customTag</uri>
+
+    <tag>
+        <name>show-of-null</name>
+        <tag-class>com.epam.library.tag.EmptyDisplayerTag</tag-class>
+        <attribute>
+            <name>value</name>
+            <rtexprvalue>true</rtexprvalue>
+            <required>true</required>
+        </attribute>
+        <attribute>
+            <name>replace</name>
+            <type>java.lang.String</type>
+            <required>true</required>
+        </attribute>
+    </tag>
+
+    <tag>
+        <name>tableBody</name>
+        <tag-class>com.epam.library.tag.TableBodyTag</tag-class>
+        <attribute>
+            <name>objects</name>
+            <type>java.util.List</type>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+
+    </tag>
+</taglib>

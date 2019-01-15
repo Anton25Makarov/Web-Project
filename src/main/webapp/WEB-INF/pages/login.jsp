@@ -2,7 +2,6 @@
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib uri="tableTag" prefix="tbl" %>
 
 <fmt:setLocale value="${sessionScope.local}" scope="session"/>
 <fmt:setBundle basename="locale" var="loc"/>

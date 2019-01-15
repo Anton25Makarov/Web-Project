@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class AuthorRepository extends AbstractRepository<Author> {
+    private static final String SHOW_COLUMNS_QUERY = "show columns from `book_author`";
     private static final String SELECT_QUERY = "select * from book_author ";
     private static final String INSERT_QUERY =
             "insert into book_author (name, surname) \n" +
@@ -70,4 +71,8 @@ public class AuthorRepository extends AbstractRepository<Author> {
     public boolean remove(Author author) throws SQLException {
         throw new UnsupportedOperationException();
     }
+
+    @Override
+    public List<String> queryColumnsNames() throws SQLException {
+        return executeQueryColumnsNames(SHOW_COLUMNS_QUERY);    }
 }

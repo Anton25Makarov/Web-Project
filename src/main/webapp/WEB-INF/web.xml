@@ -24,7 +24,7 @@
     <jsp-config>
         <!--<taglib>
             <taglib-uri>customTags</taglib-uri>
-            <taglib-location>/WEB-INF/tld/tableTag.tld</taglib-location>
+            <taglib-location>/WEB-INF/tld/customTag.tld</taglib-location>
         </taglib>-->
         <jsp-property-group>
             <url-pattern>*.jsp</url-pattern>

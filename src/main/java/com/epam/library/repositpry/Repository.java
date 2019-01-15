@@ -15,4 +15,6 @@ public interface Repository<T extends Entity> {
     boolean save(T entity) throws SQLException;
 
     boolean remove(T entity) throws SQLException;
+
+    List<String> queryColumnsNames() throws SQLException;
 }

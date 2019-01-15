@@ -15,6 +15,8 @@ import java.util.List;
 import java.util.Optional;
 
 public class OrderRepository extends AbstractRepository<Order> {
+    private static final String SHOW_COLUMNS_QUERY = "show columns from `order`";
+    private static final int FIRST_COLUMN = 1;
     private static final String SELECT_QUERY = "select * from `order` ";
     private static final String INSERT_QUERY =
             "insert into `order` (is_in_reading_room, taking_date, return_date, book_id, reader_id)\n" +
@@ -115,5 +117,10 @@ public class OrderRepository extends AbstractRepository<Order> {
     @Override
     public boolean remove(Order order) throws SQLException {
         throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public List<String> queryColumnsNames() throws SQLException {
+        return executeQueryColumnsNames(SHOW_COLUMNS_QUERY);
     }
 }

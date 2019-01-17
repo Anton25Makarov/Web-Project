@@ -20,7 +20,8 @@ public class ReturnBookCommand implements Command {
 
         HttpSession session = req.getSession();
 
-        try (ReaderService service = new ReaderService()) {
+        try  {
+            ReaderService service = new ReaderService();
             Reader reader = (Reader) session.getAttribute("user");
 
             Optional<Book> book = service.getBook(bookId);
@@ -39,8 +40,6 @@ public class ReturnBookCommand implements Command {
                 service.saveOrder(order.get());
             }
 
-        } catch (InterruptedException e) {
-            e.printStackTrace();
         } catch (SQLException e) {
             e.printStackTrace();
         }

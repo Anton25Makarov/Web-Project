@@ -1,34 +1,45 @@
 package com.epam.library.repositpry;
 
+import com.epam.library.connection.ConnectionPool;
+
 import java.sql.Connection;
 
-public class RepositoryFactory {
+public class RepositoryFactory implements AutoCloseable {
 
-    private RepositoryFactory() {
+    private Connection connection;
+    private ConnectionPool connectionPool;
+
+    public RepositoryFactory() {
+        connectionPool = ConnectionPool.getInstance();
+        connection = connectionPool.takeConnection();
     }
 
-    public static EmployeeRepository createEmployeeRepository(Connection connection) {
-        return new EmployeeRepository(connection);
-    }
-
-    public static ReaderRepository createReaderRepository(Connection connection) {
-        return new ReaderRepository(connection);
-    }
-
-    public static BookRepository createBookRepository(Connection connection) {
+    public BookRepository createBookRepository() {
         return new BookRepository(connection);
     }
 
-    public static GenreRepository createBookGenreRepository(Connection connection) {
+    public EmployeeRepository createEmployeeRepository() {
+        return new EmployeeRepository(connection);
+    }
+
+    public ReaderRepository createReaderRepository() {
+        return new ReaderRepository(connection);
+    }
+
+    public GenreRepository createBookGenreRepository() {
         return new GenreRepository(connection);
     }
 
-    public static AuthorRepository createAuthorRepository(Connection connection) {
+    public AuthorRepository createAuthorRepository() {
         return new AuthorRepository(connection);
     }
 
-    public static OrderRepository createOrderRepository(Connection connection) {
+    public OrderRepository createOrderRepository() {
         return new OrderRepository(connection);
     }
 
+    @Override
+    public void close() {
+        connectionPool.returnConnection(connection);
+    }
 }

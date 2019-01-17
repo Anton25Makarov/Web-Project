@@ -21,12 +21,10 @@ public class RemoveBookCommand implements Command {
 
         Book book = new Book(bookId);
 
-        try (EmployeeService employeeService = new EmployeeService()) {
-
+        try  {
+            EmployeeService employeeService = new EmployeeService();
             employeeService.removeBook(book);
 
-        } catch (InterruptedException e) {
-            e.printStackTrace();
         } catch (SQLException e) {
             e.printStackTrace();
         }

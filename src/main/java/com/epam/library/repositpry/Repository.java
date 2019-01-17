@@ -12,9 +12,8 @@ public interface Repository<T extends Entity> {
 
     Optional<T> queryForSingleResult(SqlSpecification sqlSpecification) throws SQLException;
 
-    boolean save(T entity) throws SQLException;
+    void save(T entity) throws SQLException;
 
-    boolean remove(T entity) throws SQLException;
+    void remove(T entity) throws SQLException;
 
-    List<String> queryColumnsNames() throws SQLException;
 }

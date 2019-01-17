@@ -24,7 +24,8 @@ public class SaveLibrarianCommand implements Command {
 
         Employee employee = new Employee(name, surname, login, password, IS_NOT_ADMIN);
 
-        try (EmployeeService employeeService = new EmployeeService()) {
+        try {
+            EmployeeService employeeService = new EmployeeService();
             if (employeeService.isEmployeeExist(login) || employeeService.isReaderExist(login)) {
                 System.out.println("Exist");
                 return CommandResult.redirect("/controller?command=getLibrariansWindow&save=fail");//page - const
@@ -33,8 +34,6 @@ public class SaveLibrarianCommand implements Command {
                 employeeService.saveEmployee(employee);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
             e.printStackTrace();
         }
 

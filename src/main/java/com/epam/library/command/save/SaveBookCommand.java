@@ -36,8 +36,8 @@ public class SaveBookCommand implements Command {
 
         Book book = new Book(bookId, title, year, count, author, bookGenre);
 
-        try (EmployeeService employeeService = new EmployeeService()) {
-
+        try  {
+            EmployeeService employeeService = new EmployeeService();
 
             employeeService.saveBook(book);
 
@@ -59,8 +59,6 @@ public class SaveBookCommand implements Command {
             List<Author> authors = employeeService.takeAuthors();
             req.setAttribute("authors", authors);*/
 
-        } catch (InterruptedException e) {
-            e.printStackTrace();
         } catch (SQLException e) {
             e.printStackTrace();
         }

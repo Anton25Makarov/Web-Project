@@ -35,12 +35,10 @@ public class IssueBookCommand implements Command {
 
         Order order = new Order(orderId, inReadingRoom, takingDate, null, book, reader);
 
-        try (LibrarianService service = new LibrarianService()) {
-
+        try  {
+            LibrarianService service = new LibrarianService();
             service.saveOrder(order);
 
-        } catch (InterruptedException e) {
-            e.printStackTrace();
         } catch (SQLException e) {
             e.printStackTrace();
         }

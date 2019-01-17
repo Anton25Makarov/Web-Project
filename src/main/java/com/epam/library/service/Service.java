@@ -5,11 +5,11 @@ import com.epam.library.connection.ConnectionPool;
 import java.io.Closeable;
 import java.sql.Connection;
 
-public abstract class Service implements Closeable {
-    protected Connection connection;
+public abstract class Service/* implements Closeable*/ {
+   /* protected Connection connection;
     private ConnectionPool connectionPool;
 
-    public Service() throws InterruptedException {
+    public Service() {
         connectionPool = ConnectionPool.getInstance();
         connection = connectionPool.takeConnection();
     }
@@ -17,5 +17,5 @@ public abstract class Service implements Closeable {
     @Override
     public void close() {
         connectionPool.returnConnection(connection);
-    }
+    }*/
 }

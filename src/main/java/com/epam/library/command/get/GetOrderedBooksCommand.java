@@ -22,8 +22,8 @@ public class GetOrderedBooksCommand implements Command {
         Reader reader = (Reader) session.getAttribute("user");
         Long readerId = reader.getId();
 
-        try (ReaderService service = new ReaderService()) {
-
+        try  {
+            ReaderService service = new ReaderService();
             List<Order> orders = service.getReaderOrders(readerId);
 
             for (Order order : orders) { //??
@@ -32,9 +32,7 @@ public class GetOrderedBooksCommand implements Command {
             }
 
             req.setAttribute("orders", orders);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
+        }  catch (SQLException e) {
             e.printStackTrace();
         }
 

@@ -22,13 +22,11 @@ public class AddGenreCommand implements Command {
         BookGenre genre = new BookGenre(bookGenre);
 
 
-        try (EmployeeService employeeService = new EmployeeService()) {
-
+        try  {
+            EmployeeService employeeService = new EmployeeService();
             employeeService.saveGenre(genre);
 
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
+        }  catch (SQLException e) {
             e.printStackTrace();
         }
         return CommandResult.redirect("/controller?command=addBookWindow&save=success");

@@ -19,7 +19,8 @@ public class LoginCommand implements Command {
         String password = req.getParameter("password");
         // class stringUtils - там проверка на login == null || login.isEmpty
         HttpSession session = req.getSession();
-        try (EmployeeService employeeService = new EmployeeService()) {
+        try  {
+            EmployeeService employeeService = new EmployeeService();
             session.removeAttribute("user");
             session.removeAttribute("role");
 
@@ -39,8 +40,6 @@ public class LoginCommand implements Command {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
             e.printStackTrace();
         }
         if (session.getAttribute("user") == null) {

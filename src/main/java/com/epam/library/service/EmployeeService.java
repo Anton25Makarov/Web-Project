@@ -11,135 +11,183 @@ import java.util.Optional;
 
 public class EmployeeService extends Service { // Check all Parameters !!!!!!!!!
 
-    public EmployeeService() throws InterruptedException {
-        super();
-    }
-
     public Optional<Employee> login(String login, String password) throws SQLException {
-        AbstractRepository<Employee> employeeRepository = RepositoryFactory.createEmployeeRepository(connection);
+        try (RepositoryFactory factory = new RepositoryFactory()) {
+            AbstractRepository<Employee> employeeRepository = factory.createEmployeeRepository();
 
-        SqlSpecification specification = new FindUserByLoginAndPasswordSpecification(login, password);
+            SqlSpecification specification = new FindUserByLoginAndPasswordSpecification(login, password);
 
-        return employeeRepository.queryForSingleResult(specification);
+            return employeeRepository.queryForSingleResult(specification);
+        }
     }
 
     public List<Book> takeBooks() throws SQLException {
-        AbstractRepository<Book> bookRepository = RepositoryFactory.createBookRepository(connection);
+        try (RepositoryFactory factory = new RepositoryFactory()) {
+            AbstractRepository<Book> bookRepository = factory.createBookRepository();
 
-        SqlSpecification specification = new FindAllBookSpecification();
+            SqlSpecification specification = new FindAllBookSpecification();
 
-        return bookRepository.query(specification);
+            return bookRepository.query(specification);
+        }
     }
 
     public List<Book> takeBooksInStock() throws SQLException {
-        AbstractRepository<Book> bookRepository = RepositoryFactory.createBookRepository(connection);
+        try (RepositoryFactory factory = new RepositoryFactory()) {
 
-        SqlSpecification specification = new FindAllBooksInStockSpecification();
+            AbstractRepository<Book> bookRepository = factory.createBookRepository();
 
-        return bookRepository.query(specification);
+            SqlSpecification specification = new FindAllBooksInStockSpecification();
+
+            return bookRepository.query(specification);
+        }
     }
 
     public List<BookGenre> takeGenres() throws SQLException {
-        AbstractRepository<BookGenre> genreRepository = RepositoryFactory.createBookGenreRepository(connection);
+        try (RepositoryFactory factory = new RepositoryFactory()) {
 
-        SqlSpecification specification = new FindAllSpecification();
+            AbstractRepository<BookGenre> genreRepository = factory.createBookGenreRepository();
 
-        return genreRepository.query(specification);
+            SqlSpecification specification = new FindAllSpecification();
+
+            return genreRepository.query(specification);
+        }
     }
 
     public List<Author> takeAuthors() throws SQLException {
-        AbstractRepository<Author> authorRepository = RepositoryFactory.createAuthorRepository(connection);
+        try (RepositoryFactory factory = new RepositoryFactory()) {
 
-        SqlSpecification specification = new FindAllSpecification();
+            AbstractRepository<Author> authorRepository = factory.createAuthorRepository();
 
-        return authorRepository.query(specification);
+            SqlSpecification specification = new FindAllSpecification();
+
+            return authorRepository.query(specification);
+        }
     }
 
-    public boolean saveBook(Book book) throws SQLException {
-        AbstractRepository<Book> bookRepository = RepositoryFactory.createBookRepository(connection);
+    public void saveBook(Book book) throws SQLException {
+        try (RepositoryFactory factory = new RepositoryFactory()) {
 
-        return bookRepository.save(book);
+            AbstractRepository<Book> bookRepository = factory.createBookRepository();
+
+            bookRepository.save(book);
+        }
     }
 
-    public boolean saveGenre(BookGenre genre) throws SQLException {
-        AbstractRepository<BookGenre> genreRepository = RepositoryFactory.createBookGenreRepository(connection);
+    public void saveGenre(BookGenre genre) throws SQLException {
+        try (RepositoryFactory factory = new RepositoryFactory()) {
 
-        return genreRepository.save(genre);
+            AbstractRepository<BookGenre> genreRepository = factory.createBookGenreRepository();
+
+            genreRepository.save(genre);
+        }
     }
 
-    public boolean saveAuthor(Author author) throws SQLException {
-        AbstractRepository<Author> authorRepository = RepositoryFactory.createAuthorRepository(connection);
+    public void saveAuthor(Author author) throws SQLException {
+        try (RepositoryFactory factory = new RepositoryFactory()) {
 
-        return authorRepository.save(author);
+            AbstractRepository<Author> authorRepository = factory.createAuthorRepository();
+
+            authorRepository.save(author);
+        }
     }
 
-    public boolean saveEmployee(Employee employee) throws SQLException {
-        AbstractRepository<Employee> employeeRepository = RepositoryFactory.createEmployeeRepository(connection);
+    public void saveEmployee(Employee employee) throws SQLException {
+        try (RepositoryFactory factory = new RepositoryFactory()) {
 
-        return employeeRepository.save(employee);
+            AbstractRepository<Employee> employeeRepository = factory.createEmployeeRepository();
+
+            employeeRepository.save(employee);
+        }
     }
 
-    public boolean removeBook(Book book) throws SQLException {
-        AbstractRepository<Book> bookRepository = RepositoryFactory.createBookRepository(connection);
+    public void removeBook(Book book) throws SQLException {
+        try (RepositoryFactory factory = new RepositoryFactory()) {
 
-        return bookRepository.remove(book);
+            AbstractRepository<Book> bookRepository = factory.createBookRepository();
+
+            bookRepository.remove(book);
+        }
     }
 
     public boolean isEmployeeExist(String login) throws SQLException {
-        AbstractRepository<Employee> employeeRepository = RepositoryFactory.createEmployeeRepository(connection);
+        try (RepositoryFactory factory = new RepositoryFactory()) {
 
-        SqlSpecification specification = new FindUserByLoginSpecification(login);
+            AbstractRepository<Employee> employeeRepository = factory.createEmployeeRepository();
 
-        return employeeRepository.queryForSingleResult(specification).isPresent();
+            SqlSpecification specification = new FindUserByLoginSpecification(login);
+
+            return employeeRepository.queryForSingleResult(specification).isPresent();
+        }
     }
 
     public boolean isReaderExist(String login) throws SQLException {
-        AbstractRepository<Reader> readerRepository = RepositoryFactory.createReaderRepository(connection);
+        try (RepositoryFactory factory = new RepositoryFactory()) {
 
-        SqlSpecification specification = new FindUserByLoginSpecification(login);
+            AbstractRepository<Reader> readerRepository = factory.createReaderRepository();
 
-        return readerRepository.queryForSingleResult(specification).isPresent();
+            SqlSpecification specification = new FindUserByLoginSpecification(login);
+
+            return readerRepository.queryForSingleResult(specification).isPresent();
+        }
     }
 
     public List<Employee> takeLibrarians() throws SQLException {
-        AbstractRepository<Employee> employeeRepository = RepositoryFactory.createEmployeeRepository(connection);
+        try (RepositoryFactory factory = new RepositoryFactory()) {
 
-        SqlSpecification specification = new FindAllLibrariansSpecification();
+            AbstractRepository<Employee> employeeRepository = factory.createEmployeeRepository();
 
-        return employeeRepository.query(specification);
+            SqlSpecification specification = new FindAllLibrariansSpecification();
+
+            return employeeRepository.query(specification);
+        }
     }
 
-    public boolean removeLibrarian(Employee employee) throws SQLException {
-        AbstractRepository<Employee> employeeRepository = RepositoryFactory.createEmployeeRepository(connection);
+    public void removeLibrarian(Employee employee) throws SQLException {
+        try (RepositoryFactory factory = new RepositoryFactory()) {
 
-        return employeeRepository.remove(employee);
+            AbstractRepository<Employee> employeeRepository = factory.createEmployeeRepository();
+
+            employeeRepository.remove(employee);
+        }
     }
 
     public List<Reader> takeReaders() throws SQLException {
-        AbstractRepository<Reader> readerRepository = RepositoryFactory.createReaderRepository(connection);
+        try (RepositoryFactory factory = new RepositoryFactory()) {
 
-        SqlSpecification specification = new FindAllSpecification();
+            AbstractRepository<Reader> readerRepository = factory.createReaderRepository();
 
-        return readerRepository.query(specification);
+            SqlSpecification specification = new FindAllSpecification();
+
+            return readerRepository.query(specification);
+        }
     }
 
-    public boolean saveReader(Reader reader) throws SQLException {
-        AbstractRepository<Reader> readerRepository = RepositoryFactory.createReaderRepository(connection);
+    public void saveReader(Reader reader) throws SQLException {
+        try (RepositoryFactory factory = new RepositoryFactory()) {
 
-        return readerRepository.save(reader);
+            AbstractRepository<Reader> readerRepository = factory.createReaderRepository();
+
+            readerRepository.save(reader);
+        }
     }
 
-    public boolean removeReader(Reader reader) throws SQLException {
-        AbstractRepository<Reader> readerRepository = RepositoryFactory.createReaderRepository(connection);
+    public void removeReader(Reader reader) throws SQLException {
+        try (RepositoryFactory factory = new RepositoryFactory()) {
 
-        return readerRepository.remove(reader);
+            AbstractRepository<Reader> readerRepository = factory.createReaderRepository();
+
+            readerRepository.remove(reader);
+        }
     }
 
     public boolean isBookInStock(Long bookId) throws SQLException {
-        AbstractRepository<Book> bookRepository = RepositoryFactory.createBookRepository(connection);
+        try (RepositoryFactory factory = new RepositoryFactory()) {
 
-        SqlSpecification specification = new FindByIdSpecification(bookId);
+            AbstractRepository<Book> bookRepository = factory.createBookRepository();
 
-        return bookRepository.queryForSingleResult(specification).isPresent();
+            SqlSpecification specification = new FindByIdSpecification(bookId);
+
+            return bookRepository.queryForSingleResult(specification).isPresent();
+        }
     }
 }

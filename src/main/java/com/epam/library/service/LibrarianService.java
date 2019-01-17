@@ -15,42 +15,42 @@ import java.util.Optional;
 
 public class LibrarianService extends Service {
 
-    public LibrarianService() throws InterruptedException {
-    }
-
     public Optional<Reader> login(String login, String password) throws SQLException {
-        AbstractRepository<Reader> readerRepository = RepositoryFactory.createReaderRepository(connection);
+        try (RepositoryFactory factory = new RepositoryFactory()) {
 
-        SqlSpecification specification = new FindUserByLoginAndPasswordSpecification(login, password);
+            AbstractRepository<Reader> readerRepository = factory.createReaderRepository();
 
-        return readerRepository.queryForSingleResult(specification);
+            SqlSpecification specification = new FindUserByLoginAndPasswordSpecification(login, password);
+
+            return readerRepository.queryForSingleResult(specification);
+        }
     }
 
     public List<Order> takeOrders() throws SQLException {
-        AbstractRepository<Order> orderRepository = RepositoryFactory.createOrderRepository(connection);
+        try (RepositoryFactory factory = new RepositoryFactory()) {
+            AbstractRepository<Order> orderRepository = factory.createOrderRepository();
 
-        SqlSpecification specification = new FindAllSpecification();
+            SqlSpecification specification = new FindAllSpecification();
 
-        return orderRepository.query(specification);
+            return orderRepository.query(specification);
+        }
     }
 
     public List<Order> takeOrdersToIssue() throws SQLException {
-        AbstractRepository<Order> orderRepository = RepositoryFactory.createOrderRepository(connection);
+        try (RepositoryFactory factory = new RepositoryFactory()) {
+            AbstractRepository<Order> orderRepository = factory.createOrderRepository();
 
-        SqlSpecification specification = new FindOrdersToIssueSpecification();
+            SqlSpecification specification = new FindOrdersToIssueSpecification();
 
-        return orderRepository.query(specification);
+            return orderRepository.query(specification);
+        }
     }
 
     public void saveOrder(Order order) throws SQLException {
-        AbstractRepository<Order> orderRepository = RepositoryFactory.createOrderRepository(connection);
+        try (RepositoryFactory factory = new RepositoryFactory()) {
+            AbstractRepository<Order> orderRepository = factory.createOrderRepository();
 
-        orderRepository.save(order);
-    }
-
-    public List<String> getOrderTableColumns() throws SQLException {
-        AbstractRepository<Order> orderRepository = RepositoryFactory.createOrderRepository(connection);
-
-        return orderRepository.queryColumnsNames();
+            orderRepository.save(order);
+        }
     }
 }

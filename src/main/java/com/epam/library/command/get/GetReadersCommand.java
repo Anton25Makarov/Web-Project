@@ -17,13 +17,12 @@ public class GetReadersCommand implements Command {
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) {
 
 
-        try (EmployeeService employeeService = new EmployeeService()) {
+        try  {
+            EmployeeService employeeService = new EmployeeService();
             List<Reader> readers = employeeService.takeReaders();
 
             req.setAttribute("readers", readers);
         } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
             e.printStackTrace();
         }
 

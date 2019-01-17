@@ -22,22 +22,15 @@ public class RemoveLibrarianCommand implements Command {
 
         Employee employee = new Employee(librarianId);
 
-        try (EmployeeService employeeService = new EmployeeService()) {
-            boolean result = employeeService.removeLibrarian(employee);
-
-            if (result) {
-                return CommandResult.redirect("/controller?command=getLibrariansWindow&save=success");
-            } else {
-                return CommandResult.redirect("/controller?command=getLibrariansWindow&save=fail");
-            }
+        try {
+            EmployeeService employeeService = new EmployeeService();
+            employeeService.removeLibrarian(employee);
 
 
-        } catch (InterruptedException e) {
-            e.printStackTrace();
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return CommandResult.redirect("/controller?command=getLibrariansWindow&save=fail");
+        return CommandResult.redirect("/controller?command=getLibrariansWindow&save=success");
     }
 }

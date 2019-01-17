@@ -11,41 +11,47 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public abstract class AbstractRepository<T extends Entity> implements Repository<T> {
-    private static final int FIRST_COLUMN = 1;
     protected Connection connection;
 
     public AbstractRepository(Connection connection) {
         this.connection = connection;
     }
 
-    // get table name?
-   /* @Override
-    public abstract boolean save(T t) throws SQLException;*/
 
-    /*@Override
-    public abstract boolean remove(T t) throws SQLException;*/
-
-    protected boolean executeRemove(T t, String removeQuery) throws SQLException {
+    protected void executeRemove(T t, String removeQuery) throws SQLException {
         try (PreparedStatement preparedStatement = connection.prepareStatement(removeQuery)) {
-            preparedStatement.setLong(FIRST_COLUMN, t.getId());
+            preparedStatement.setLong(1, t.getId());
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new SQLException(); //own exception
         }
-
-        return true;
     }
 
-    protected abstract Builder<T> getBuilder();
+    protected void executeSave(Map<Integer, Object> map, String query) throws SQLException {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            for (Map.Entry<Integer, Object> entry : map.entrySet()) {
+                Integer key = entry.getKey();
+                Object value = entry.getValue();
+                preparedStatement.setObject(key, value);
+            }
+
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new SQLException(); //own exception
+        }
+    }
+
 
     protected Optional<T> executeQueryForSingleResult(Builder<T> builder, String query, List<String> parameters)
             throws SQLException {
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            int i = FIRST_COLUMN;
+            int i = 1;
             for (String parameter : parameters) {
                 preparedStatement.setString(i++, parameter);
             }
@@ -61,9 +67,10 @@ public abstract class AbstractRepository<T extends Entity> implements Repository
         }
     }
 
-    protected List<T> executeQuery(Builder<T> builder, String query, List<String> parameters) throws SQLException {
+    protected List<T> executeQuery(String query, List<String> parameters) throws SQLException {
+        Builder<T> builder = getBuilder();
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            int i = FIRST_COLUMN;
+            int i = 1;
             for (String parameter : parameters) {
                 preparedStatement.setString(i++, parameter);
             }
@@ -80,19 +87,5 @@ public abstract class AbstractRepository<T extends Entity> implements Repository
         }
     }
 
-    protected List<String> executeQueryColumnsNames(String showTableColumnsQuery) throws SQLException {
-        try (PreparedStatement preparedStatement = connection.prepareStatement(showTableColumnsQuery)) {
-
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            List<String> columns = new ArrayList<>();
-
-            while (resultSet.next()) {
-                String column = resultSet.getString("Field");
-                columns.add(column);
-            }
-
-            return columns;
-        }
-    }
+    protected abstract Builder<T> getBuilder();
 }

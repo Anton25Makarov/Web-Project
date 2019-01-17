@@ -6,7 +6,6 @@ import com.epam.library.model.Reader;
 import com.epam.library.repositpry.AbstractRepository;
 import com.epam.library.repositpry.RepositoryFactory;
 import com.epam.library.specification.*;
-import com.sun.org.apache.xpath.internal.operations.Or;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -14,67 +13,80 @@ import java.util.Optional;
 
 public class ReaderService extends Service {
 
-    public ReaderService() throws InterruptedException {
-    }
-
     public Optional<Reader> login(String login, String password) throws SQLException {
-        AbstractRepository<Reader> readerRepository = RepositoryFactory.createReaderRepository(connection);
+        try (RepositoryFactory factory = new RepositoryFactory()) {
+            AbstractRepository<Reader> readerRepository = factory.createReaderRepository();
 
-        SqlSpecification specification = new FindUserByLoginAndPasswordSpecification(login, password);
+            SqlSpecification specification = new FindUserByLoginAndPasswordSpecification(login, password);
 
-        return readerRepository.queryForSingleResult(specification);
+            return readerRepository.queryForSingleResult(specification);
+        }
     }
 
     public Optional<Book> getBook(Long bookId) throws SQLException {
-        AbstractRepository<Book> bookRepository = RepositoryFactory.createBookRepository(connection);
+        try (RepositoryFactory factory = new RepositoryFactory()) {
+            AbstractRepository<Book> bookRepository = factory.createBookRepository();
 
-        SqlSpecification specification = new FindBookByIdSpecification(bookId);
+            SqlSpecification specification = new FindBookByIdSpecification(bookId);
 
-        return bookRepository.queryForSingleResult(specification);
+            return bookRepository.queryForSingleResult(specification);
+        }
     }
 
     public List<Book> getBooks(String title, String authorName, String authorSurname, String bookGenre)
             throws SQLException {
-        AbstractRepository<Book> bookRepository = RepositoryFactory.createBookRepository(connection);
+        try (RepositoryFactory factory = new RepositoryFactory()) {
+            AbstractRepository<Book> bookRepository = factory.createBookRepository();
 
-        SqlSpecification specification = new FindBooksInStockSpecification(title, authorName, authorSurname, bookGenre);
+            SqlSpecification specification = new FindBooksInStockSpecification(title, authorName, authorSurname, bookGenre);
 
-        return bookRepository.query(specification);
+            return bookRepository.query(specification);
+        }
     }
 
     public Optional<Book> getBookInStoke(Long bookId) throws SQLException {
-        AbstractRepository<Book> bookRepository = RepositoryFactory.createBookRepository(connection);
+        try (RepositoryFactory factory = new RepositoryFactory()) {
+            AbstractRepository<Book> bookRepository = factory.createBookRepository();
 
-        SqlSpecification specification = new FindBookInStockByIdSpecification(bookId);
+            SqlSpecification specification = new FindBookInStockByIdSpecification(bookId);
 
-        return bookRepository.queryForSingleResult(specification);
+            return bookRepository.queryForSingleResult(specification);
+        }
     }
 
-    public boolean saveBook(Book book) throws SQLException {
-        AbstractRepository<Book> bookRepository = RepositoryFactory.createBookRepository(connection);
+    public void saveBook(Book book) throws SQLException {
+        try (RepositoryFactory factory = new RepositoryFactory()) {
+            AbstractRepository<Book> bookRepository = factory.createBookRepository();
 
-        return bookRepository.save(book);
+            bookRepository.save(book);
+        }
     }
 
     public void saveOrder(Order order) throws SQLException {
-        AbstractRepository<Order> orderRepository = RepositoryFactory.createOrderRepository(connection);
+        try (RepositoryFactory factory = new RepositoryFactory()) {
+            AbstractRepository<Order> orderRepository = factory.createOrderRepository();
 
-        orderRepository.save(order);
+            orderRepository.save(order);
+        }
     }
 
     public List<Order> getReaderOrders(Long readerId) throws SQLException {
-        AbstractRepository<Order> orderRepository = RepositoryFactory.createOrderRepository(connection);
+        try (RepositoryFactory factory = new RepositoryFactory()) {
+            AbstractRepository<Order> orderRepository = factory.createOrderRepository();
 
-        SqlSpecification specification = new FindCurrentReaderBooksSpecification(readerId);
+            SqlSpecification specification = new FindCurrentReaderBooksSpecification(readerId);
 
-        return orderRepository.query(specification);
+            return orderRepository.query(specification);
+        }
     }
 
     public Optional<Order> getOrder(Long bookId) throws SQLException {
-        AbstractRepository<Order> orderRepository = RepositoryFactory.createOrderRepository(connection);
+        try (RepositoryFactory factory = new RepositoryFactory()) {
+            AbstractRepository<Order> orderRepository = factory.createOrderRepository();
 
-        SqlSpecification specification = new FindByIdSpecification(bookId);
+            SqlSpecification specification = new FindByIdSpecification(bookId);
 
-        return orderRepository.queryForSingleResult(specification);
+            return orderRepository.queryForSingleResult(specification);
+        }
     }
 }

@@ -25,7 +25,8 @@ public class SaveReaderCommand implements Command {
 
         Reader reader = new Reader(name, surname, login, password, telephone);
 
-        try (EmployeeService employeeService = new EmployeeService()) {
+        try  {
+            EmployeeService employeeService = new EmployeeService();
             if (employeeService.isEmployeeExist(login) || employeeService.isReaderExist(login)) {
                 System.out.println("Exist");
                 return CommandResult.redirect("/controller?command=getReadersWindow&save=fail");//page - const
@@ -35,9 +36,7 @@ public class SaveReaderCommand implements Command {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        } 
 
 
         return CommandResult.redirect("/controller?command=getReadersWindow&save=success");//page - const

@@ -22,13 +22,12 @@ public class GetChosenBooksCommand implements Command {
         String bookTitle = req.getParameter("BookTitle");
         String bookGenre = req.getParameter("bookGenre");
 
-        try (ReaderService service = new ReaderService()) {
-
+        try  {
+            ReaderService service = new ReaderService();
             List<Book> books = service.getBooks(bookTitle, authorName, authorSurname, bookGenre);
 
             req.setAttribute("books", books);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+
         } catch (SQLException e) {
             e.printStackTrace();
         }

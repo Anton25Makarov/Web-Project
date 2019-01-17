@@ -8,15 +8,13 @@ import com.epam.library.model.Reader;
 import com.epam.library.specification.SqlSpecification;
 
 import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public class OrderRepository extends AbstractRepository<Order> {
-    private static final String SHOW_COLUMNS_QUERY = "show columns from `order`";
-    private static final int FIRST_COLUMN = 1;
     private static final String SELECT_QUERY = "select * from `order` ";
     private static final String INSERT_QUERY =
             "insert into `order` (is_in_reading_room, taking_date, return_date, book_id, reader_id)\n" +
@@ -39,10 +37,8 @@ public class OrderRepository extends AbstractRepository<Order> {
 
         String query = SELECT_QUERY + specification.toSql();
         List<String> parameters = specification.getParameters();
-        Builder<Order> builder = getBuilder();
 
-
-        return executeQuery(builder, query, parameters);
+        return executeQuery(query, parameters);
     }
 
     //map<Str, obj> fields
@@ -63,64 +59,30 @@ public class OrderRepository extends AbstractRepository<Order> {
 
 
     @Override
-    public boolean save(Order order) throws SQLException {
+    public void save(Order order) throws SQLException {
 
-        Long orderId = order.getId();
-        boolean inReadingBook = order.isInReadingRoom();
-        java.util.Date takingDate = order.getTakingDate();
-        java.util.Date returnDate = order.getReturnDate();
-        Date takingDateSql = null;
-        Date returnDateSql = null;
-        if (takingDate != null) {
-            takingDateSql = new Date(order.getTakingDate().getTime());
-        }
-        if (returnDate != null) {
-            returnDateSql = new Date(order.getReturnDate().getTime());
-        }
+        Map<Integer, Object> map = new HashMap<>();
+        int i = 1;
+
+        map.put(i++, order.isInReadingRoom());
+        map.put(i++, order.getTakingDate());
+        map.put(i++, order.getReturnDate());
         Book book = order.getBook();
+        map.put(i++, book.getId());
         Reader reader = order.getReader();
-        Long bookId = book.getId();
-        Long readerId = reader.getId();
+        map.put(i++, reader.getId());
 
-        int i = FIRST_COLUMN;
-
-        if (orderId != null) {
-            try (PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_QUERY)) {
-                preparedStatement.setBoolean(i++, inReadingBook);
-                preparedStatement.setDate(i++, takingDateSql);
-                preparedStatement.setDate(i++, returnDateSql);
-                preparedStatement.setLong(i++, bookId);
-                preparedStatement.setLong(i++, readerId);
-                preparedStatement.setLong(i, orderId);
-
-                preparedStatement.executeUpdate();
-            } catch (SQLException e) {
-                throw new SQLException(); //own exception
-            }
+        if (order.getId() == null) {
+            executeSave(map, INSERT_QUERY);
         } else {
-            try (PreparedStatement preparedStatement = connection.prepareStatement(INSERT_QUERY)) {
-                preparedStatement.setBoolean(i++, inReadingBook);
-                preparedStatement.setDate(i++, takingDateSql);
-                preparedStatement.setDate(i++, returnDateSql);
-                preparedStatement.setLong(i++, bookId);
-                preparedStatement.setLong(i, readerId);
-
-                preparedStatement.executeUpdate();
-            } catch (SQLException e) {
-                throw new SQLException(); //own exception
-            }
+            map.put(i, order.getId());
+            executeSave(map, UPDATE_QUERY);
         }
-
-        return true;
     }
 
     @Override
-    public boolean remove(Order order) throws SQLException {
+    public void remove(Order order) throws SQLException {
         throw new UnsupportedOperationException();
     }
 
-    @Override
-    public List<String> queryColumnsNames() throws SQLException {
-        return executeQueryColumnsNames(SHOW_COLUMNS_QUERY);
-    }
 }

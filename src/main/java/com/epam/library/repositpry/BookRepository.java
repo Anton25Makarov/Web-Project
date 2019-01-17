@@ -8,12 +8,9 @@ import com.epam.library.specification.SqlSpecification;
 import com.epam.library.model.Book;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class BookRepository extends AbstractRepository<Book> {
-    private static final String SHOW_COLUMNS_QUERY = "show columns from `book`";
     private static final String SELECT_QUERY = "select * from book ";
     private static final String REMOVE_QUERY = "delete from book where id = ?";
     private static final String INSERT_QUERY =
@@ -37,10 +34,8 @@ public class BookRepository extends AbstractRepository<Book> {
 
         String query = SELECT_QUERY + specification.toSql();
         List<String> parameters = specification.getParameters();
-        Builder<Book> builder = getBuilder();
 
-
-        return executeQuery(builder, query, parameters);
+        return executeQuery(query, parameters);
     }
 
     //map<Str, obj> fields
@@ -59,56 +54,44 @@ public class BookRepository extends AbstractRepository<Book> {
         return new BookBuilder();
     }
 
+   /* private Map<Integer, Object> getMapToAdd(Book book) {
+
+        int i = 1;
+        Map<Integer, Object> map = new HashMap<>();
+
+        map.put(i++, book.getTitle());
+        map.put(i++, book.getYear());
+        map.put(i++, book.getCount());
+        map.put(i++, book.getAuthor().getId());
+        map.put(i, book.getGenre().getId());
+
+        return map;
+    }*/
+
 
     @Override
-    public boolean save(Book book) throws SQLException {
+    public void save(Book book) throws SQLException {
 
-        String title = book.getTitle();
-        int year = book.getYear();
-        int count = book.getCount();
-        Author author = book.getAuthor();
-        BookGenre genre = book.getGenre();
+        Map<Integer, Object> map = new HashMap<>();
+        int i = 1;
 
-        if (book.getId() == null) { // Duplicate ???
+        map.put(i++, book.getTitle());
+        map.put(i++, book.getYear());
+        map.put(i++, book.getCount());
+        map.put(i++, book.getAuthor().getId());
+        map.put(i++, book.getGenre().getId());
 
-            try (PreparedStatement preparedStatement = connection.prepareStatement(INSERT_QUERY)) {
-
-                preparedStatement.setString(1, title);
-                preparedStatement.setInt(2, year);
-                preparedStatement.setInt(3, count);
-                preparedStatement.setLong(4, author.getId());
-                preparedStatement.setLong(5, genre.getId());
-
-                preparedStatement.executeUpdate();
-            } catch (SQLException e) {
-                throw new SQLException(); //own exception
-            }
-
-            return true;
+        if (book.getId() == null) {
+            executeSave(map, INSERT_QUERY);
         } else {
-            try (PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_QUERY)) {
-
-                preparedStatement.setString(1, title);
-                preparedStatement.setInt(2, year);
-                preparedStatement.setInt(3, count);
-                preparedStatement.setLong(4, author.getId());
-                preparedStatement.setLong(5, genre.getId());
-                preparedStatement.setLong(6, book.getId());
-
-                preparedStatement.executeUpdate();
-            } catch (SQLException e) {
-                throw new SQLException(); //own exception
-            }
+            map.put(i, book.getId());
+            executeSave(map, UPDATE_QUERY);
         }
-        return true;
     }
 
     @Override
-    public boolean remove(Book book) throws SQLException {
-        return executeRemove(book, REMOVE_QUERY);
+    public void remove(Book book) throws SQLException {
+        executeRemove(book, REMOVE_QUERY);
     }
 
-    @Override
-    public List<String> queryColumnsNames() throws SQLException {
-        return executeQueryColumnsNames(SHOW_COLUMNS_QUERY);    }
 }

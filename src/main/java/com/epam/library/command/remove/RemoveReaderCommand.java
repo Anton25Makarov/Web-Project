@@ -19,13 +19,11 @@ public class RemoveReaderCommand implements Command {
 
         Reader reader = new Reader(readerId);
 
-        try (EmployeeService employeeService = new EmployeeService()) {
-
+        try  {
+            EmployeeService employeeService = new EmployeeService();
             employeeService.removeReader(reader);
 
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
+        }catch (SQLException e) {
             e.printStackTrace();
         }
 

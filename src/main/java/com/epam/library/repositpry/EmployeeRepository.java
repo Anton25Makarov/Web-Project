@@ -9,7 +9,9 @@ import org.apache.commons.codec.digest.DigestUtils;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public class EmployeeRepository extends AbstractRepository<Employee> {
@@ -36,9 +38,8 @@ public class EmployeeRepository extends AbstractRepository<Employee> {
     public List<Employee> query(SqlSpecification specification) throws SQLException {
         String query = SELECT_QUERY + specification.toSql();
         List<String> parameters = specification.getParameters();
-        Builder<Employee> builder = getBuilder();
 
-        return executeQuery(builder, query, parameters);
+        return executeQuery(query, parameters);
     }
 
     @Override
@@ -53,57 +54,34 @@ public class EmployeeRepository extends AbstractRepository<Employee> {
     }
 
     @Override
-    public boolean save(Employee employee) throws SQLException {
+    public void save(Employee employee) throws SQLException {
 
-        String name = employee.getName();
-        String surname = employee.getSurname();
-        String login = employee.getLogin();
-//        String password = employee.getPassword();
-        String password = DigestUtils.md5Hex(employee.getPassword());
-        boolean isAdmin = employee.isAdmin();
+        Map<Integer, Object> map = new HashMap<>();
+        int i = 1;
+
+        map.put(i++, employee.getLogin());
+        map.put(i++, DigestUtils.md5Hex(employee.getPassword()));
+        map.put(i++, employee.getName());
+        map.put(i++, employee.getSurname());
+        map.put(i++, employee.isAdmin());
+
 
         if (employee.getId() == null) {
-            try (PreparedStatement preparedStatement = connection.prepareStatement(INSERT_QUERY)) {
-                preparedStatement.setString(1, login);
-                preparedStatement.setString(2, password);
-                preparedStatement.setString(3, name);
-                preparedStatement.setString(4, surname);
-                preparedStatement.setBoolean(5, isAdmin);
-
-                preparedStatement.executeUpdate();
-            } catch (SQLException e) {
-                throw new SQLException(); //own exception
-            }
+            executeSave(map, INSERT_QUERY);
         } else {
-            try (PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_QUERY)) {
-
-                preparedStatement.setString(1, login);
-                preparedStatement.setString(2, password);
-                preparedStatement.setString(3, name);
-                preparedStatement.setString(4, surname);
-                preparedStatement.setBoolean(5, isAdmin);
-                preparedStatement.setLong(6, employee.getId());
-
-                preparedStatement.executeUpdate();
-            } catch (SQLException e) {
-                throw new SQLException(); //own exception
-            }
+            map.put(i, UPDATE_QUERY);
         }
-        return true;
     }
 
     @Override
-    public boolean remove(Employee employee) throws SQLException {
-        return executeRemove(employee, REMOVE_QUERY);
+    public void remove(Employee employee) throws SQLException {
+        executeRemove(employee, REMOVE_QUERY);
     }
 
     protected Builder<Employee> getBuilder() {
         return new EmployeeBuilder();
     }
 
-    @Override
-    public List<String> queryColumnsNames() throws SQLException {
-        return executeQueryColumnsNames(SHOW_COLUMNS_QUERY);    }
 }
 //map<Str, obj> fields
 // fields.put(NAME_OF_COLUMN, employee.getId);

@@ -17,13 +17,11 @@ public class GetBooksCommand implements Command {
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) {
 
-        try (EmployeeService employeeService = new EmployeeService()) {
-
+        try  {
+            EmployeeService employeeService = new EmployeeService();
             List<Book> books = employeeService.takeBooksInStock();
 
             req.setAttribute("books", books);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
         } catch (SQLException e) {
             e.printStackTrace();
         }

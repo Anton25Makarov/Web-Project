@@ -4,29 +4,28 @@ import com.epam.library.builder.Builder;
 import com.epam.library.builder.ReaderBuilder;
 import com.epam.library.model.Reader;
 import com.epam.library.specification.SqlSpecification;
-import org.apache.commons.codec.cli.Digest;
 import org.apache.commons.codec.digest.DigestUtils;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public class ReaderRepository extends AbstractRepository<Reader> {
     public static final int FIRST_COLUMN = 1;
-    private static final String SHOW_COLUMNS_QUERY = "show columns from `reader`";
     private static final String SELECT_QUERY = "select * from reader ";
     private static final String REMOVE_QUERY = "delete from reader where id = ?";
     private static final String INSERT_QUERY =
-            "insert into reader (login, password, name, surname, telephone)\n" +
+            "insert into reader (name, surname, login, password, telephone)\n" +
                     "values (?, ?, ?, ?, ?);";
     private static final String UPDATE_QUERY =
             "update reader\n" +
-                    "set login     = ?,\n" +
-                    "    password  = ?,\n" +
-                    "    name      = ?,\n" +
+                    "set name      = ?,\n" +
                     "    surname   = ?,\n" +
+                    "    login     = ?,\n" +
+                    "    password  = ?,\n" +
                     "    telephone = ?\n" +
                     "where id = ?;";
 
@@ -39,9 +38,8 @@ public class ReaderRepository extends AbstractRepository<Reader> {
     public List<Reader> query(SqlSpecification specification) throws SQLException {
         String query = SELECT_QUERY + specification.toSql();
         List<String> parameters = specification.getParameters();
-        Builder<Reader> builder = getBuilder();
 
-        return executeQuery(builder, query, parameters);
+        return executeQuery(query, parameters);
     }
 
     @Override
@@ -57,48 +55,28 @@ public class ReaderRepository extends AbstractRepository<Reader> {
     }
 
     @Override
-    public boolean save(Reader reader) throws SQLException {
-        String login = reader.getLogin();
-        String name = reader.getName();
-        String surname = reader.getSurname();
-        String password = DigestUtils.md5Hex(reader.getPassword());
-        String telephoneNumber = reader.getTelephoneNumber();
+    public void save(Reader reader) throws SQLException {
 
-        int i = FIRST_COLUMN;
+        Map<Integer, Object> map = new HashMap<>();
+        int i = 1;
+
+        map.put(i++, reader.getName());
+        map.put(i++, reader.getSurname());
+        map.put(i++, reader.getLogin());
+        map.put(i++, DigestUtils.md5Hex(reader.getPassword()));
+        map.put(i++, reader.getTelephoneNumber());
+
         if (reader.getId() == null) {
-            try (PreparedStatement preparedStatement = connection.prepareStatement(INSERT_QUERY)) {
-                preparedStatement.setString(i++, login);
-                preparedStatement.setString(i++, password);
-                preparedStatement.setString(i++, name);
-                preparedStatement.setString(i++, surname);
-                preparedStatement.setString(i, telephoneNumber);
-
-                preparedStatement.executeUpdate();
-            } catch (SQLException e) {
-                throw new SQLException(); //own exception
-            }
+            executeSave(map, INSERT_QUERY);
         } else {
-            try (PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_QUERY)) {
-
-                preparedStatement.setString(i++, login);
-                preparedStatement.setString(i++, password);
-                preparedStatement.setString(i++, name);
-                preparedStatement.setString(i++, surname);
-                preparedStatement.setString(i++, telephoneNumber);
-                preparedStatement.setLong(i, reader.getId());
-
-                preparedStatement.executeUpdate();
-            } catch (SQLException e) {
-                throw new SQLException(); //own exception
-            }
+            map.put(i, reader.getId());
+            executeSave(map, UPDATE_QUERY);
         }
-
-        return true;
     }
 
     @Override
-    public boolean remove(Reader reader) throws SQLException {
-        return executeRemove(reader, REMOVE_QUERY);
+    public void remove(Reader reader) throws SQLException {
+        executeRemove(reader, REMOVE_QUERY);
     }
 
     @Override
@@ -106,7 +84,4 @@ public class ReaderRepository extends AbstractRepository<Reader> {
         return new ReaderBuilder();
     }
 
-    @Override
-    public List<String> queryColumnsNames() throws SQLException {
-        return executeQueryColumnsNames(SHOW_COLUMNS_QUERY);    }
 }

@@ -49,7 +49,8 @@ public class OrderBookCommand implements Command {
         Date takingDate = new Date();
 
 
-        try (ReaderService service = new ReaderService()) {
+        try  {
+            ReaderService service = new ReaderService();
             Reader reader = (Reader) session.getAttribute("user");
 
             Optional<Book> book1 = service.getBookInStoke(bookId);
@@ -65,8 +66,6 @@ public class OrderBookCommand implements Command {
 
             }
 
-        } catch (InterruptedException e) {
-            e.printStackTrace();
         } catch (SQLException e) {
             e.printStackTrace();
         }

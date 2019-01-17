@@ -14,13 +14,12 @@ public class GetOrdersToIssueCommand implements Command {
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) {
 
-        try (LibrarianService service = new LibrarianService()) {
+        try{
+            LibrarianService service = new LibrarianService();
             List<Order> orders = service.takeOrdersToIssue();
 
             req.setAttribute("orders", orders);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
+        }  catch (SQLException e) {
             e.printStackTrace();
         }
 

@@ -16,7 +16,8 @@ public class GetBooksAuthorsGenresCommand implements Command {
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) {
 
-        try (EmployeeService employeeService = new EmployeeService()) {
+        try  {
+            EmployeeService employeeService = new EmployeeService();
             List<Book> books = employeeService.takeBooks();
             req.setAttribute("books", books);
 
@@ -25,9 +26,7 @@ public class GetBooksAuthorsGenresCommand implements Command {
 
             List<Author> authors = employeeService.takeAuthors();
             req.setAttribute("authors", authors);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
+        }  catch (SQLException e) {
             e.printStackTrace();
         }
 

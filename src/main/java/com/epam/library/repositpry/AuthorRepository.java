@@ -6,19 +6,15 @@ import com.epam.library.model.Author;
 import com.epam.library.specification.SqlSpecification;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class AuthorRepository extends AbstractRepository<Author> {
-    private static final String SHOW_COLUMNS_QUERY = "show columns from `book_author`";
     private static final String SELECT_QUERY = "select * from book_author ";
     private static final String INSERT_QUERY =
             "insert into book_author (name, surname) \n" +
                     "values (?, ?);";
+
 
     public AuthorRepository(Connection connection) {
         super(connection);
@@ -28,9 +24,8 @@ public class AuthorRepository extends AbstractRepository<Author> {
     public List<Author> query(SqlSpecification specification) throws SQLException {
         String query = SELECT_QUERY + specification.toSql();
         List<String> parameters = specification.getParameters();
-        Builder<Author> builder = getBuilder();
 
-        return executeQuery(builder, query, parameters);
+        return executeQuery(query, parameters);
     }
 
     //map<Str, obj> fields
@@ -50,29 +45,21 @@ public class AuthorRepository extends AbstractRepository<Author> {
     }
 
     @Override
-    public boolean save(Author author) throws SQLException {
+    public void save(Author author) throws SQLException {
 
-        boolean executingFlag;
-        try (PreparedStatement preparedStatement = connection.prepareStatement(INSERT_QUERY)) {
+        Map<Integer, Object> map = new HashMap<>();
+        int i = 1;
 
-            preparedStatement.setString(1, author.getName());
-            preparedStatement.setString(2, author.getSurname());
+        map.put(i++, author.getName());
+        map.put(i, author.getSurname());
 
-            preparedStatement.executeUpdate();
-            executingFlag = true;
-        } catch (SQLException e) {
-            throw new SQLException(); //own exception
-        }
-
-        return executingFlag;
+        executeSave(map, INSERT_QUERY);
     }
 
     @Override
-    public boolean remove(Author author) throws SQLException {
+    public void remove(Author author) throws SQLException {
         throw new UnsupportedOperationException();
     }
 
-    @Override
-    public List<String> queryColumnsNames() throws SQLException {
-        return executeQueryColumnsNames(SHOW_COLUMNS_QUERY);    }
+
 }

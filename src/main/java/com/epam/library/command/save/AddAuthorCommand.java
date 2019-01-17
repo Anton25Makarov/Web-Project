@@ -21,14 +21,12 @@ public class AddAuthorCommand implements Command {
 
         Author author = new Author(authorBookName, authorBookSurname);
 
-        try (EmployeeService employeeService = new EmployeeService()) {
-
+        try  {
+            EmployeeService employeeService = new EmployeeService();
             employeeService.saveAuthor(author);
 
 
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
+        }  catch (SQLException e) {
             e.printStackTrace();
         }
         return CommandResult.redirect("/controller?command=addBookWindow&save=success");

@@ -6,9 +6,7 @@ import com.epam.library.model.BookGenre;
 import com.epam.library.specification.SqlSpecification;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class GenreRepository extends AbstractRepository<BookGenre> {
     private static final String SHOW_COLUMNS_QUERY = "show columns from `genre_catalog`";
@@ -25,10 +23,8 @@ public class GenreRepository extends AbstractRepository<BookGenre> {
     public List<BookGenre> query(SqlSpecification specification) throws SQLException {
         String query = SELECT_QUERY + specification.toSql();
         List<String> parameters = specification.getParameters();
-        Builder<BookGenre> builder = getBuilder();
 
-
-        return executeQuery(builder, query, parameters);
+        return executeQuery(query, parameters);
     }
 
     //map<Str, obj> fields
@@ -47,52 +43,18 @@ public class GenreRepository extends AbstractRepository<BookGenre> {
         throw new UnsupportedOperationException(); // add text error as parameter
     }
 
-//    private List<BookGenre> executeQuery(Builder<BookGenre> builder, String query, List<String> parameters)
-//            throws SQLException {
-//
-//        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-//            int i = 1;
-//            for (String parameter : parameters) {
-//                preparedStatement.setString(i++, parameter);
-//            }
-//
-//            ResultSet resultSet = preparedStatement.executeQuery();
-//
-//            List<BookGenre> genres = new ArrayList<>();
-//            while (resultSet.next()) {
-//                BookGenre bookGenre = builder.build(resultSet);
-//                genres.add(bookGenre);
-//            }
-//
-//            return genres;
-//        } catch (SQLException e) {
-//            throw new SQLException(); //own exception
-//        }
-//    }
-
     @Override
-    public boolean save(BookGenre genre) throws SQLException {
+    public void save(BookGenre genre) throws SQLException {
+        Map<Integer, Object> map = new HashMap<>();
 
-        boolean executingFlag;
-        try (PreparedStatement preparedStatement = connection.prepareStatement(INSERT_QUERY)) {
+        map.put(1, genre.getGenre());
 
-            preparedStatement.setString(1, genre.getGenre());
-
-            preparedStatement.executeUpdate();
-            executingFlag = true;
-        } catch (SQLException e) {
-            throw new SQLException(); //own exception
-        }
-
-        return executingFlag;
+        executeSave(map, INSERT_QUERY);
     }
 
     @Override
-    public boolean remove(BookGenre genre) throws SQLException {
+    public void remove(BookGenre genre) throws SQLException {
         throw new UnsupportedOperationException();
     }
 
-    @Override
-    public List<String> queryColumnsNames() throws SQLException {
-        return executeQueryColumnsNames(SHOW_COLUMNS_QUERY);    }
 }

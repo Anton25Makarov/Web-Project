@@ -27,16 +27,16 @@ public class ConnectionPool {
         return instance;
     }
 
-    public Connection takeConnection() throws InterruptedException {
-        semaphore.acquire();
-        Connection connection;
+    public Connection takeConnection() {
         try {
+            semaphore.acquire();
             takeLock.lock();
-            connection = connections.poll();
+            return connections.poll();
+        } catch (InterruptedException e) {
+            throw new RuntimeException("Interrupted while waiting for a database connection.", e);
         } finally {
             takeLock.unlock();
         }
-        return connection;
     }
 
     public void returnConnection(Connection connection) {
@@ -56,7 +56,7 @@ public class ConnectionPool {
                 connections.add(connection);
             }
         } catch (IOException | SQLException e) {
-            throw new RuntimeException("Con not create connection to database", e);
+            throw new RuntimeException("Can not create connection to database.", e);
         }
     }
 }

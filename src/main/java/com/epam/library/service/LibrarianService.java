@@ -1,13 +1,11 @@
 package com.epam.library.service;
 
+import com.epam.library.model.Book;
 import com.epam.library.model.Order;
 import com.epam.library.model.Reader;
 import com.epam.library.repositpry.AbstractRepository;
 import com.epam.library.repositpry.RepositoryFactory;
-import com.epam.library.specification.FindAllSpecification;
-import com.epam.library.specification.FindOrdersToIssueSpecification;
-import com.epam.library.specification.FindUserByLoginAndPasswordSpecification;
-import com.epam.library.specification.SqlSpecification;
+import com.epam.library.specification.*;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -51,6 +49,26 @@ public class LibrarianService extends Service {
             AbstractRepository<Order> orderRepository = factory.createOrderRepository();
 
             orderRepository.save(order);
+        }
+    }
+
+    public Optional<Book> getBook(Long bookId) throws SQLException {
+        try (RepositoryFactory factory = new RepositoryFactory()) {
+            AbstractRepository<Book> bookRepository = factory.createBookRepository();
+
+            SqlSpecification specification = new FindBookByIdSpecification(bookId);
+
+            return bookRepository.queryForSingleResult(specification);
+        }
+    }
+
+    public Optional<Reader> getReader(Long bookId) throws SQLException {
+        try (RepositoryFactory factory = new RepositoryFactory()) {
+            AbstractRepository<Reader> readerRepository = factory.createReaderRepository();
+
+            SqlSpecification specification = new FindByIdSpecification(bookId);
+
+            return readerRepository.queryForSingleResult(specification);
         }
     }
 }

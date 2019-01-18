@@ -1,5 +1,5 @@
 $(document).ready(function () {
     $(window).on('click', function () {
-        $('.vertical-direction span').hide(400);
+        $('.vertical-direction span .info').hide(400);
     });
 });

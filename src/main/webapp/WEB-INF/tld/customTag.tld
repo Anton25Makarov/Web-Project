@@ -29,6 +29,5 @@
             <type>java.util.List</type>
             <rtexprvalue>true</rtexprvalue>
         </attribute>
-
     </tag>
 </taglib>

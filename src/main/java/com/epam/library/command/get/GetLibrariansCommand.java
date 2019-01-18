@@ -26,7 +26,7 @@ public class GetLibrariansCommand implements Command {
             e.printStackTrace();
         }
 
-        return CommandResult.forward("/WEB-INF/pages/admin-librarian.jsp");
+        return CommandResult.forward("/WEB-INF/pages/admin/librarians.jsp");
 
     }
 }

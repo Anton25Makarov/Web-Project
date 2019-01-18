@@ -30,6 +30,6 @@ public class GetBooksAuthorsGenresCommand implements Command {
             e.printStackTrace();
         }
 
-        return CommandResult.forward("/WEB-INF/pages/admin-book.jsp");
+        return CommandResult.forward("/WEB-INF/pages/admin/books.jsp");
     }
 }

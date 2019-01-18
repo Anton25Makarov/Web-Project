@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
 import java.util.List;
 
-public class AddGenreCommand implements Command {
+public class SaveGenreCommand implements Command {
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) {
 
@@ -31,6 +31,6 @@ public class AddGenreCommand implements Command {
         }
         return CommandResult.redirect("/controller?command=addBookWindow&save=success");
 
-//        return CommandResult.forward("/WEB-INF/pages/admin-book.jsp");
+//        return CommandResult.forward("/WEB-INF/pages/books.jsp");
     }
 }

@@ -9,8 +9,3 @@
         <fmt:message bundle="${loc}" key="header.title"/>
     </h1>
 </div>
-<%--
-<br/>
-<i>Language</i>
-<a href="${pageContext.servletContext.contextPath}/controller?command=logOut">log out</a>
-<br>--%>

@@ -23,6 +23,6 @@ public class GetOrdersToIssueCommand implements Command {
             e.printStackTrace();
         }
 
-        return CommandResult.forward("/WEB-INF/pages/librarian-issue-orders.jsp");
+        return CommandResult.forward("/WEB-INF/pages/librarian/issue-orders.jsp");
     }
 }

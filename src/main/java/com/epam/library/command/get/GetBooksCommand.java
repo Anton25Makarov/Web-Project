@@ -26,7 +26,7 @@ public class GetBooksCommand implements Command {
             e.printStackTrace();
         }
 
-        return CommandResult.forward("/WEB-INF/pages/reader-find-books.jsp");
+        return CommandResult.forward("/WEB-INF/pages/reader/find-books.jsp");
     }
 
 }

@@ -8,7 +8,7 @@
 <html>
 <head>
     <title>
-        <fmt:message bundle="${loc}" key="tab.login.title"/>
+        <fmt:message bundle="${loc}" key="label.logIn"/>
     </title>
     <link type="text/css" rel="stylesheet" href='${pageContext.servletContext.contextPath}/resource/style/style.css'/>
 </head>
@@ -42,12 +42,12 @@
             <form class="sign_up_form" method="post"
                   action="${pageContext.servletContext.contextPath}/controller?command=login">
                 <div class="sign_up_form_group">
-                    <fmt:message bundle="${loc}" key="input.placeholder.login" var="login"/>
+                    <fmt:message bundle="${loc}" key="label.login" var="login"/>
                     <input type="text" name="login" placeholder="${login}" required class="sign_up_input"/>
                 </div>
 
                 <div class="sign_up_form_group">
-                    <fmt:message bundle="${loc}" key="input.placeholder.password" var="password"/>
+                    <fmt:message bundle="${loc}" key="label.password" var="password"/>
                     <input type="password" name="password" placeholder="${password}" required class="sign_up_input"/>
                 </div>
 

@@ -57,4 +57,8 @@ public class Order extends Entity {
     public Reader getReader() {
         return reader;
     }
+
+    public void setReader(Reader reader) {
+        this.reader = reader;
+    }
 }

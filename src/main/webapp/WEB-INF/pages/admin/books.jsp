@@ -1,5 +1,10 @@
 <%@ page contentType="text/html; charset=utf-8" pageEncoding="UTF-8" isELIgnored="false" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<fmt:setLocale value="${sessionScope.local}" scope="session"/>
+<fmt:setBundle basename="locale" var="loc"/>
 <html>
 <head>
     <link type="text/css" rel="stylesheet" href='${pageContext.servletContext.contextPath}/resource/style/style.css'/>
@@ -19,14 +24,14 @@
 <body>
 <div id="head">
     <header>
-        <jsp:include page="../fragments/header-label.jsp"/>
+        <jsp:include page="../../fragments/header-label.jsp"/>
     </header>
     <nav>
         <ul>
-            <jsp:include page="../fragments/nav-language.jsp">
-                <jsp:param name="page" value="addBook"/>
+            <jsp:include page="../../fragments/nav-language.jsp">
+                <jsp:param name="page" value="addBooks"/>
             </jsp:include>
-            <jsp:include page="../fragments/nav-logout.jsp"/>
+            <jsp:include page="../../fragments/nav-logout.jsp"/>
         </ul>
     </nav>
 </div>
@@ -35,37 +40,68 @@
         <div class="menu">
             <c:choose>
                 <c:when test="${sessionScope.role == 'employee' and sessionScope.user.admin}">
-                    <jsp:include page="../fragments/admin/admin-menu.jsp"/>
+                    <jsp:include page="../../fragments/admin/admin-menu.jsp"/>
                 </c:when>
                 <c:when test="${sessionScope.role == 'employee' and !sessionScope.user.admin}">
 
                 </c:when>
                 <c:when test="${sessionScope.role == 'reader'}">
-                    <jsp:include page="../fragments/reader/reader-menu.jsp"/>
+                    <jsp:include page="../../fragments/reader/reader-menu.jsp"/>
                 </c:when>
             </c:choose>
+            <div class="vertical-direction">
+                <div class="button-info">
+                    <button id="saveBookButton">
+                        <fmt:message bundle="${loc}" key="label.add.book"/>
+                    </button>
+                </div>
+                <div class="button-info">
+                    <button id="addAuthorButton">
+                        <fmt:message bundle="${loc}" key="label.add.author"/>
+                    </button>
+                </div>
+                <div class="button-info">
+                    <button id="addGenreButton">
+                        <fmt:message bundle="${loc}" key="label.add.genre"/>
+                    </button>
+                </div>
+                <span> <c:out value="${param.save}"/></span>
+            </div>
         </div>
     </aside>
 
     <article>
         <div>
+            <p class="page-title">
+                <fmt:message bundle="${loc}" key="label.books"/>
+            </p>
             <table id="table">
                 <thead>
                 <tr>
-                    <th>Id</th>
-                    <th>Book name</th>
-                    <th>Book author</th>
-                    <th>Genre</th>
-                    <th>Year</th>
-                    <th>Count</th>
-                    <th>Edit</th>
-                    <th>Remove</th>
+                    <th>№</th>
+                    <th>
+                        <fmt:message bundle="${loc}" key="label.book.title"/>
+                    </th>
+                    <th>
+                        <fmt:message bundle="${loc}" key="label.book.author"/>
+                    </th>
+                    <th>
+                        <fmt:message bundle="${loc}" key="label.book.genre"/>
+                    </th>
+                    <th>
+                        <fmt:message bundle="${loc}" key="label.year"/>
+                    </th>
+                    <th>
+                        <fmt:message bundle="${loc}" key="label.amount"/>
+                    </th>
+                    <th></th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
-                <c:forEach var="book" items="${requestScope.books}">
+                <c:forEach var="book" items="${requestScope.books}" varStatus="status">
                     <tr>
-                        <td><c:out value="${book.id}"/></td>
+                        <td><c:out value="${status.count}"/></td>
                         <td><c:out value="${book.title}"/></td>
                         <td>
                             <c:out value="${book.author.name}"/>
@@ -75,75 +111,25 @@
                         <td><c:out value="${book.year}"/></td>
                         <td><c:out value="${book.count}"/></td>
                         <td>
-                            <div id="modal-wrapper-book" class="modal">
+                            <%--<input type="hidden" value="${book.id} + ' is my ID'">--%>
 
-                                <form class="modal-content animate" method="post"
-                                      action="${pageContext.servletContext.contextPath}/controller?command=saveBook">
-                                    <div class="imgContainer">
-                                        <span class="close modalCross" title="Close">&times;</span>
-                                        <img src="${pageContext.servletContext.contextPath}/resource/images/add-book.png"
-                                             alt="Add book"
-                                             class="addingImage"/>
-                                        <h1 style="text-align:center">Adding book</h1>
-                                    </div>
-
-                                    <div class="container">
-                                        <input type="text" placeholder="Title" name="bookTitle" required
-                                               pattern="[a-zA-Z\d]{2,15}">
-
-                                        <label>Genre
-                                            <select name="selectedGenreId" required>
-                                                <c:forEach items="${requestScope.genres}" var="genre">
-                                                    <option value="${genre.id}"><c:out value="${genre.genre}"/></option>
-                                                </c:forEach>
-                                            </select>
-                                        </label>
-                                        <label>Author
-                                            <select name="selectedAuthorId" title="authors" required>
-                                                <c:forEach items="${requestScope.authors}" var="author">
-                                                    <option value="${author.id}">
-                                                        <c:out value="${author.name}"/>
-                                                        <c:out value="${author.surname}"/>
-                                                    </option>
-                                                </c:forEach>
-                                            </select>
-                                        </label>
-                                        <input type="text" placeholder="Count" name="bookCount" required pattern="\d+">
-                                        <input type="text" placeholder="Year" name="bookYear" required pattern="\d+">
-                                        <input type="hidden" value="${book.id}" name="bookId">
-                                        <button type="submit">Save book</button>
-                                    </div>
-                                </form>
-
-                            </div>
-                                <%-- <input type="hidden" value="${book.id}" name="bookId">--%>
-                            <button type="submit" class="saveEditBookButton">Edit</button>
+                            <button type="submit" class="saveEditBookButton" value="${book.id}">
+                                <fmt:message bundle="${loc}" key="label.edit"/>
+                            </button>
                         </td>
                         <td>
                             <form class="form-for-button" method="post"
                                   action="${pageContext.servletContext.contextPath}/controller?command=removeBook">
                                 <input type="hidden" value="${book.id}" name="bookId">
-                                <button type="submit" class="saveRemoveBookButton">Remove</button>
+                                <button type="submit" class="saveRemoveBookButton">
+                                    <fmt:message bundle="${loc}" key="label.remove"/>
+                                </button>
                             </form>
-                                <%-- <input type="hidden" value="${book.id}" name="bookId">--%>
                         </td>
                     </tr>
                 </c:forEach>
                 </tbody>
             </table>
-        </div>
-
-        <div class="vertical-direction">
-            <div class="button-info">
-                <button id="saveBookButton">Add book</button>
-            </div>
-            <div class="button-info">
-                <button id="addAuthorButton">Add author</button>
-            </div>
-            <div class="button-info">
-                <button id="addGenreButton">Add genre</button>
-            </div>
-            <span> <c:out value="${param.save}"/></span>
         </div>
 
         <div id="modal-wrapper-book-insert" class="modal">
@@ -155,11 +141,14 @@
                     <img src="${pageContext.servletContext.contextPath}/resource/images/add-book.png"
                          alt="Add book"
                          class="addingImage"/>
-                    <h1 style="text-align:center">Adding book</h1>
+                    <h1 style="text-align:center">
+                        <fmt:message bundle="${loc}" key="label.book.adding"/>
+                    </h1>
                 </div>
 
                 <div class="container">
-                    <input type="text" placeholder="Title" name="bookTitle" required pattern="[a-zA-Z\d]{2,15}"/>
+                    <fmt:message bundle="${loc}" key="label.book.title" var="title"/>
+                    <input type="text" placeholder="${title}" name="bookTitle" required pattern="[a-zA-Z\d]{2,15}"/>
 
                     <label>
                         <select name="selectedGenreId" required>
@@ -178,9 +167,14 @@
                             </c:forEach>
                         </select>
                     </label>
-                    <input type="text" placeholder="Count" name="bookCount" required pattern="\d+">
-                    <input type="text" placeholder="Year" name="bookYear" required pattern="\d+">
-                    <button type="submit">Save book</button>
+                    <fmt:message bundle="${loc}" key="label.amount" var="count"/>
+                    <input type="text" placeholder="${count}" name="bookCount" required pattern="\d+">
+                    <fmt:message bundle="${loc}" key="label.year" var="year"/>
+                    <input type="text" placeholder="${year}" name="bookYear" required pattern="\d+">
+                    <input type="hidden" name="bookId">
+                    <button type="submit">
+                        <fmt:message bundle="${loc}" key="label.save"/>
+                    </button>
                 </div>
             </form>
 
@@ -195,15 +189,21 @@
                     <span class="close modalCross" title="Close">&times;</span>
                     <img src="${pageContext.servletContext.contextPath}/resource/images/add-book.png" alt="Add author"
                          class="addingImage"/>
-                    <h1 style="text-align:center">Adding author</h1>
+                    <h1 style="text-align:center">
+                        <fmt:message bundle="${loc}" key="label.author.adding"/>
+                    </h1>
                 </div>
 
                 <div class="container">
-                    <input type="text" placeholder="Author name" name="authorBookName" required
+                    <fmt:message bundle="${loc}" key="label.author.name" var="name"/>
+                    <input type="text" placeholder="${name}" name="authorBookName" required
                            pattern="[a-zA-Z]{2,15}">
-                    <input type="text" placeholder="Author surname" name="authorBookSurname" required
+                    <fmt:message bundle="${loc}" key="label.author.surname" var="surname"/>
+                    <input type="text" placeholder="${surname}" name="authorBookSurname" required
                            pattern="[a-zA-Z]{2,15}">
-                    <button type="submit">Add author</button>
+                    <button type="submit">
+                        <fmt:message bundle="${loc}" key="label.save"/>
+                    </button>
                 </div>
 
             </form>
@@ -219,11 +219,16 @@
                     <span class="close modalCross" title="Close">&times;</span>
                     <img src="${pageContext.servletContext.contextPath}/resource/images/add-book.png" alt="Add genre"
                          class="addingImage"/>
-                    <h1 style="text-align:center">Adding genre</h1>
+                    <h1 style="text-align:center">
+                        <fmt:message bundle="${loc}" key="label.genre.adding"/>
+                    </h1>
                 </div>
                 <div class="container">
-                    <input type="text" placeholder="Genre" name="bookGenre" required pattern="[a-zA-Z]{2,15}">
-                    <button type="submit">Add genre</button>
+                    <fmt:message bundle="${loc}" key="label.book.genre" var="genre"/>
+                    <input type="text" placeholder="${genre}" name="bookGenre" required pattern="[a-zA-Z]{2,15}">
+                    <button type="submit">
+                        <fmt:message bundle="${loc}" key="label.save"/>
+                    </button>
                 </div>
 
             </form>
@@ -234,3 +239,4 @@
 </main>
 </body>
 </html>
+

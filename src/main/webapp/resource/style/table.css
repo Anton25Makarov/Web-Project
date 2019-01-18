@@ -422,6 +422,19 @@ table.dataTable, table.dataTable th, table.dataTable td {
     }
 }
 
+#table_filter input{
+    border-radius: 4px;
+    padding: 2px;
+}
+
+#table_filter{
+    padding-top: 10px;
+}
+
+.dataTables_length{
+    margin: 10px;
+}
+
 table thead tr {
     background-color: darkblue;
     color: white;

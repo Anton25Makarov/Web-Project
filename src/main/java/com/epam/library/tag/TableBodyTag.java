@@ -38,7 +38,6 @@ public class TableBodyTag extends TagSupport {
         return SKIP_BODY;
     }
 
-
     @Override
     public int doEndTag() {
         return EVAL_PAGE;
@@ -47,18 +46,18 @@ public class TableBodyTag extends TagSupport {
     private void writeBodyOrder() throws IOException {
         JspWriter out = pageContext.getOut();
 
+        int i = 1;
         for (Object object : objects) {
             Order order = (Order) object;
             out.write("<tr>");
-            out.write("<td>" + order.getId() + "</td>");
+            out.write("<td>" + i++ + "</td>");
 
             if (order.isInReadingRoom()) {
-                out.write("<td><input type='checkbox' checked disabled/></td>");
+                out.write("<td><input type='checkbox' style='text-align: center' checked disabled/></td>");
             } else {
-                out.write("<td><input type='checkbox' disabled/></td>");
+                out.write("<td><input type='checkbox' style='text-align: center' disabled/></td>");
             }
 
-//            out.write("<td>" + order.isInReadingRoom() + "</tr>");
             if (order.getTakingDate() == null) {
                 out.write("<td> - </td>");
             } else {
@@ -69,11 +68,9 @@ public class TableBodyTag extends TagSupport {
             } else {
                 out.write("<td>" + order.getReturnDate() + "</td>");
             }
-//            out.write("<td>" + order.getReturnDate() + "</tr>");
-            out.write("<td>" + order.getBook().getId() + "</td>");
-            out.write("<td>" + order.getReader().getId() + "</td>");
+            out.write("<td>" + order.getBook().getTitle() + "</td>");
+            out.write("<td>" + order.getReader().getLogin() + "</td>");
             out.write("</tr>");
-
         }
     }
 }

@@ -26,7 +26,7 @@ public class GetOrderedBooksCommand implements Command {
             ReaderService service = new ReaderService();
             List<Order> orders = service.getReaderOrders(readerId);
 
-            for (Order order : orders) { //??
+            for (Order order : orders) {
                 Optional<Book> book = service.getBook(order.getBook().getId());
                 book.ifPresent(order::setBook);
             }
@@ -36,7 +36,7 @@ public class GetOrderedBooksCommand implements Command {
             e.printStackTrace();
         }
 
-        return CommandResult.forward("/WEB-INF/pages/readers-books.jsp");
+        return CommandResult.forward("/WEB-INF/pages/reader/books.jsp");
     }
 
 //    private void setBooks

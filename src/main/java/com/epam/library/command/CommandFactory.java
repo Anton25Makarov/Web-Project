@@ -16,9 +16,9 @@ public class CommandFactory {
             case "saveBook":
                 return new SaveBookCommand();
             case "addGenre":
-                return new AddGenreCommand();
+                return new SaveGenreCommand();
             case "addAuthor":
-                return new AddAuthorCommand();
+                return new SaveAuthorCommand();
             case "removeBook":
                 return new RemoveBookCommand();
             case "changeLanguage":
@@ -51,6 +51,8 @@ public class CommandFactory {
                 return new GetOrderedBooksCommand();
             case "readerReturnBook":
                 return new ReturnBookCommand();
+            case "logOut":
+                return new LogOutCommand();
             default:
                 throw new UnsupportedOperationException("Unknown command: " + command);
         }

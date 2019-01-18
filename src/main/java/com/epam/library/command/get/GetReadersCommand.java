@@ -26,7 +26,7 @@ public class GetReadersCommand implements Command {
             e.printStackTrace();
         }
 
-        return CommandResult.forward("/WEB-INF/pages/admin-readers.jsp");
+        return CommandResult.forward("/WEB-INF/pages/admin/readers.jsp");
 
     }
 }

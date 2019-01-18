@@ -22,6 +22,8 @@ public class ChangeLanguageCommand implements Command {
                 case "be_by":
                     session.setAttribute("local", "be_BY");
                     break;
+                default:
+                    throw new UnsupportedOperationException("Unknown language: " + lang);
             }
         }
 
@@ -33,11 +35,23 @@ public class ChangeLanguageCommand implements Command {
                     return CommandResult.forward("/WEB-INF/pages/login.jsp");
                 case "main":
                     return CommandResult.forward("/WEB-INF/pages/main.jsp");
-                case "addBook":
+                case "addBooks":
                     return CommandResult.redirect("/controller?command=addBookWindow");
+                case "addLibrarians":
+                    return CommandResult.redirect("/controller?command=getLibrariansWindow");
+                case "addReaders":
+                    return CommandResult.redirect("/controller?command=getReadersWindow");
+                case "allOrders":
+                    return CommandResult.redirect("/controller?command=getAllOrders");
+                case "issueOrders":
+                    return CommandResult.redirect("/controller?command=getOrdersToIssue");
+                case "readersBooks":
+                    return CommandResult.redirect("/controller?command=readersBooks");
+                case "readerFindBook":
+                    return CommandResult.redirect("/controller?command=readersAllBooks");
                 default:
-                    throw new UnsupportedOperationException("unknown page: " + page);
-            }
+                    throw new UnsupportedOperationException("Unknown page: " + page);
+            }//
         }
 
         return CommandResult.redirect(pageToShow);

@@ -3,7 +3,12 @@
 
 <%@ taglib uri="customTag" prefix="ctg" %>
 
-<html>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<fmt:setLocale value="${sessionScope.local}" scope="session"/>
+<fmt:setBundle basename="locale" var="loc"/>
+
+<html lang="ru">
 <head>
     <link type="text/css" rel="stylesheet" href='${pageContext.servletContext.contextPath}/resource/style/style.css'/>
     <link type="text/css" rel="stylesheet" href='${pageContext.servletContext.contextPath}/resource/style/table.css'/>
@@ -21,14 +26,14 @@
 <body>
 <div id="head">
     <header>
-        <jsp:include page="../fragments/header-label.jsp"/>
+        <jsp:include page="../../fragments/header-label.jsp"/>
     </header>
     <nav>
         <ul>
-            <jsp:include page="../fragments/nav-language.jsp">
-                <jsp:param name="page" value="main"/>
+            <jsp:include page="../../fragments/nav-language.jsp">
+                <jsp:param name="page" value="issueOrders"/>
             </jsp:include>
-            <jsp:include page="../fragments/nav-logout.jsp"/>
+            <jsp:include page="../../fragments/nav-logout.jsp"/>
         </ul>
     </nav>
 </div>
@@ -37,13 +42,13 @@
         <div class="menu">
             <c:choose>
                 <c:when test="${sessionScope.role == 'employee' and sessionScope.user.admin}">
-                    <jsp:include page="../fragments/admin/admin-menu.jsp"/>
+                    <jsp:include page="../../fragments/admin/admin-menu.jsp"/>
                 </c:when>
                 <c:when test="${sessionScope.role == 'employee' and !sessionScope.user.admin}">
-                    <jsp:include page="../fragments/librarian/librarian-menu.jsp"/>
+                    <jsp:include page="../../fragments/librarian/librarian-menu.jsp"/>
                 </c:when>
                 <c:when test="${sessionScope.role == 'reader'}">
-                    <jsp:include page="../fragments/reader/reader-menu.jsp"/>
+                    <jsp:include page="../../fragments/reader/reader-menu.jsp"/>
                 </c:when>
             </c:choose>
         </div>
@@ -51,22 +56,35 @@
 
     <article>
         <div>
+            <p class="page-title">
+                <fmt:message bundle="${loc}" key="label.applicationsForBooksIssuance"/>
+            </p>
             <table id="table">
                 <thead>
                 <tr>
-                    <th>Id</th>
-                    <th>Reading room</th>
-                    <th>Taking date</th>
-                    <th>Return Date</th>
-                    <th>Book id</th>
-                    <th>Reader id</th>
-                    <th>To issue</th>
+                    <th>№</th>
+                    <th>
+                        <fmt:message bundle="${loc}" key="label.inReadingRoom"/>
+                    </th>
+                    <th>
+                        <fmt:message bundle="${loc}" key="label.date.issued"/>
+                    </th>
+                    <th>
+                        <fmt:message bundle="${loc}" key="label.date.return"/>
+                    </th>
+                    <th>
+                        <fmt:message bundle="${loc}" key="label.book"/>
+                    </th>
+                    <th>
+                        <fmt:message bundle="${loc}" key="label.reader"/>
+                    </th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
-                <c:forEach var="order" items="${requestScope.orders}">
+                <c:forEach var="order" items="${requestScope.orders}" varStatus="status">
                     <tr>
-                        <td><c:out value="${order.id}"/></td>
+                        <td><c:out value="${status.count}"/></td>
                         <td>
                             <c:choose>
                                 <c:when test="${order.inReadingRoom}">
@@ -83,8 +101,8 @@
                         <td>
                             <ctg:show-of-null value="${order.returnDate}" replace="-"/>
                         </td>
-                        <td><c:out value="${order.book.id}"/></td>
-                        <td><c:out value="${order.reader.id}"/></td>
+                        <td><c:out value="${order.book.title}"/></td>
+                        <td><c:out value="${order.reader.login}"/></td>
                         <td>
                             <c:choose>
                                 <c:when test="${order.takingDate == null}">
@@ -96,7 +114,9 @@
                                         <input type="hidden" value="${order.returnDate}" name="orderReturnDate">
                                         <input type="hidden" value="${order.book.id}" name="orderBookId">
                                         <input type="hidden" value="${order.reader.id}" name="orderReaderId">
-                                        <button type="submit" class="issueBook">Issue</button>
+                                        <button type="submit" class="issueBook">
+                                            <fmt:message bundle="${loc}" key="label.issue"/>
+                                        </button>
                                     </form>
                                 </c:when>
                             </c:choose>

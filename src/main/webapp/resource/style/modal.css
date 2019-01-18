@@ -1,5 +1,5 @@
 /* Full-width input fields */
-input[type=text], input[type=password],input[type=tel], option, select {
+input[type=text], input[type=password], input[type=tel], option, select {
     width: 90%;
     padding: 12px 20px;
     margin: 8px 26px;
@@ -12,18 +12,41 @@ input[type=text], input[type=password],input[type=tel], option, select {
 /* Set a style for all buttons */
 .container button, #saveBookButton,
 #addAuthorButton, #addGenreButton,
-#saveLibrarianButton {
-    background-color: #ABA194;
-    color: white;
-    padding: 14px 20px;
+#saveLibrarianButton, #saveReaderButton {
+    /*background-color: #ABA194;*/
+    /*color: white;*/
+    padding: 5px 10px;
+    /*margin: 8px 26px;*/
+    border: none;
+    cursor: pointer;
+    /*width: 90%;*/
+    font-size: 20px;
+    border-radius: 10px;
+}
+
+form .container button {
+    /*background-color: #ABA194;*/
+    /*color: white;*/
+    padding: 5px 10px;
     margin: 8px 26px;
     border: none;
     cursor: pointer;
     width: 90%;
     font-size: 20px;
     border-radius: 10px;
+    color: black;
+    background-color: #888888;
 }
 
+form .container button:hover {
+    background-color: gray;
+}
+
+form .container select {
+    margin: 8px 26px;
+    border-radius: 5px;
+    padding: 12px 20px;
+}
 
 .container input, .container option {
     border-radius: 5px;
@@ -31,9 +54,10 @@ input[type=text], input[type=password],input[type=tel], option, select {
 
 .container button:hover,
 #saveBookButton:hover, #addAuthorButton:hover,
-#addGenreButton:hover, #saveLibrarianButton:hover {
+#addGenreButton:hover, #saveLibrarianButton:hover,
+#saveReaderButton:hover {
     opacity: 0.8;
-    background-color: gray;
+    background-color: lightgray;
 }
 
 /* Center the image and position the close button */
@@ -86,10 +110,22 @@ input[type=text], input[type=password],input[type=tel], option, select {
     cursor: pointer;
 }
 
-#saveBookButton, #addAuthorButton, #addGenreButton, #saveLibrarianButton {
+#saveBookButton, #addAuthorButton, #addGenreButton {
     width: 200px;
-    max-height: 70px;
-    margin: 30px 20px;
+    max-height: 50px;
+    margin: 10px;
+}
+
+#saveLibrarianButton {
+    width: 200px;
+    max-height: 50px;
+    margin: 20px 100px 0 -24px;
+}
+
+#saveReaderButton {
+    width: 200px;
+    max-height: 50px;
+    margin: 20px 100px 0 -6px;
 }
 
 

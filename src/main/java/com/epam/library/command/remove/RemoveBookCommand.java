@@ -30,6 +30,6 @@ public class RemoveBookCommand implements Command {
         }
         return CommandResult.redirect("/controller?command=addBookWindow&save=success");
 
-//        return CommandResult.forward("/WEB-INF/pages/admin-book.jsp");
+//        return CommandResult.forward("/WEB-INF/pages/books.jsp");
     }
 }

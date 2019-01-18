@@ -64,7 +64,7 @@ public class SaveBookCommand implements Command {
         }
 
         return CommandResult.redirect("/controller?command=addBookWindow&save=success");
-//        return CommandResult.redirect("/WEB-INF/pages/admin-book.jsp");
-//        return CommandResult.forward("/WEB-INF/pages/admin-book.jsp");
+//        return CommandResult.redirect("/WEB-INF/pages/books.jsp");
+//        return CommandResult.forward("/WEB-INF/pages/books.jsp");
     }
 }

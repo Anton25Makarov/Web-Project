@@ -3,6 +3,7 @@ package com.epam.library.controller;
 import com.epam.library.command.Command;
 import com.epam.library.command.CommandFactory;
 import com.epam.library.command.CommandResult;
+import com.epam.library.exception.ServiceException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -49,7 +50,12 @@ public class LibraryController extends HttpServlet {
         // command = null - Обработать
         Command action = CommandFactory.create(command);
 
-        CommandResult page = action.execute(req, resp);
+        CommandResult page = null;
+        try {
+            page = action.execute(req, resp);
+        } catch (ServiceException e) {
+            e.printStackTrace();
+        }
 
         dispatch(req, resp, page);
     }

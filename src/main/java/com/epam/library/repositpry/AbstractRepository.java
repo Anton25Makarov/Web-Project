@@ -21,14 +21,11 @@ public abstract class AbstractRepository<T extends Entity> implements Repository
         this.connection = connection;
     }
 
-
     protected void executeRemove(T t, String removeQuery) throws SQLException {
         try (PreparedStatement preparedStatement = connection.prepareStatement(removeQuery)) {
             preparedStatement.setLong(1, t.getId());
 
             preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw new SQLException(); //own exception
         }
     }
 
@@ -42,28 +39,6 @@ public abstract class AbstractRepository<T extends Entity> implements Repository
             }
 
             preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw new SQLException(); //own exception
-        }
-    }
-
-
-    protected Optional<T> executeQueryForSingleResult(Builder<T> builder, String query, List<String> parameters)
-            throws SQLException {
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            int i = 1;
-            for (String parameter : parameters) {
-                preparedStatement.setString(i++, parameter);
-            }
-
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            T entity = null;
-            if (resultSet.next()) {
-                entity = builder.build(resultSet);
-            }
-
-            return Optional.ofNullable(entity);
         }
     }
 
@@ -84,6 +59,25 @@ public abstract class AbstractRepository<T extends Entity> implements Repository
             }
 
             return entities;
+        }
+    }
+
+    protected Optional<T> executeQueryForSingleResult(Builder<T> builder, String query, List<String> parameters)
+            throws SQLException {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            int i = 1;
+            for (String parameter : parameters) {
+                preparedStatement.setString(i++, parameter);
+            }
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            T entity = null;
+            if (resultSet.next()) {
+                entity = builder.build(resultSet);
+            }
+
+            return Optional.ofNullable(entity);
         }
     }
 

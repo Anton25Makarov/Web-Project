@@ -1,47 +1,39 @@
 package com.epam.library.command;
 
-import com.epam.library.model.*;
-import com.epam.library.service.ReaderService;
+import com.epam.library.exception.ServiceException;
+import com.epam.library.model.Book;
+import com.epam.library.model.Order;
+import com.epam.library.service.BookService;
+import com.epam.library.service.OrderService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import java.sql.SQLException;
 import java.util.Date;
 import java.util.Optional;
 
 public class ReturnBookCommand implements Command {
     @Override
-    public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) {
+    public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
 
 
         Long bookId = Long.valueOf(req.getParameter("bookId"));
         Long orderId = Long.valueOf(req.getParameter("orderId"));
 
-        HttpSession session = req.getSession();
 
-        try  {
-            ReaderService service = new ReaderService();
-            Reader reader = (Reader) session.getAttribute("user");
+        BookService bookService = new BookService();
+        Optional<Book> book = bookService.getBook(bookId);
 
-            Optional<Book> book = service.getBook(bookId);
-
-            Optional<Order> order = service.getOrder(orderId);
+        OrderService orderService = new OrderService();
+        Optional<Order> order = orderService.getOrder(orderId);
 
 
-            if (book.isPresent() && order.isPresent()) {
-                int count = book.get().getCount();
-                book.get().setCount(count + 1);
-                service.saveBook(book.get());
+        if (book.isPresent() && order.isPresent()) {
+            int count = book.get().getCount();
+            book.get().setCount(count + 1);
+            bookService.save(book.get());
 
-//                Order order = new Order(inReadingRoom, null, null, book.get(), reader);
-                order.get().setReturnDate(new Date());
-
-                service.saveOrder(order.get());
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
+            order.get().setReturnDate(new Date());
+            orderService.save(order.get());
         }
 
         return CommandResult.redirect("/controller?command=readersBooks&save=success");//page - const

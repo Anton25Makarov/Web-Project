@@ -2,6 +2,7 @@ package com.epam.library.repositpry;
 
 import com.epam.library.builder.AuthorBuilder;
 import com.epam.library.builder.Builder;
+import com.epam.library.exception.RepositoryException;
 import com.epam.library.model.Author;
 import com.epam.library.specification.SqlSpecification;
 
@@ -21,15 +22,17 @@ public class AuthorRepository extends AbstractRepository<Author> {
     }
 
     @Override
-    public List<Author> query(SqlSpecification specification) throws SQLException {
-        String query = SELECT_QUERY + specification.toSql();
-        List<String> parameters = specification.getParameters();
+    public List<Author> query(SqlSpecification specification) throws RepositoryException {
+        try {
+            String query = SELECT_QUERY + specification.toSql();
+            List<String> parameters = specification.getParameters();
 
-        return executeQuery(query, parameters);
+            return executeQuery(query, parameters);
+        } catch (SQLException e) {
+            throw new RepositoryException(e);
+        }
     }
 
-    //map<Str, obj> fields
-    // fields.put(NAME_OF_COLUMN, employee.getId);
     @Override
     public Optional<Author> queryForSingleResult(SqlSpecification specification) {
         throw new UnsupportedOperationException();
@@ -45,21 +48,23 @@ public class AuthorRepository extends AbstractRepository<Author> {
     }
 
     @Override
-    public void save(Author author) throws SQLException {
+    public void save(Author author) throws RepositoryException {
+        try {
+            Map<Integer, Object> map = new HashMap<>();
+            int i = 1;
 
-        Map<Integer, Object> map = new HashMap<>();
-        int i = 1;
+            map.put(i++, author.getName());
+            map.put(i, author.getSurname());
 
-        map.put(i++, author.getName());
-        map.put(i, author.getSurname());
-
-        executeSave(map, INSERT_QUERY);
+            executeSave(map, INSERT_QUERY);
+        } catch (SQLException e) {
+            throw new RepositoryException(e);
+        }
     }
 
     @Override
-    public void remove(Author author) throws SQLException {
+    public void remove(Author author) {
         throw new UnsupportedOperationException();
     }
-
 
 }

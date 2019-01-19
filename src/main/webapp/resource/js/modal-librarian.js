@@ -13,6 +13,10 @@ $(document).ready(function () {
         $('#modal-wrapper-librarian-insert').css('display', 'block');
     });
 
+    $('#saveReaderButton').on('click', function () {
+        $('#modal-wrapper-librarian-insert').css('display', 'block');
+    });
+
     table.on('click', '.modalCross', function () { // for second page
         $('#modal-wrapper-librarian-insert').css('display', 'none');
         $('.container input').val('');
@@ -22,7 +26,6 @@ $(document).ready(function () {
         $('#modal-wrapper-librarian-insert').css('display', 'none');
         $('.container input').val('');
     });
-
 
 });
 

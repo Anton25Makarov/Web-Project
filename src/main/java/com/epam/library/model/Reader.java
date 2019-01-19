@@ -3,6 +3,8 @@ package com.epam.library.model;
 import java.io.Serializable;
 
 public class Reader extends Entity implements Serializable {
+    private static final long serialVersionUID = 5055250724556125522L;
+
     private String name;
     private String surname;
     private String login;

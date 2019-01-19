@@ -1,6 +1,10 @@
 package com.epam.library.model;
 
-public class Entity {
+import java.io.Serializable;
+
+public class Entity implements Serializable {
+    private static final long serialVersionUID = -4767629413295377029L;
+
     private Long id;
 
     public Entity(Long id) {

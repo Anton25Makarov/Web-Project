@@ -1,92 +1,86 @@
 package com.epam.library.service;
 
-import com.epam.library.model.Book;
-import com.epam.library.model.Order;
+import com.epam.library.exception.RepositoryException;
+import com.epam.library.exception.ServiceException;
 import com.epam.library.model.Reader;
 import com.epam.library.repositpry.AbstractRepository;
 import com.epam.library.repositpry.RepositoryFactory;
 import com.epam.library.specification.*;
 
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
-public class ReaderService extends Service {
+public class ReaderService {
 
-    public Optional<Reader> login(String login, String password) throws SQLException {
+    public Optional<Reader> login(String login, String password) throws ServiceException {
         try (RepositoryFactory factory = new RepositoryFactory()) {
             AbstractRepository<Reader> readerRepository = factory.createReaderRepository();
 
             SqlSpecification specification = new FindUserByLoginAndPasswordSpecification(login, password);
 
             return readerRepository.queryForSingleResult(specification);
+        } catch (RepositoryException e) {
+            throw new ServiceException(e);
         }
     }
 
-    public Optional<Book> getBook(Long bookId) throws SQLException {
+    public List<Reader> getReaders() throws ServiceException {
         try (RepositoryFactory factory = new RepositoryFactory()) {
-            AbstractRepository<Book> bookRepository = factory.createBookRepository();
 
-            SqlSpecification specification = new FindBookByIdSpecification(bookId);
+            AbstractRepository<Reader> readerRepository = factory.createReaderRepository();
 
-            return bookRepository.queryForSingleResult(specification);
+            SqlSpecification specification = new FindAllSpecification();
+
+            return readerRepository.query(specification);
+        } catch (RepositoryException e) {
+            throw new ServiceException(e);
         }
     }
 
-    public List<Book> getBooks(String title, String authorName, String authorSurname, String bookGenre)
-            throws SQLException {
+    public void save(Reader reader) throws ServiceException {
         try (RepositoryFactory factory = new RepositoryFactory()) {
-            AbstractRepository<Book> bookRepository = factory.createBookRepository();
 
-            SqlSpecification specification = new FindBooksInStockSpecification(title, authorName, authorSurname, bookGenre);
+            AbstractRepository<Reader> readerRepository = factory.createReaderRepository();
 
-            return bookRepository.query(specification);
+            readerRepository.save(reader);
+        } catch (RepositoryException e) {
+            throw new ServiceException(e);
         }
     }
 
-    public Optional<Book> getBookInStoke(Long bookId) throws SQLException {
+    public void remove(Reader reader) throws ServiceException {
         try (RepositoryFactory factory = new RepositoryFactory()) {
-            AbstractRepository<Book> bookRepository = factory.createBookRepository();
 
-            SqlSpecification specification = new FindBookInStockByIdSpecification(bookId);
+            AbstractRepository<Reader> readerRepository = factory.createReaderRepository();
 
-            return bookRepository.queryForSingleResult(specification);
+            readerRepository.remove(reader);
+        } catch (RepositoryException e) {
+            throw new ServiceException(e);
         }
     }
 
-    public void saveBook(Book book) throws SQLException {
+    public boolean isReaderExist(String login) throws ServiceException {
         try (RepositoryFactory factory = new RepositoryFactory()) {
-            AbstractRepository<Book> bookRepository = factory.createBookRepository();
 
-            bookRepository.save(book);
+            AbstractRepository<Reader> readerRepository = factory.createReaderRepository();
+
+            SqlSpecification specification = new FindUserByLoginSpecification(login);
+
+            return readerRepository.queryForSingleResult(specification).isPresent();
+        } catch (RepositoryException e) {
+            throw new ServiceException(e);
         }
     }
 
-    public void saveOrder(Order order) throws SQLException {
+    public Optional<Reader> getReader(Long bookId) throws ServiceException {
         try (RepositoryFactory factory = new RepositoryFactory()) {
-            AbstractRepository<Order> orderRepository = factory.createOrderRepository();
-
-            orderRepository.save(order);
-        }
-    }
-
-    public List<Order> getReaderOrders(Long readerId) throws SQLException {
-        try (RepositoryFactory factory = new RepositoryFactory()) {
-            AbstractRepository<Order> orderRepository = factory.createOrderRepository();
-
-            SqlSpecification specification = new FindCurrentReaderBooksSpecification(readerId);
-
-            return orderRepository.query(specification);
-        }
-    }
-
-    public Optional<Order> getOrder(Long bookId) throws SQLException {
-        try (RepositoryFactory factory = new RepositoryFactory()) {
-            AbstractRepository<Order> orderRepository = factory.createOrderRepository();
+            AbstractRepository<Reader> readerRepository = factory.createReaderRepository();
 
             SqlSpecification specification = new FindByIdSpecification(bookId);
 
-            return orderRepository.queryForSingleResult(specification);
+            return readerRepository.queryForSingleResult(specification);
+        } catch (RepositoryException e) {
+            throw new ServiceException(e);
         }
     }
 }

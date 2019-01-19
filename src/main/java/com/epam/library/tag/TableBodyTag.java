@@ -53,20 +53,20 @@ public class TableBodyTag extends TagSupport {
             out.write("<td>" + i++ + "</td>");
 
             if (order.isInReadingRoom()) {
-                out.write("<td><input type='checkbox' style='text-align: center' checked disabled/></td>");
+                out.write("<td class='center-align'><input type='checkbox' checked disabled/></td>");
             } else {
-                out.write("<td><input type='checkbox' style='text-align: center' disabled/></td>");
+                out.write("<td class='center-align'><input type='checkbox' disabled/></td>");
             }
 
             if (order.getTakingDate() == null) {
-                out.write("<td> - </td>");
+                out.write("<td class='center-align'> - </td>");
             } else {
-                out.write("<td>" + order.getTakingDate() + "</td>");
+                out.write("<td class='center-align'>" + order.getTakingDate() + "</td>");
             }
             if (order.getReturnDate() == null) {
-                out.write("<td> - </td>");
+                out.write("<td class='center-align'> - </td>");
             } else {
-                out.write("<td>" + order.getReturnDate() + "</td>");
+                out.write("<td class='center-align'>" + order.getReturnDate() + "</td>");
             }
             out.write("<td>" + order.getBook().getTitle() + "</td>");
             out.write("<td>" + order.getReader().getLogin() + "</td>");

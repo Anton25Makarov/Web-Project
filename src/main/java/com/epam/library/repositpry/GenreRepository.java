@@ -2,6 +2,7 @@ package com.epam.library.repositpry;
 
 import com.epam.library.builder.Builder;
 import com.epam.library.builder.GenreBuilder;
+import com.epam.library.exception.RepositoryException;
 import com.epam.library.model.BookGenre;
 import com.epam.library.specification.SqlSpecification;
 
@@ -9,7 +10,6 @@ import java.sql.*;
 import java.util.*;
 
 public class GenreRepository extends AbstractRepository<BookGenre> {
-    private static final String SHOW_COLUMNS_QUERY = "show columns from `genre_catalog`";
     private static final String SELECT_QUERY = "select * from genre_catalog ";
     private static final String INSERT_QUERY =
             "insert into genre_catalog (genre)\n" +
@@ -20,11 +20,15 @@ public class GenreRepository extends AbstractRepository<BookGenre> {
     }
 
     @Override
-    public List<BookGenre> query(SqlSpecification specification) throws SQLException {
-        String query = SELECT_QUERY + specification.toSql();
-        List<String> parameters = specification.getParameters();
+    public List<BookGenre> query(SqlSpecification specification) throws RepositoryException {
+        try {
+            String query = SELECT_QUERY + specification.toSql();
+            List<String> parameters = specification.getParameters();
 
-        return executeQuery(query, parameters);
+            return executeQuery(query, parameters);
+        } catch (SQLException e) {
+            throw new RepositoryException(e);
+        }
     }
 
     //map<Str, obj> fields
@@ -44,16 +48,20 @@ public class GenreRepository extends AbstractRepository<BookGenre> {
     }
 
     @Override
-    public void save(BookGenre genre) throws SQLException {
-        Map<Integer, Object> map = new HashMap<>();
+    public void save(BookGenre genre) throws RepositoryException {
+        try {
+            Map<Integer, Object> map = new HashMap<>();
 
-        map.put(1, genre.getGenre());
+            map.put(1, genre.getGenre());
 
-        executeSave(map, INSERT_QUERY);
+            executeSave(map, INSERT_QUERY);
+        } catch (SQLException e) {
+            throw new RepositoryException(e);
+        }
     }
 
     @Override
-    public void remove(BookGenre genre) throws SQLException {
+    public void remove(BookGenre genre) {
         throw new UnsupportedOperationException();
     }
 

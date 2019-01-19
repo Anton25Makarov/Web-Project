@@ -2,8 +2,7 @@ package com.epam.library.repositpry;
 
 import com.epam.library.builder.BookBuilder;
 import com.epam.library.builder.Builder;
-import com.epam.library.model.Author;
-import com.epam.library.model.BookGenre;
+import com.epam.library.exception.RepositoryException;
 import com.epam.library.specification.SqlSpecification;
 import com.epam.library.model.Book;
 
@@ -11,7 +10,7 @@ import java.sql.*;
 import java.util.*;
 
 public class BookRepository extends AbstractRepository<Book> {
-    private static final String SELECT_QUERY = "select * from book ";
+    private static final String SELECT_QUERY = "select * from book\n";
     private static final String REMOVE_QUERY = "delete from book where id = ?";
     private static final String INSERT_QUERY =
             "insert into book (title, year, count, book_author_id, genre_catalog_id)\n" +
@@ -30,48 +29,33 @@ public class BookRepository extends AbstractRepository<Book> {
     }
 
     @Override
-    public List<Book> query(SqlSpecification specification) throws SQLException {
+    public List<Book> query(SqlSpecification specification) throws RepositoryException {
+        try {
+            String query = SELECT_QUERY + specification.toSql();
+            List<String> parameters = specification.getParameters();
 
-        String query = SELECT_QUERY + specification.toSql();
-        List<String> parameters = specification.getParameters();
-
-        return executeQuery(query, parameters);
+            return executeQuery(query, parameters);
+        } catch (SQLException e) {
+            throw new RepositoryException(e);
+        }
     }
-
-    //map<Str, obj> fields
-    // fields.put(NAME_OF_COLUMN, employee.getId);
-    @Override
-    public Optional<Book> queryForSingleResult(SqlSpecification specification) throws SQLException {
-        String query = SELECT_QUERY + specification.toSql();
-        List<String> parameters = specification.getParameters();
-
-        Builder<Book> builder = getBuilder();
-
-        return executeQueryForSingleResult(builder, query, parameters);
-    }
-
-    protected Builder<Book> getBuilder() {
-        return new BookBuilder();
-    }
-
-   /* private Map<Integer, Object> getMapToAdd(Book book) {
-
-        int i = 1;
-        Map<Integer, Object> map = new HashMap<>();
-
-        map.put(i++, book.getTitle());
-        map.put(i++, book.getYear());
-        map.put(i++, book.getCount());
-        map.put(i++, book.getAuthor().getId());
-        map.put(i, book.getGenre().getId());
-
-        return map;
-    }*/
-
 
     @Override
-    public void save(Book book) throws SQLException {
+    public Optional<Book> queryForSingleResult(SqlSpecification specification) throws RepositoryException {
+        try {
+            String query = SELECT_QUERY + specification.toSql();
+            List<String> parameters = specification.getParameters();
 
+            Builder<Book> builder = getBuilder();
+
+            return executeQueryForSingleResult(builder, query, parameters);
+        } catch (SQLException e) {
+            throw new RepositoryException(e);
+        }
+    }
+
+    @Override
+    public void save(Book book) throws RepositoryException {
         Map<Integer, Object> map = new HashMap<>();
         int i = 1;
 
@@ -81,17 +65,28 @@ public class BookRepository extends AbstractRepository<Book> {
         map.put(i++, book.getAuthor().getId());
         map.put(i++, book.getGenre().getId());
 
-        if (book.getId() == null) {
-            executeSave(map, INSERT_QUERY);
-        } else {
-            map.put(i, book.getId());
-            executeSave(map, UPDATE_QUERY);
+        try {
+            if (book.getId() == null) {
+                executeSave(map, INSERT_QUERY);
+            } else {
+                map.put(i, book.getId());
+                executeSave(map, UPDATE_QUERY);
+            }
+        } catch (SQLException e) {
+            throw new RepositoryException(e);
         }
     }
 
     @Override
-    public void remove(Book book) throws SQLException {
-        executeRemove(book, REMOVE_QUERY);
+    public void remove(Book book) throws RepositoryException {
+        try {
+            executeRemove(book, REMOVE_QUERY);
+        } catch (SQLException e) {
+            throw new RepositoryException(e);
+        }
     }
 
+    protected Builder<Book> getBuilder() {
+        return new BookBuilder();
+    }
 }

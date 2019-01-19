@@ -2,6 +2,7 @@ package com.epam.library.repositpry;
 
 import com.epam.library.builder.Builder;
 import com.epam.library.builder.ReaderBuilder;
+import com.epam.library.exception.RepositoryException;
 import com.epam.library.model.Reader;
 import com.epam.library.specification.SqlSpecification;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -14,7 +15,6 @@ import java.util.Map;
 import java.util.Optional;
 
 public class ReaderRepository extends AbstractRepository<Reader> {
-    public static final int FIRST_COLUMN = 1;
     private static final String SELECT_QUERY = "select * from reader ";
     private static final String REMOVE_QUERY = "delete from reader where id = ?";
     private static final String INSERT_QUERY =
@@ -35,27 +35,34 @@ public class ReaderRepository extends AbstractRepository<Reader> {
     }
 
     @Override
-    public List<Reader> query(SqlSpecification specification) throws SQLException {
-        String query = SELECT_QUERY + specification.toSql();
-        List<String> parameters = specification.getParameters();
+    public List<Reader> query(SqlSpecification specification) throws RepositoryException {
+        try {
+            String query = SELECT_QUERY + specification.toSql();
+            List<String> parameters = specification.getParameters();
 
-        return executeQuery(query, parameters);
+            return executeQuery(query, parameters);
+        } catch (SQLException e) {
+            throw new RepositoryException(e);
+        }
     }
 
     @Override
-    public Optional<Reader> queryForSingleResult(SqlSpecification specification)
-            throws SQLException {
+    public Optional<Reader> queryForSingleResult(SqlSpecification specification) throws RepositoryException {
+        try {
 
-        String query = SELECT_QUERY + specification.toSql();
-        List<String> parameters = specification.getParameters();
+            String query = SELECT_QUERY + specification.toSql();
+            List<String> parameters = specification.getParameters();
 
-        Builder<Reader> builder = getBuilder();
+            Builder<Reader> builder = getBuilder();
 
-        return executeQueryForSingleResult(builder, query, parameters);
+            return executeQueryForSingleResult(builder, query, parameters);
+        } catch (SQLException e) {
+            throw new RepositoryException(e);
+        }
     }
 
     @Override
-    public void save(Reader reader) throws SQLException {
+    public void save(Reader reader) throws RepositoryException {
 
         Map<Integer, Object> map = new HashMap<>();
         int i = 1;
@@ -66,17 +73,25 @@ public class ReaderRepository extends AbstractRepository<Reader> {
         map.put(i++, DigestUtils.md5Hex(reader.getPassword()));
         map.put(i++, reader.getTelephoneNumber());
 
-        if (reader.getId() == null) {
-            executeSave(map, INSERT_QUERY);
-        } else {
-            map.put(i, reader.getId());
-            executeSave(map, UPDATE_QUERY);
+        try {
+            if (reader.getId() == null) {
+                executeSave(map, INSERT_QUERY);
+            } else {
+                map.put(i, reader.getId());
+                executeSave(map, UPDATE_QUERY);
+            }
+        } catch (SQLException e) {
+            throw new RepositoryException(e);
         }
     }
 
     @Override
-    public void remove(Reader reader) throws SQLException {
-        executeRemove(reader, REMOVE_QUERY);
+    public void remove(Reader reader) throws RepositoryException {
+        try {
+            executeRemove(reader, REMOVE_QUERY);
+        } catch (SQLException e) {
+            throw new RepositoryException(e);
+        }
     }
 
     @Override

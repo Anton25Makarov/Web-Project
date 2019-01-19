@@ -85,20 +85,24 @@
                 <c:forEach var="order" items="${requestScope.orders}" varStatus="status">
                     <tr>
                         <td><c:out value="${status.count}"/></td>
-                        <td>
+                        <td class='center-align'>
                             <c:choose>
                                 <c:when test="${order.inReadingRoom}">
-                                    <input type="checkbox" checked disabled/>
+                                    <label>
+                                        <input type="checkbox" checked disabled/>
+                                    </label>
                                 </c:when>
                                 <c:when test="${!order.inReadingRoom}">
-                                    <input type="checkbox" disabled/>
+                                    <label>
+                                        <input type="checkbox" disabled/>
+                                    </label>
                                 </c:when>
                             </c:choose>
                         </td>
-                        <td>
+                        <td class='center-align'>
                             <ctg:show-of-null value="${order.takingDate}" replace="-"/>
                         </td>
-                        <td>
+                        <td class='center-align'>
                             <ctg:show-of-null value="${order.returnDate}" replace="-"/>
                         </td>
                         <td><c:out value="${order.book.title}"/></td>

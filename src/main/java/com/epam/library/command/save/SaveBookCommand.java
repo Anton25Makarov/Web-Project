@@ -2,20 +2,19 @@ package com.epam.library.command.save;
 
 import com.epam.library.command.Command;
 import com.epam.library.command.CommandResult;
+import com.epam.library.exception.ServiceException;
 import com.epam.library.model.Author;
 import com.epam.library.model.Book;
 import com.epam.library.model.BookGenre;
+import com.epam.library.service.BookService;
 import com.epam.library.service.EmployeeService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.sql.SQLException;
-import java.util.List;
-import java.util.Optional;
 
 public class SaveBookCommand implements Command {
     @Override
-    public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) {
+    public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
 
         String bookIdParameter = req.getParameter("bookId");
         Long bookId = null;
@@ -36,35 +35,13 @@ public class SaveBookCommand implements Command {
 
         Book book = new Book(bookId, title, year, count, author, bookGenre);
 
-        try  {
-            EmployeeService employeeService = new EmployeeService();
-
-            employeeService.saveBook(book);
 
 
-            // if book exist ... (in save count increase) !!!!!!!
 
-            /*if (result) {
-                req.setAttribute("insertBookInfo", "Inserting is successful");
-            } else {
-                req.setAttribute("insertBookInfo", "Inserting is failed");
-            }*/
 
-           /* List<Book> books = employeeService.takeBooks();
-            req.setAttribute("books", books);
-
-            List<BookGenre> genres = employeeService.takeGenres();
-            req.setAttribute("genres", genres);
-
-            List<Author> authors = employeeService.takeAuthors();
-            req.setAttribute("authors", authors);*/
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        BookService bookService = new BookService();
+        bookService.save(book);
 
         return CommandResult.redirect("/controller?command=addBookWindow&save=success");
-//        return CommandResult.redirect("/WEB-INF/pages/books.jsp");
-//        return CommandResult.forward("/WEB-INF/pages/books.jsp");
     }
 }

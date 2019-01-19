@@ -331,6 +331,10 @@ header {
     background-color: #3e8e41;
 }
 
+.center-align {
+    text-align: center;
+}
+
 /*******************reader find books********/
 .find-line {
     display: flex;

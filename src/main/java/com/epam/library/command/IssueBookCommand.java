@@ -1,18 +1,18 @@
 package com.epam.library.command;
 
+import com.epam.library.exception.ServiceException;
 import com.epam.library.model.Book;
 import com.epam.library.model.Order;
 import com.epam.library.model.Reader;
-import com.epam.library.service.LibrarianService;
+import com.epam.library.service.OrderService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.sql.SQLException;
 import java.util.Date;
 
 public class IssueBookCommand implements Command {
     @Override
-    public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) {
+    public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
 
 
         String orderIdParameter = req.getParameter("orderId");
@@ -23,8 +23,6 @@ public class IssueBookCommand implements Command {
         }
 
         boolean inReadingRoom = Boolean.parseBoolean(req.getParameter("orderInReadingRoom"));
-//        String takingDateParameter = req.getParameter("orderTakingDate");
-//        String returnDateParameter = req.getParameter("orderReturnDate");
         Long bookId = Long.valueOf(req.getParameter("orderBookId"));
         Long readerId = Long.valueOf(req.getParameter("orderReaderId"));
 
@@ -35,13 +33,10 @@ public class IssueBookCommand implements Command {
 
         Order order = new Order(orderId, inReadingRoom, takingDate, null, book, reader);
 
-        try  {
-            LibrarianService service = new LibrarianService();
-            service.saveOrder(order);
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+
+        OrderService orderService = new OrderService();
+        orderService.save(order);
 
         return CommandResult.redirect("/controller?command=getOrdersToIssue&save=success");//page - const
     }

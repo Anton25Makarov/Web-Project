@@ -1,21 +1,20 @@
 package com.epam.library.command;
 
-import com.epam.library.command.Command;
-import com.epam.library.command.CommandResult;
-import com.epam.library.model.*;
-import com.epam.library.service.LibrarianService;
-import com.epam.library.service.ReaderService;
+import com.epam.library.exception.ServiceException;
+import com.epam.library.model.Book;
+import com.epam.library.model.Order;
+import com.epam.library.model.Reader;
+import com.epam.library.service.BookService;
+import com.epam.library.service.OrderService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.sql.SQLException;
-import java.util.Date;
 import java.util.Optional;
 
 public class OrderBookCommand implements Command {
     @Override
-    public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) {
+    public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
 
 
         String bookIdParameter = req.getParameter("bookId");
@@ -25,50 +24,33 @@ public class OrderBookCommand implements Command {
             bookId = Long.parseLong(bookIdParameter);
         }
 
-        Long authorIdParameter = Long.valueOf(req.getParameter("authorId"));
-        Long genreIdParameter = Long.valueOf(req.getParameter("genreId"));
-        String bookTitleParameter = req.getParameter("bookTitle");
-        int bookYearParameter = Integer.parseInt(req.getParameter("bookYear"));
-        int bookCountParameter = Integer.parseInt(req.getParameter("bookCount"));
         String inReadingRoomParameter = req.getParameter("inReadingRoom");
         boolean inReadingRoom = false;
         if (inReadingRoomParameter != null) {
             inReadingRoom = true;
         }
 
-        Author author = new Author(authorIdParameter);
-        BookGenre genre = new BookGenre(genreIdParameter);
 
-        Book book = new Book(bookId, bookTitleParameter, bookYearParameter, bookCountParameter, author, genre);
+
+
 
         HttpSession session = req.getSession();
+        Reader reader = (Reader) session.getAttribute("user");
 
+        BookService bookService = new BookService();
+        Optional<Book> book = bookService.getBookInStoke(bookId);
 
-//        String takingDateParameter = req.getParameter("orderTakingDate");
-//        String returnDateParameter = req.getParameter("orderReturnDate");
-        Date takingDate = new Date();
+        if (book.isPresent()) {
+            int count = book.get().getCount();
+            book.get().setCount(count - 1);
+            bookService.save(book.get());
 
+            Order order = new Order(inReadingRoom, null, null, book.get(), reader);
 
-        try  {
-            ReaderService service = new ReaderService();
-            Reader reader = (Reader) session.getAttribute("user");
-
-            Optional<Book> book1 = service.getBookInStoke(bookId);
-
-            if (book1.isPresent()) {
-                int count = book1.get().getCount();
-                book1.get().setCount(count - 1);
-                service.saveBook(book1.get());
-
-                Order order = new Order(inReadingRoom, null, null, book1.get(), reader);
-
-                service.saveOrder(order);
-
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
+            OrderService orderService = new OrderService();
+            orderService.save(order);
         }
+
 
         return CommandResult.redirect("/controller?command=readersAllBooks&save=success");//page - const
     }

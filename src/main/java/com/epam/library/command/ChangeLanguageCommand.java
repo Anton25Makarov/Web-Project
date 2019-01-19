@@ -28,7 +28,7 @@ public class ChangeLanguageCommand implements Command {
         }
 
         String page = req.getParameter("page");
-        String pageToShow = "";
+
         if (page != null) {
             switch (page) {
                 case "login":
@@ -54,6 +54,6 @@ public class ChangeLanguageCommand implements Command {
             }//
         }
 
-        return CommandResult.redirect(pageToShow);
+        return CommandResult.redirect("Error page");
     }
 }

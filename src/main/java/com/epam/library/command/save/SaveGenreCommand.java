@@ -2,9 +2,11 @@ package com.epam.library.command.save;
 
 import com.epam.library.command.Command;
 import com.epam.library.command.CommandResult;
+import com.epam.library.exception.ServiceException;
 import com.epam.library.model.Author;
 import com.epam.library.model.BookGenre;
 import com.epam.library.model.Book;
+import com.epam.library.service.BookGenreService;
 import com.epam.library.service.EmployeeService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,7 +16,7 @@ import java.util.List;
 
 public class SaveGenreCommand implements Command {
     @Override
-    public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) {
+    public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
 
 
         String bookGenre = req.getParameter("bookGenre");
@@ -22,15 +24,9 @@ public class SaveGenreCommand implements Command {
         BookGenre genre = new BookGenre(bookGenre);
 
 
-        try  {
-            EmployeeService employeeService = new EmployeeService();
-            employeeService.saveGenre(genre);
+        BookGenreService genreService = new BookGenreService();
+        genreService.save(genre);
 
-        }  catch (SQLException e) {
-            e.printStackTrace();
-        }
         return CommandResult.redirect("/controller?command=addBookWindow&save=success");
-
-//        return CommandResult.forward("/WEB-INF/pages/books.jsp");
     }
 }

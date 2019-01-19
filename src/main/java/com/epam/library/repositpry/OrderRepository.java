@@ -2,6 +2,7 @@ package com.epam.library.repositpry;
 
 import com.epam.library.builder.Builder;
 import com.epam.library.builder.OrderBuilder;
+import com.epam.library.exception.RepositoryException;
 import com.epam.library.model.Book;
 import com.epam.library.model.Order;
 import com.epam.library.model.Reader;
@@ -33,24 +34,32 @@ public class OrderRepository extends AbstractRepository<Order> {
     }
 
     @Override
-    public List<Order> query(SqlSpecification specification) throws SQLException {
+    public List<Order> query(SqlSpecification specification) throws RepositoryException {
+        try {
 
-        String query = SELECT_QUERY + specification.toSql();
-        List<String> parameters = specification.getParameters();
+            String query = SELECT_QUERY + specification.toSql();
+            List<String> parameters = specification.getParameters();
 
-        return executeQuery(query, parameters);
+            return executeQuery(query, parameters);
+        } catch (SQLException e) {
+            throw new RepositoryException(e);
+        }
     }
 
     //map<Str, obj> fields
     // fields.put(NAME_OF_COLUMN, employee.getId);
     @Override
-    public Optional<Order> queryForSingleResult(SqlSpecification specification) throws SQLException {
-        String query = SELECT_QUERY + specification.toSql();
-        List<String> parameters = specification.getParameters();
+    public Optional<Order> queryForSingleResult(SqlSpecification specification) throws RepositoryException {
+        try {
+            String query = SELECT_QUERY + specification.toSql();
+            List<String> parameters = specification.getParameters();
 
-        Builder<Order> builder = getBuilder();
+            Builder<Order> builder = getBuilder();
 
-        return executeQueryForSingleResult(builder, query, parameters);
+            return executeQueryForSingleResult(builder, query, parameters);
+        } catch (SQLException e) {
+            throw new RepositoryException(e);
+        }
     }
 
     protected Builder<Order> getBuilder() {
@@ -59,7 +68,7 @@ public class OrderRepository extends AbstractRepository<Order> {
 
 
     @Override
-    public void save(Order order) throws SQLException {
+    public void save(Order order) throws RepositoryException {
 
         Map<Integer, Object> map = new HashMap<>();
         int i = 1;
@@ -72,16 +81,20 @@ public class OrderRepository extends AbstractRepository<Order> {
         Reader reader = order.getReader();
         map.put(i++, reader.getId());
 
-        if (order.getId() == null) {
-            executeSave(map, INSERT_QUERY);
-        } else {
-            map.put(i, order.getId());
-            executeSave(map, UPDATE_QUERY);
+        try {
+            if (order.getId() == null) {
+                executeSave(map, INSERT_QUERY);
+            } else {
+                map.put(i, order.getId());
+                executeSave(map, UPDATE_QUERY);
+            }
+        } catch (SQLException e) {
+            throw new RepositoryException(e);
         }
     }
 
     @Override
-    public void remove(Order order) throws SQLException {
+    public void remove(Order order) {
         throw new UnsupportedOperationException();
     }
 

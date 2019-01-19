@@ -2,12 +2,12 @@ package com.epam.library.repositpry;
 
 import com.epam.library.builder.Builder;
 import com.epam.library.builder.EmployeeBuilder;
+import com.epam.library.exception.RepositoryException;
 import com.epam.library.model.Employee;
 import com.epam.library.specification.SqlSpecification;
 import org.apache.commons.codec.digest.DigestUtils;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
@@ -15,7 +15,6 @@ import java.util.Map;
 import java.util.Optional;
 
 public class EmployeeRepository extends AbstractRepository<Employee> {
-    private static final String SHOW_COLUMNS_QUERY = "show columns from `employee`";
     private static final String SELECT_QUERY = "select * from employee ";
     private static final String REMOVE_QUERY = "delete from employee where id = ?";
     private static final String INSERT_QUERY =
@@ -35,26 +34,34 @@ public class EmployeeRepository extends AbstractRepository<Employee> {
     }
 
     @Override
-    public List<Employee> query(SqlSpecification specification) throws SQLException {
-        String query = SELECT_QUERY + specification.toSql();
-        List<String> parameters = specification.getParameters();
+    public List<Employee> query(SqlSpecification specification) throws RepositoryException {
+        try {
+            String query = SELECT_QUERY + specification.toSql();
+            List<String> parameters = specification.getParameters();
 
-        return executeQuery(query, parameters);
+            return executeQuery(query, parameters);
+        } catch (SQLException e) {
+            throw new RepositoryException(e);
+        }
     }
 
     @Override
-    public Optional<Employee> queryForSingleResult(SqlSpecification specification) throws SQLException {
+    public Optional<Employee> queryForSingleResult(SqlSpecification specification) throws RepositoryException {
+        try {
 
-        String query = SELECT_QUERY + specification.toSql();
-        List<String> parameters = specification.getParameters();
+            String query = SELECT_QUERY + specification.toSql();
+            List<String> parameters = specification.getParameters();
 
-        Builder<Employee> builder = getBuilder();
+            Builder<Employee> builder = getBuilder();
 
-        return executeQueryForSingleResult(builder, query, parameters);
+            return executeQueryForSingleResult(builder, query, parameters);
+        } catch (SQLException e) {
+            throw new RepositoryException(e);
+        }
     }
 
     @Override
-    public void save(Employee employee) throws SQLException {
+    public void save(Employee employee) throws RepositoryException {
 
         Map<Integer, Object> map = new HashMap<>();
         int i = 1;
@@ -66,16 +73,24 @@ public class EmployeeRepository extends AbstractRepository<Employee> {
         map.put(i++, employee.isAdmin());
 
 
-        if (employee.getId() == null) {
-            executeSave(map, INSERT_QUERY);
-        } else {
-            map.put(i, UPDATE_QUERY);
+        try {
+            if (employee.getId() == null) {
+                executeSave(map, INSERT_QUERY);
+            } else {
+                map.put(i, UPDATE_QUERY);
+            }
+        } catch (SQLException e) {
+            throw new RepositoryException(e);
         }
     }
 
     @Override
-    public void remove(Employee employee) throws SQLException {
-        executeRemove(employee, REMOVE_QUERY);
+    public void remove(Employee employee) throws RepositoryException {
+        try {
+            executeRemove(employee, REMOVE_QUERY);
+        } catch (SQLException e) {
+            throw new RepositoryException(e);
+        }
     }
 
     protected Builder<Employee> getBuilder() {

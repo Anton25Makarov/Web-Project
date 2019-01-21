@@ -9,10 +9,9 @@ import javax.servlet.http.HttpServletResponse;
 public interface Command {
 
     /**
-     * @param req
-     * @param resp
-     * @return
-     * @throws ServiceException
+     * @param req to provide request information for HTTP servlets.
+     * @param resp to provide HTTP-specific functionality in sending a response
+     * @return an instance of {@link CommandResult}, that has a web-page name to show.
      */
     CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException;
 }

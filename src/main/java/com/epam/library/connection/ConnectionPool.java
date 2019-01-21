@@ -39,7 +39,8 @@ public class ConnectionPool {
             takeLock.lock();
             return connections.poll();
         } catch (InterruptedException e) {
-            throw new RuntimeException("Interrupted while waiting for a database connection.", e);
+            LOGGER.error("Can not create connection to database.", e);
+            throw new RuntimeException(e);
         } finally {
             takeLock.unlock();
         }
@@ -62,7 +63,8 @@ public class ConnectionPool {
                 connections.add(connection);
             }
         } catch (IOException | SQLException | ClassNotFoundException e) {
-            LOGGER.error(e);
+            System.out.println("IOException | SQLException | ClassNotFoundException");
+            LOGGER.error("Can not create connection to database.", e);
             throw new RuntimeException("Can not create connection to database.", e);
         }
     }

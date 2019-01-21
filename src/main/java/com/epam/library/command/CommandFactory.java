@@ -5,8 +5,12 @@ import com.epam.library.command.remove.RemoveBookCommand;
 import com.epam.library.command.remove.RemoveLibrarianCommand;
 import com.epam.library.command.remove.RemoveReaderCommand;
 import com.epam.library.command.save.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class CommandFactory {
+    private static final Logger LOGGER = LogManager.getLogger();
+
     public static Command create(String command) { // class for commands
         switch (command) {
             case "login":
@@ -54,6 +58,7 @@ public class CommandFactory {
             case "logOut":
                 return new LogOutCommand();
             default:
+                LOGGER.error("Unknown command: " + command);
                 throw new UnsupportedOperationException("Unknown command: " + command);
         }
     }

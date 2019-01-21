@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configuration monitorInterval="3">
+<configuration monitorInterval="5">
 
     <appenders>
-        <File name="FILE" fileName="WEB-INF/classes/logs/application.log">
+        <File name="FILE" fileName="logs/application/app.log">
             <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n"/>
         </File>
     </appenders>

@@ -13,20 +13,16 @@ public class ConnectionCreator {
     private static final String DB_PASS = "password";
 
 
-    public static Connection getConnection() throws SQLException, IOException {
-        try {
-            PropertiesReader propertiesReader = new PropertiesReader();
-            Properties properties = propertiesReader.getProperty();
+    public static Connection getConnection() throws SQLException, IOException, ClassNotFoundException {
+        PropertiesReader propertiesReader = new PropertiesReader();
+        Properties properties = propertiesReader.getProperty();
 
-            String dbDriver = properties.getProperty(DB_DRIVER);
-            String dbUrl = properties.getProperty(DB_URL);
-            String dbUser = properties.getProperty(DB_USER);
-            String dbPassword = properties.getProperty(DB_PASS);
+        String dbDriver = properties.getProperty(DB_DRIVER);
+        String dbUrl = properties.getProperty(DB_URL);
+        String dbUser = properties.getProperty(DB_USER);
+        String dbPassword = properties.getProperty(DB_PASS);
 
-            Class.forName(dbDriver);
-            return DriverManager.getConnection(dbUrl, dbUser, dbPassword);
-        } catch (SQLException | ClassNotFoundException e) {
-            throw new SQLException("Error connecting to the database", e);
-        }
+        Class.forName(dbDriver);
+        return DriverManager.getConnection(dbUrl, dbUser, dbPassword);
     }
 }

@@ -1,6 +1,7 @@
 package com.epam.library.exception;
 
 public class RepositoryException extends Exception {
+    private static final long serialVersionUID = 8339343639617072062L;
 
     public RepositoryException() {
     }

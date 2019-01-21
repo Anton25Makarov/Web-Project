@@ -1,15 +1,21 @@
 package com.epam.library.connection;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.*;
+import java.util.ArrayDeque;
+import java.util.Queue;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class ConnectionPool {
     private static final int CONNECTION_COUNT = 5;
+    private static final Logger LOGGER = LogManager.getLogger(ConnectionPool.class.getName());
+
 
     private static ConnectionPool instance = new ConnectionPool();
 
@@ -55,7 +61,8 @@ public class ConnectionPool {
                 Connection connection = ConnectionCreator.getConnection();
                 connections.add(connection);
             }
-        } catch (IOException | SQLException e) {
+        } catch (IOException | SQLException | ClassNotFoundException e) {
+            LOGGER.error(e);
             throw new RuntimeException("Can not create connection to database.", e);
         }
     }

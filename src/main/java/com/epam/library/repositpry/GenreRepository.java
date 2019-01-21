@@ -6,11 +6,15 @@ import com.epam.library.exception.RepositoryException;
 import com.epam.library.model.BookGenre;
 import com.epam.library.specification.SqlSpecification;
 
-import java.sql.*;
-import java.util.*;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 public class GenreRepository extends AbstractRepository<BookGenre> {
-    private static final String SELECT_QUERY = "select * from genre_catalog ";
+    private static final String SELECT_QUERY = "select * from genre_catalog\n";
     private static final String INSERT_QUERY =
             "insert into genre_catalog (genre)\n" +
                     "values (?);";
@@ -27,25 +31,28 @@ public class GenreRepository extends AbstractRepository<BookGenre> {
 
             return executeQuery(query, parameters);
         } catch (SQLException e) {
-            throw new RepositoryException(e);
+            throw new RepositoryException("Cannot execute query" + e);
         }
     }
 
     //map<Str, obj> fields
     // fields.put(NAME_OF_COLUMN, employee.getId);
     @Override
-    public Optional<BookGenre> queryForSingleResult(SqlSpecification specification) {
-        throw new UnsupportedOperationException();
+    public Optional<BookGenre> queryForSingleResult(SqlSpecification specification) throws RepositoryException {
+        try {
+            String query = SELECT_QUERY + specification.toSql();
+            List<String> parameters = specification.getParameters();
+
+            return executeQueryForSingleResult(query, parameters);
+        } catch (SQLException e) {
+            throw new RepositoryException("Cannot execute query for single result" + e);
+        }
     }
 
     protected Builder<BookGenre> getBuilder() {
         return new GenreBuilder();
     }
 
-    protected Optional<BookGenre> executeQueryForSingleResult(
-            Builder<BookGenre> builder, String query, List<String> parameters) {
-        throw new UnsupportedOperationException(); // add text error as parameter
-    }
 
     @Override
     public void save(BookGenre genre) throws RepositoryException {
@@ -56,13 +63,13 @@ public class GenreRepository extends AbstractRepository<BookGenre> {
 
             executeSave(map, INSERT_QUERY);
         } catch (SQLException e) {
-            throw new RepositoryException(e);
+            throw new RepositoryException("Cannot execute save entity" + e);
         }
     }
 
     @Override
     public void remove(BookGenre genre) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("Operation 'remove' is not defined");
     }
 
 }

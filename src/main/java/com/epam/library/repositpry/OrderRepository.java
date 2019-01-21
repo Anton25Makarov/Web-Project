@@ -16,7 +16,7 @@ import java.util.Map;
 import java.util.Optional;
 
 public class OrderRepository extends AbstractRepository<Order> {
-    private static final String SELECT_QUERY = "select * from `order` ";
+    private static final String SELECT_QUERY = "select * from `order`\n";
     private static final String INSERT_QUERY =
             "insert into `order` (is_in_reading_room, taking_date, return_date, book_id, reader_id)\n" +
                     "values (?, ?, ?, ?, ?);";
@@ -42,7 +42,7 @@ public class OrderRepository extends AbstractRepository<Order> {
 
             return executeQuery(query, parameters);
         } catch (SQLException e) {
-            throw new RepositoryException(e);
+            throw new RepositoryException("Cannot execute query" + e);
         }
     }
 
@@ -54,11 +54,9 @@ public class OrderRepository extends AbstractRepository<Order> {
             String query = SELECT_QUERY + specification.toSql();
             List<String> parameters = specification.getParameters();
 
-            Builder<Order> builder = getBuilder();
-
-            return executeQueryForSingleResult(builder, query, parameters);
+            return executeQueryForSingleResult(query, parameters);
         } catch (SQLException e) {
-            throw new RepositoryException(e);
+            throw new RepositoryException("Cannot execute query for single result" + e);
         }
     }
 
@@ -89,13 +87,13 @@ public class OrderRepository extends AbstractRepository<Order> {
                 executeSave(map, UPDATE_QUERY);
             }
         } catch (SQLException e) {
-            throw new RepositoryException(e);
+            throw new RepositoryException("Cannot execute save entity" + e);
         }
     }
 
     @Override
     public void remove(Order order) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("Operation 'remove' is not defined");
     }
 
 }

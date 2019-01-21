@@ -1,5 +1,7 @@
 package com.epam.library.command;
 
+import com.epam.library.jsp.JspPageName;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -12,6 +14,6 @@ public class LogOutCommand implements Command {
         session.removeAttribute("user");
         session.removeAttribute("role");
 
-        return CommandResult.forward("/WEB-INF/pages/login.jsp");
+        return CommandResult.forward(JspPageName.LOGIN_PAGE);
     }
 }

@@ -6,7 +6,7 @@
 <fmt:setLocale value="${sessionScope.local}" scope="session"/>
 <fmt:setBundle basename="locale" var="loc"/>
 
-<html lang="ru">
+<html>
 <head>
     <link type="text/css" rel="stylesheet" href='${pageContext.servletContext.contextPath}/resource/style/style.css'/>
     <link type="text/css" rel="stylesheet" href='${pageContext.servletContext.contextPath}/resource/style/table.css'/>
@@ -18,7 +18,7 @@
     <script type="text/javascript"
             src="${pageContext.servletContext.contextPath}/resource/js/list-div.js"></script>
     <script type="text/javascript"
-            src="${pageContext.servletContext.contextPath}/resource/js/hideInfo.js"></script>
+            src="${pageContext.servletContext.contextPath}/resource/js/showInfo.js"></script>
 
     <title>Menu</title>
 </head>
@@ -50,6 +50,12 @@
                     <jsp:include page="../../fragments/reader/reader-menu.jsp"/>
                 </c:when>
             </c:choose>
+        </div>
+        <div class="server-answer">
+            <p class="infos">${sessionScope.parametersInfo}</p>
+            <c:remove var="parametersInfo" scope="session"/>
+            <p class="infos">${sessionScope.bookReturnInfo}</p>
+            <c:remove var="bookReturnInfo" scope="session"/>
         </div>
     </aside>
 

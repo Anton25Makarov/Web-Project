@@ -14,7 +14,6 @@ public class FindUserByLoginAndPasswordSpecification implements SqlSpecification
     public FindUserByLoginAndPasswordSpecification(String login, String password) {
         this.login = login;
         this.password = DigestUtils.md5Hex(password);
-//        this.password = password;
     }
 
     @Override

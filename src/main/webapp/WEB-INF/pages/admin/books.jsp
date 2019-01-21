@@ -15,11 +15,13 @@
     <script type="text/javascript"
             src="${pageContext.servletContext.contextPath}/resource/js/jquery-datatable.js"></script>
     <script type="text/javascript"
-            src="${pageContext.servletContext.contextPath}/resource/js/modal-book.js?newversion"></script>
+            src="${pageContext.servletContext.contextPath}/resource/js/modal-book.js"></script>
     <script type="text/javascript"
-            src="${pageContext.servletContext.contextPath}/resource/js/hideInfo.js?newversion"></script>
+            src="${pageContext.servletContext.contextPath}/resource/js/showInfo.js"></script>
 
-    <title>Menu</title>
+    <title>
+        <fmt:message bundle="${loc}" key="tab.title.library"/>
+    </title>
 </head>
 <body>
 <div id="head">
@@ -68,6 +70,14 @@
                 <span> <c:out value="${param.save}"/></span>
             </div>
         </div>
+        <div class="server-answer">
+            <p class="infos">${sessionScope.parametersInfo}</p>
+            <c:remove var="parametersInfo" scope="session"/>
+            <p class="infos">${sessionScope.saveStatusInfo}</p>
+            <c:remove var="saveStatusInfo" scope="session"/>
+            <p class="infos">${sessionScope.removeStatusInfo}</p>
+            <c:remove var="removeStatusInfo" scope="session"/>
+        </div>
     </aside>
 
     <article>
@@ -111,8 +121,6 @@
                         <td><c:out value="${book.year}"/></td>
                         <td><c:out value="${book.count}"/></td>
                         <td>
-                            <%--<input type="hidden" value="${book.id} + ' is my ID'">--%>
-
                             <button type="submit" class="saveEditBookButton" value="${book.id}">
                                 <fmt:message bundle="${loc}" key="label.edit"/>
                             </button>
@@ -148,8 +156,11 @@
 
                 <div class="container">
                     <fmt:message bundle="${loc}" key="label.book.title" var="title"/>
-                    <input type="text" placeholder="${title}" name="bookTitle" required pattern="[a-zA-Z\d]{2,15}"/>
-
+                    <fmt:message bundle="${loc}" key="warning.input.number" var="numberWaring"/>
+                    <fmt:message bundle="${loc}" key="warning.input.text" var="textWaring"/>
+                    <input type="text" placeholder="${title}" name="bookTitle" required
+                           title="${textWaring}"
+                           pattern="[a-zA-Zа-яА-Я0-9]{2,15}"/>
                     <label>
                         <select name="selectedGenreId" required>
                             <c:forEach items="${requestScope.genres}" var="genre">
@@ -168,9 +179,13 @@
                         </select>
                     </label>
                     <fmt:message bundle="${loc}" key="label.amount" var="count"/>
-                    <input type="text" placeholder="${count}" name="bookCount" required pattern="\d+">
+                    <input type="number" placeholder="${count}" name="bookCount" required
+                           title="${numberWaring}" min="0" max="100"
+                           pattern="[0-9]{1,3}">
                     <fmt:message bundle="${loc}" key="label.year" var="year"/>
-                    <input type="text" placeholder="${year}" name="bookYear" required pattern="\d+">
+                    <input type="number" placeholder="${year}" name="bookYear" required
+                           title="${numberWaring}" min="1500" max="2019"
+                           pattern="[0-9]{4}">
                     <input type="hidden" name="bookId">
                     <button type="submit">
                         <fmt:message bundle="${loc}" key="label.save"/>
@@ -197,10 +212,12 @@
                 <div class="container">
                     <fmt:message bundle="${loc}" key="label.author.name" var="name"/>
                     <input type="text" placeholder="${name}" name="authorBookName" required
-                           pattern="[a-zA-Z]{2,15}">
+                           title="${textWaring}"
+                           pattern="[a-zA-Zа-яА-Я0-9]{2,15}">
                     <fmt:message bundle="${loc}" key="label.author.surname" var="surname"/>
                     <input type="text" placeholder="${surname}" name="authorBookSurname" required
-                           pattern="[a-zA-Z]{2,15}">
+                           title="${textWaring}"
+                           pattern="[a-zA-Zа-яА-Я0-9]{2,15}">
                     <button type="submit">
                         <fmt:message bundle="${loc}" key="label.save"/>
                     </button>
@@ -225,7 +242,8 @@
                 </div>
                 <div class="container">
                     <fmt:message bundle="${loc}" key="label.book.genre" var="genre"/>
-                    <input type="text" placeholder="${genre}" name="bookGenre" required pattern="[a-zA-Z]{2,15}">
+                    <input type="text" placeholder="${genre}" name="bookGenre" required
+                           title="${textWaring}" pattern="[a-zA-Zа-яА-Я0-9]{2,15}">
                     <button type="submit">
                         <fmt:message bundle="${loc}" key="label.save"/>
                     </button>

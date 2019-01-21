@@ -19,7 +19,7 @@
     <script type="text/javascript"
             src="${pageContext.servletContext.contextPath}/resource/js/list-div.js"></script>
     <script type="text/javascript"
-            src="${pageContext.servletContext.contextPath}/resource/js/hideInfo.js"></script>
+            src="${pageContext.servletContext.contextPath}/resource/js/showInfo.js"></script>
 
     <title>Menu</title>
 </head>
@@ -51,6 +51,12 @@
                     <jsp:include page="../../fragments/reader/reader-menu.jsp"/>
                 </c:when>
             </c:choose>
+        </div>
+        <div class="server-answer">
+            <p class="infos">${sessionScope.parametersInfo}</p>
+            <c:remove var="parametersInfo" scope="session"/>
+            <p class="infos">${sessionScope.bookOrderedInfo}</p>
+            <c:remove var="bookOrderedInfo" scope="session"/>
         </div>
     </aside>
 
@@ -134,7 +140,9 @@
                                         <input type="hidden" value="${book.genre.id}" name="genreId"/>
                                         <input type="hidden" value="${book.year}" name="bookYear"/>
                                         <input type="hidden" value="${book.count}" name="bookCount"/>
-                                        <button type="submit">Order</button>
+                                        <button type="submit">
+                                            <fmt:message bundle="${loc}" key="label.order"/>
+                                        </button>
                                         <label class="m-top">
                                             <fmt:message bundle="${loc}" key="label.inReadingRoom"/>
                                             <input type="checkbox" name="inReadingRoom"/>

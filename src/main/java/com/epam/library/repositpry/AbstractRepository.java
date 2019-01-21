@@ -2,7 +2,6 @@ package com.epam.library.repositpry;
 
 
 import com.epam.library.builder.Builder;
-import com.epam.library.specification.SqlSpecification;
 import com.epam.library.model.Entity;
 
 import java.sql.Connection;
@@ -43,7 +42,6 @@ public abstract class AbstractRepository<T extends Entity> implements Repository
     }
 
     protected List<T> executeQuery(String query, List<String> parameters) throws SQLException {
-        Builder<T> builder = getBuilder();
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             int i = 1;
             for (String parameter : parameters) {
@@ -52,6 +50,7 @@ public abstract class AbstractRepository<T extends Entity> implements Repository
 
             ResultSet resultSet = preparedStatement.executeQuery(); //close?
 
+            Builder<T> builder = getBuilder();
             List<T> entities = new ArrayList<>();
             while (resultSet.next()) {
                 T entity = builder.build(resultSet);
@@ -62,8 +61,7 @@ public abstract class AbstractRepository<T extends Entity> implements Repository
         }
     }
 
-    protected Optional<T> executeQueryForSingleResult(Builder<T> builder, String query, List<String> parameters)
-            throws SQLException {
+    protected Optional<T> executeQueryForSingleResult(String query, List<String> parameters) throws SQLException {
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             int i = 1;
             for (String parameter : parameters) {
@@ -73,6 +71,7 @@ public abstract class AbstractRepository<T extends Entity> implements Repository
             ResultSet resultSet = preparedStatement.executeQuery();
 
             T entity = null;
+            Builder<T> builder = getBuilder();
             if (resultSet.next()) {
                 entity = builder.build(resultSet);
             }

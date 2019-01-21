@@ -54,7 +54,15 @@ public class Book extends Entity {
         return author;
     }
 
+    public void setAuthor(Author author) {
+        this.author = author;
+    }
+
     public BookGenre getGenre() {
         return genre;
+    }
+
+    public void setGenre(BookGenre genre) {
+        this.genre = genre;
     }
 }

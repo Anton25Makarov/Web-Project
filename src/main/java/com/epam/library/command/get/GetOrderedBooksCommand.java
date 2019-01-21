@@ -3,6 +3,7 @@ package com.epam.library.command.get;
 import com.epam.library.command.Command;
 import com.epam.library.command.CommandResult;
 import com.epam.library.exception.ServiceException;
+import com.epam.library.jsp.JspPageName;
 import com.epam.library.model.Book;
 import com.epam.library.model.Order;
 import com.epam.library.model.Reader;
@@ -21,6 +22,7 @@ public class GetOrderedBooksCommand implements Command {
 
         HttpSession session = req.getSession();
         Reader reader = (Reader) session.getAttribute("user");
+
         Long readerId = reader.getId();
 
         OrderService orderService = new OrderService();
@@ -34,7 +36,7 @@ public class GetOrderedBooksCommand implements Command {
 
         req.setAttribute("orders", orders);
 
-        return CommandResult.forward("/WEB-INF/pages/reader/books.jsp");
+        return CommandResult.forward(JspPageName.READER_BOOKS_PAGE);
     }
 
 }

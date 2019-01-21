@@ -13,7 +13,7 @@ import com.epam.library.specification.SqlSpecification;
 import java.util.List;
 import java.util.Optional;
 
-public class EmployeeService { // Check all Parameters !!!!!!!!!
+public class EmployeeService {
 
     public Optional<Employee> login(String login, String password) throws ServiceException {
         try (RepositoryFactory factory = new RepositoryFactory()) {

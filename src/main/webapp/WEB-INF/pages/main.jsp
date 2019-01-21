@@ -1,5 +1,10 @@
 <%@ page contentType="text/html; charset=utf-8" pageEncoding="UTF-8" isELIgnored="false" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<fmt:setLocale value="${sessionScope.local}" scope="session"/>
+<fmt:setBundle basename="locale" var="loc"/>
+
 <html>
 <head>
     <link type="text/css" rel="stylesheet" href='${pageContext.servletContext.contextPath}/resource/style/style.css'/>
@@ -7,8 +12,12 @@
             src="${pageContext.servletContext.contextPath}/resource/js/jquery-3.3.1.js"></script>
     <script type="text/javascript"
             src="${pageContext.servletContext.contextPath}/resource/js/modal-book.js"></script>
+    <script type="text/javascript"
+            src="${pageContext.servletContext.contextPath}/resource/js/showInfo.js"></script>
 
-    <title>Menu</title>
+    <title>
+        <fmt:message bundle="${loc}" key="tab.title.library"/>
+    </title>
 </head>
 <body>
 <div id="head">
@@ -38,6 +47,10 @@
                     <jsp:include page="../fragments/reader/reader-menu.jsp"/>
                 </c:when>
             </c:choose>
+        </div>
+        <div class="server-answer">
+            <p class="infos">${sessionScope.parametersInfo}</p>
+            <c:remove var="parametersInfo" scope="session"/>
         </div>
     </aside>
 

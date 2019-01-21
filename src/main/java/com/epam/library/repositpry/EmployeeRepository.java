@@ -15,7 +15,7 @@ import java.util.Map;
 import java.util.Optional;
 
 public class EmployeeRepository extends AbstractRepository<Employee> {
-    private static final String SELECT_QUERY = "select * from employee ";
+    private static final String SELECT_QUERY = "select * from employee\n";
     private static final String REMOVE_QUERY = "delete from employee where id = ?";
     private static final String INSERT_QUERY =
             "insert into employee (login, password, name, surname, is_admin)\n" +
@@ -41,22 +41,19 @@ public class EmployeeRepository extends AbstractRepository<Employee> {
 
             return executeQuery(query, parameters);
         } catch (SQLException e) {
-            throw new RepositoryException(e);
+            throw new RepositoryException("Cannot execute query" + e);
         }
     }
 
     @Override
     public Optional<Employee> queryForSingleResult(SqlSpecification specification) throws RepositoryException {
         try {
-
             String query = SELECT_QUERY + specification.toSql();
             List<String> parameters = specification.getParameters();
 
-            Builder<Employee> builder = getBuilder();
-
-            return executeQueryForSingleResult(builder, query, parameters);
+            return executeQueryForSingleResult(query, parameters);
         } catch (SQLException e) {
-            throw new RepositoryException(e);
+            throw new RepositoryException("Cannot execute query for single result" + e);
         }
     }
 
@@ -80,7 +77,7 @@ public class EmployeeRepository extends AbstractRepository<Employee> {
                 map.put(i, UPDATE_QUERY);
             }
         } catch (SQLException e) {
-            throw new RepositoryException(e);
+            throw new RepositoryException("Cannot execute save entity" + e);
         }
     }
 
@@ -89,7 +86,7 @@ public class EmployeeRepository extends AbstractRepository<Employee> {
         try {
             executeRemove(employee, REMOVE_QUERY);
         } catch (SQLException e) {
-            throw new RepositoryException(e);
+            throw new RepositoryException("Cannot execute remove entity" + e);
         }
     }
 

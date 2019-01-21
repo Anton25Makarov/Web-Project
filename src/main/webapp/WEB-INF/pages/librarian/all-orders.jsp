@@ -19,9 +19,11 @@
     <script type="text/javascript"
             src="${pageContext.servletContext.contextPath}/resource/js/table.js"></script>
     <script type="text/javascript"
-            src="${pageContext.servletContext.contextPath}/resource/js/hideInfo.js"></script>
+            src="${pageContext.servletContext.contextPath}/resource/js/showInfo.js"></script>
 
-    <title>Menu</title>
+    <title>
+        <fmt:message bundle="${loc}" key="tab.title.library"/>
+    </title>
 </head>
 <body>
 <div id="head">
@@ -51,6 +53,10 @@
                     <jsp:include page="../../fragments/reader/reader-menu.jsp"/>
                 </c:when>
             </c:choose>
+        </div>
+        <div class="server-answer">
+            <p class="infos">${sessionScope.parametersInfo}</p>
+            <c:remove var="parametersInfo" scope="session"/>
         </div>
     </aside>
 

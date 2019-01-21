@@ -3,6 +3,7 @@ package com.epam.library.command.get;
 import com.epam.library.command.Command;
 import com.epam.library.command.CommandResult;
 import com.epam.library.exception.ServiceException;
+import com.epam.library.jsp.JspPageName;
 import com.epam.library.model.Employee;
 import com.epam.library.service.EmployeeService;
 
@@ -20,7 +21,6 @@ public class GetLibrariansCommand implements Command {
 
         req.setAttribute("librarians", librarians);
 
-        return CommandResult.forward("/WEB-INF/pages/admin/librarians.jsp");
-
+        return CommandResult.forward(JspPageName.ADMIN_LIBRARIANS_PAGE);
     }
 }

@@ -4,6 +4,8 @@ import com.epam.library.command.Command;
 import com.epam.library.command.CommandFactory;
 import com.epam.library.command.CommandResult;
 import com.epam.library.exception.ServiceException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,6 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class LibraryController extends HttpServlet {
+    private static final long serialVersionUID = -1550596778941759867L;
+    private static final Logger LOGGER = LogManager.getLogger(LibraryController.class.getName());
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -54,7 +58,7 @@ public class LibraryController extends HttpServlet {
         try {
             page = action.execute(req, resp);
         } catch (ServiceException e) {
-            e.printStackTrace();
+            LOGGER.error(e);
         }
 
         dispatch(req, resp, page);
@@ -71,5 +75,4 @@ public class LibraryController extends HttpServlet {
             dispatcher.forward(req, resp);
         }
     }
-    //UISerialVersionId !!!
 }

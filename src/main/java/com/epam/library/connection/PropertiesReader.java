@@ -14,13 +14,10 @@ public class PropertiesReader {
     }
 
     public Properties getProperty() throws IOException {
-        try {
-            InputStream inputStream = ConnectionCreator.class.getClassLoader().getResourceAsStream(PROPERTIES_FILE);
+        InputStream inputStream = ConnectionCreator.class.getClassLoader().getResourceAsStream(PROPERTIES_FILE);
 
-            properties.load(inputStream);
-        } catch (IOException e) {
-            throw new IOException("Cannot read properties file to connect to db", e);
-        }
+        properties.load(inputStream);
+
         return properties;
     }
 }

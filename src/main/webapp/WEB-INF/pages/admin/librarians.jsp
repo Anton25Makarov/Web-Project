@@ -17,9 +17,11 @@
     <script type="text/javascript"
             src="${pageContext.servletContext.contextPath}/resource/js/modal-librarian.js"></script>
     <script type="text/javascript"
-            src="${pageContext.servletContext.contextPath}/resource/js/hideInfo.js"></script>
+            src="${pageContext.servletContext.contextPath}/resource/js/showInfo.js"></script>
 
-    <title>Menu</title>
+    <title>
+        <fmt:message bundle="${loc}" key="tab.title.library"/>
+    </title>
 </head>
 <body>
 <div id="head">
@@ -57,6 +59,16 @@
                 </div>
                 <span><c:out value="${param.save}"/></span>
             </div>
+        </div>
+        <div class="server-answer">
+            <p class="infos">${sessionScope.parametersInfo}</p>
+            <c:remove var="parametersInfo" scope="session"/>
+            <p class="infos">${sessionScope.correctLoginInfo}</p>
+            <c:remove var="correctLoginInfo" scope="session"/>
+            <p class="infos">${sessionScope.saveStatusInfo}</p>
+            <c:remove var="saveStatusInfo" scope="session"/>
+            <p class="infos">${sessionScope.removeStatusInfo}</p>
+            <c:remove var="removeStatusInfo" scope="session"/>
         </div>
     </aside>
 
@@ -118,14 +130,20 @@
                 </div>
 
                 <div class="container">
+                    <fmt:message bundle="${loc}" key="warning.input.number" var="numberWaring"/>
+                    <fmt:message bundle="${loc}" key="warning.input.text" var="textWaring"/>
                     <fmt:message bundle="${loc}" key="label.author.name" var="name"/>
-                    <input type="text" placeholder="${name}" name="name" required pattern="[a-zA-Z]{2,15}">
+                    <input type="text" placeholder="${name}" name="name" required  title="${textWaring}"
+                           pattern="[a-zA-Zа-яА-Я0-9]{2,15}">
                     <fmt:message bundle="${loc}" key="label.author.surname" var="surname"/>
-                    <input type="text" placeholder="${surname}" name="surname" required pattern="[a-zA-Z]{2,15}">
+                    <input type="text" placeholder="${surname}" name="surname" required  title="${textWaring}"
+                           pattern="[a-zA-Zа-яА-Я0-9]{2,15}">
                     <fmt:message bundle="${loc}" key="label.login" var="login"/>
-                    <input type="text" placeholder="${login}" name="login" required pattern="[a-zA-Z]{2,15}">
+                    <input type="text" placeholder="${login}" name="login" required  title="${textWaring}"
+                           pattern="[a-zA-Zа-яА-Я0-9]{2,15}">
                     <fmt:message bundle="${loc}" key="label.password" var="password"/>
-                    <input type="password" placeholder="${password}" name="password" required pattern="[a-zA-Z]{2,15}">
+                    <input type="password" placeholder="${password}" name="password" required  title="${textWaring}"
+                           pattern="[a-zA-Zа-яА-Я0-9]{2,15}">
 
                     <button type="submit">
                         <fmt:message bundle="${loc}" key="label.save"/>

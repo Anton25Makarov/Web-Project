@@ -36,7 +36,7 @@ public class BookRepository extends AbstractRepository<Book> {
 
             return executeQuery(query, parameters);
         } catch (SQLException e) {
-            throw new RepositoryException(e);
+            throw new RepositoryException("Cannot execute query" + e);
         }
     }
 
@@ -46,11 +46,9 @@ public class BookRepository extends AbstractRepository<Book> {
             String query = SELECT_QUERY + specification.toSql();
             List<String> parameters = specification.getParameters();
 
-            Builder<Book> builder = getBuilder();
-
-            return executeQueryForSingleResult(builder, query, parameters);
+            return executeQueryForSingleResult(query, parameters);
         } catch (SQLException e) {
-            throw new RepositoryException(e);
+            throw new RepositoryException("Cannot execute query for single result" + e);
         }
     }
 
@@ -73,7 +71,7 @@ public class BookRepository extends AbstractRepository<Book> {
                 executeSave(map, UPDATE_QUERY);
             }
         } catch (SQLException e) {
-            throw new RepositoryException(e);
+            throw new RepositoryException("Cannot execute save entity" + e);
         }
     }
 
@@ -82,7 +80,7 @@ public class BookRepository extends AbstractRepository<Book> {
         try {
             executeRemove(book, REMOVE_QUERY);
         } catch (SQLException e) {
-            throw new RepositoryException(e);
+            throw new RepositoryException("Cannot execute remove entity" + e);
         }
     }
 

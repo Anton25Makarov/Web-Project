@@ -11,6 +11,8 @@
         <fmt:message bundle="${loc}" key="label.logIn"/>
     </title>
     <link type="text/css" rel="stylesheet" href='${pageContext.servletContext.contextPath}/resource/style/style.css'/>
+    <script type="text/javascript"
+            src="${pageContext.servletContext.contextPath}/resource/js/showInfo.js"></script>
 </head>
 <body>
 
@@ -27,7 +29,12 @@
     </nav>
 </div>
 <main>
+    <a href="${pageContext.request.contextPath}/controller?command=sdfsd">Goooo</a>
     <article>
+        <div class="server-answer">
+            <p class="infos">${sessionScope.parametersInfo}</p>
+            <c:remove var="parametersInfo" scope="session"/>
+        </div>
         <div class="user">
 
             <header class="sign_up_header">
@@ -57,7 +64,7 @@
             </form>
 
             <div class="errorInfo">
-                <c:out value="${requestScope.errorLogin}"/>
+                <c:out value="${requestScope.errorAuthorisation}"/>
             </div>
         </div>
 
@@ -65,9 +72,3 @@
 </main>
 </body>
 </html>
-
-<%--pattern="[a-zA-Z\d]{6,20}"
-                       title="Login should contain only latin characters and numbers.
-                       Length between 6 and 20 chaacters"--%>
-<%-- pattern=".{6,20}"
-                       title="Password should contain between 6 and 20 characters"--%>

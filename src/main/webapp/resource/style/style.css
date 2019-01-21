@@ -54,6 +54,10 @@ nav {
     background-color: #333;
 }
 
+.server-answer {
+    display: none;
+}
+
 nav * {
     margin: 0;
     padding: 0;
@@ -289,7 +293,6 @@ header {
 .errorInfo {
     font-size: 20px;
     color: white;
-    background-color: darkgrey;
     font-family: Arial, Calibri, serif;
 }
 

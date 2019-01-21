@@ -3,6 +3,7 @@ package com.epam.library.command.get;
 import com.epam.library.command.Command;
 import com.epam.library.command.CommandResult;
 import com.epam.library.exception.ServiceException;
+import com.epam.library.jsp.JspPageName;
 import com.epam.library.model.Reader;
 import com.epam.library.service.ReaderService;
 
@@ -20,7 +21,7 @@ public class GetReadersCommand implements Command {
 
         req.setAttribute("readers", readers);
 
-        return CommandResult.forward("/WEB-INF/pages/admin/readers.jsp");
+        return CommandResult.forward(JspPageName.ADMIN_READERS_PAGE);
 
     }
 }

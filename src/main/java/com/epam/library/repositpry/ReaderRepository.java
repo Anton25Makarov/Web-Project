@@ -15,7 +15,7 @@ import java.util.Map;
 import java.util.Optional;
 
 public class ReaderRepository extends AbstractRepository<Reader> {
-    private static final String SELECT_QUERY = "select * from reader ";
+    private static final String SELECT_QUERY = "select * from reader\n";
     private static final String REMOVE_QUERY = "delete from reader where id = ?";
     private static final String INSERT_QUERY =
             "insert into reader (name, surname, login, password, telephone)\n" +
@@ -42,7 +42,7 @@ public class ReaderRepository extends AbstractRepository<Reader> {
 
             return executeQuery(query, parameters);
         } catch (SQLException e) {
-            throw new RepositoryException(e);
+            throw new RepositoryException("Cannot execute query" + e);
         }
     }
 
@@ -53,11 +53,9 @@ public class ReaderRepository extends AbstractRepository<Reader> {
             String query = SELECT_QUERY + specification.toSql();
             List<String> parameters = specification.getParameters();
 
-            Builder<Reader> builder = getBuilder();
-
-            return executeQueryForSingleResult(builder, query, parameters);
+            return executeQueryForSingleResult(query, parameters);
         } catch (SQLException e) {
-            throw new RepositoryException(e);
+            throw new RepositoryException("Cannot execute query for single result" + e);
         }
     }
 
@@ -81,7 +79,7 @@ public class ReaderRepository extends AbstractRepository<Reader> {
                 executeSave(map, UPDATE_QUERY);
             }
         } catch (SQLException e) {
-            throw new RepositoryException(e);
+            throw new RepositoryException("Cannot execute save entity" + e);
         }
     }
 
@@ -90,7 +88,7 @@ public class ReaderRepository extends AbstractRepository<Reader> {
         try {
             executeRemove(reader, REMOVE_QUERY);
         } catch (SQLException e) {
-            throw new RepositoryException(e);
+            throw new RepositoryException("Cannot execute remove entity" + e);
         }
     }
 

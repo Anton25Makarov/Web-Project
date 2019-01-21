@@ -3,6 +3,7 @@ package com.epam.library.command.get;
 import com.epam.library.command.Command;
 import com.epam.library.command.CommandResult;
 import com.epam.library.exception.ServiceException;
+import com.epam.library.jsp.JspPageName;
 import com.epam.library.model.Book;
 import com.epam.library.model.Order;
 import com.epam.library.model.Reader;
@@ -34,6 +35,6 @@ public class GetOrdersCommand implements Command {
 
         req.setAttribute("orders", orders);
 
-        return CommandResult.forward("/WEB-INF/pages/librarian/all-orders.jsp");
+        return CommandResult.forward(JspPageName.LIBRARIAN_ORDERS_PAGE);
     }
 }

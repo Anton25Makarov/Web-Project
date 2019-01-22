@@ -12,7 +12,6 @@ public class ConnectionCreator {
     private static final String DB_USER = "name";
     private static final String DB_PASS = "password";
 
-
     public static Connection getConnection() throws SQLException, IOException, ClassNotFoundException {
         PropertiesReader propertiesReader = new PropertiesReader();
         Properties properties = propertiesReader.getProperty();

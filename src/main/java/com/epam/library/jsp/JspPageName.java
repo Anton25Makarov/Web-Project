@@ -10,7 +10,6 @@ public class JspPageName {
     public static final String LIBRARIAN_ISSUE_ORDERS_PAGE = "/WEB-INF/pages/librarian/issue-orders.jsp";
     public static final String READER_BOOKS_PAGE = "/WEB-INF/pages/reader/books.jsp";
     public static final String READER_FIND_BOOKS_PAGE = "/WEB-INF/pages/reader/find-books.jsp";
-    public static final String ERROR_PAGE = "/WEB-INF/pages/error/service-exception-page.jsp";
 
     private JspPageName() {
     }

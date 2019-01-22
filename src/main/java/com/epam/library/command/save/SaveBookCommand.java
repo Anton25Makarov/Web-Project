@@ -3,6 +3,7 @@ package com.epam.library.command.save;
 import com.epam.library.command.Command;
 import com.epam.library.command.CommandResult;
 import com.epam.library.exception.ServiceException;
+import com.epam.library.jsp.JspPageRedirectPath;
 import com.epam.library.model.Author;
 import com.epam.library.model.Book;
 import com.epam.library.model.BookGenre;
@@ -38,12 +39,12 @@ public class SaveBookCommand implements Command {
         if (!stringUtil.areNotNullAndNotEmpty(title, yearParameter, countParameter) ||
                 !stringUtil.areNumbers(authorIdParameter, genreIdParameter)) {
             session.setAttribute("parametersInfo", rb.getString(WRONG_OPERATION_KEY));
-            return CommandResult.redirect("/controller?command=addBookWindow");
+            return CommandResult.redirect(JspPageRedirectPath.ADMIN_BOOKS_PAGE);
         }
 
         if (!stringUtil.areNumbers(countParameter, yearParameter)) {
             session.setAttribute("correctLoginInfo", rb.getString(WRONG_NUMBER_KEY));
-            return CommandResult.redirect("/controller?command=addBookWindow");
+            return CommandResult.redirect(JspPageRedirectPath.ADMIN_BOOKS_PAGE);
         }
 
         Long bookId = null;
@@ -66,7 +67,7 @@ public class SaveBookCommand implements Command {
         bookService.save(book);
 
         session.setAttribute("saveStatusInfo", rb.getString(SAVE_SUCCESSFUL_KEY));
-        return CommandResult.redirect("/controller?command=addBookWindow");
+        return CommandResult.redirect(JspPageRedirectPath.ADMIN_BOOKS_PAGE);
     }
 
     private ResourceBundle getResourceBundle(HttpSession session) {

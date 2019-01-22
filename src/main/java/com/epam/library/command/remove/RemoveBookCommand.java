@@ -1,5 +1,6 @@
 package com.epam.library.command.remove;
 
+import com.epam.library.jsp.JspPageRedirectPath;
 import com.epam.library.util.StringUtil;
 import com.epam.library.command.Command;
 import com.epam.library.command.CommandResult;
@@ -29,7 +30,7 @@ public class RemoveBookCommand implements Command {
         StringUtil stringUtil = new StringUtil();
         if (!stringUtil.isNumber(bookIdParameter)) {
             session.setAttribute("parametersInfo", rb.getString(WRONG_OPERATION_KEY));
-            return CommandResult.redirect("/controller?command=addBookWindow");
+            return CommandResult.redirect(JspPageRedirectPath.ADMIN_BOOKS_PAGE);
         }
 
         Long bookId = Long.valueOf(bookIdParameter);
@@ -40,7 +41,7 @@ public class RemoveBookCommand implements Command {
         bookService.remove(book);
 
         session.setAttribute("removeStatusInfo", rb.getString(REMOVE_SUCCESSFUL_KEY));
-        return CommandResult.redirect("/controller?command=addBookWindow");
+        return CommandResult.redirect(JspPageRedirectPath.ADMIN_BOOKS_PAGE);
     }
 
     private ResourceBundle getResourceBundle(HttpSession session) {

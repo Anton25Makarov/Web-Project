@@ -2,6 +2,8 @@ package com.epam.library.command;
 
 import com.epam.library.exception.ServiceException;
 import com.epam.library.jsp.JspPageName;
+import com.epam.library.jsp.JspPageRedirectPath;
+import com.epam.library.language.LanguageName;
 import com.epam.library.util.StringUtil;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,10 +20,10 @@ public class ChangeLanguageCommand implements Command {
     @Override
     public CommandResult execute(HttpServletRequest req, HttpServletResponse resp) throws ServiceException {
 
-        HttpSession session = req.getSession();
-
         String lang = req.getParameter("lang");
         String page = req.getParameter("page");
+
+        HttpSession session = req.getSession();
 
         StringUtil stringUtil = new StringUtil();
         ResourceBundle rb = getResourceBundle(session);
@@ -30,20 +32,13 @@ public class ChangeLanguageCommand implements Command {
             return CommandResult.forward(JspPageName.LOGIN_PAGE);
         }
 
-
-        switch (lang) { //!!!!!!!!!!!!!!!!
-            case "en_gb":
-                session.setAttribute(LOCALE_ATTRIBUTE_NAME, "en_GB");
-                break;
-            case "ru_ru":
-                session.setAttribute(LOCALE_ATTRIBUTE_NAME, "ru_RU");
-                break;
-            case "be_by":
-                session.setAttribute(LOCALE_ATTRIBUTE_NAME, "be_BY");
-                break;
-            default:
-                throw new UnsupportedOperationException("Unknown language: " + lang);
+        LanguageName languageName = new LanguageName();
+        if (languageName.isLangExist(lang)) {
+            session.setAttribute(LOCALE_ATTRIBUTE_NAME, lang);
+        } else {
+            throw new UnsupportedOperationException("Unknown language: " + lang);
         }
+
 
         switch (page) {
             case "login":
@@ -51,19 +46,19 @@ public class ChangeLanguageCommand implements Command {
             case "main":
                 return CommandResult.forward(JspPageName.MAIN_PAGE);
             case "addBooks":
-                return CommandResult.redirect("/controller?command=addBookWindow");
+                return CommandResult.redirect(JspPageRedirectPath.ADMIN_BOOKS_PAGE);
             case "addLibrarians":
-                return CommandResult.redirect("/controller?command=getLibrariansWindow");
+                return CommandResult.redirect(JspPageRedirectPath.ADMIN_LIBRARIANS_PAGE);
             case "addReaders":
-                return CommandResult.redirect("/controller?command=getReadersWindow");
+                return CommandResult.redirect(JspPageRedirectPath.ADMIN_READERS_PAGE);
             case "allOrders":
-                return CommandResult.redirect("/controller?command=getAllOrders");
+                return CommandResult.redirect(JspPageRedirectPath.LIBRARIAN_ALL_ORDERS_PAGE);
             case "issueOrders":
-                return CommandResult.redirect("/controller?command=getOrdersToIssue");
+                return CommandResult.redirect(JspPageRedirectPath.LIBRARIAN_ISSUE_ORDERS_PAGE);
             case "readersBooks":
-                return CommandResult.redirect("/controller?command=readersBooks");
+                return CommandResult.redirect(JspPageRedirectPath.READER_BOOKS_PAGE);
             case "readerFindBook":
-                return CommandResult.redirect("/controller?command=readersAllBooks");
+                return CommandResult.redirect(JspPageRedirectPath.READER_FIND_BOOKS_PAGE);
             default:
                 throw new UnsupportedOperationException("Unknown page: " + page);
         }

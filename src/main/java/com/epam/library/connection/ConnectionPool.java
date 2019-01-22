@@ -16,12 +16,12 @@ public class ConnectionPool {
     private static final int CONNECTION_COUNT = 5;
     private static final Logger LOGGER = LogManager.getLogger(ConnectionPool.class.getName());
 
-
     private static ConnectionPool instance = new ConnectionPool();
 
     private Semaphore semaphore = new Semaphore(CONNECTION_COUNT, true);
     private Lock takeLock = new ReentrantLock();
     private Lock returnLock = new ReentrantLock();
+
 
     private Queue<Connection> connections = new ArrayDeque<>();
 

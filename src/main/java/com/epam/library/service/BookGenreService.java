@@ -6,11 +6,9 @@ import com.epam.library.model.BookGenre;
 import com.epam.library.repositpry.AbstractRepository;
 import com.epam.library.repositpry.RepositoryFactory;
 import com.epam.library.specification.FindAllSpecification;
-import com.epam.library.specification.FindByIdSpecification;
 import com.epam.library.specification.SqlSpecification;
 
 import java.util.List;
-import java.util.Optional;
 
 public class BookGenreService {
 
@@ -38,15 +36,4 @@ public class BookGenreService {
         }
     }
 
-    public Optional<BookGenre> getBookGenre(Long bookId) throws ServiceException {
-        try (RepositoryFactory factory = new RepositoryFactory()) {
-            AbstractRepository<BookGenre> genreRepository = factory.createBookGenreRepository();
-
-            SqlSpecification specification = new FindByIdSpecification(bookId);
-
-            return genreRepository.queryForSingleResult(specification);
-        } catch (RepositoryException e) {
-            throw new ServiceException(e);
-        }
-    }
 }

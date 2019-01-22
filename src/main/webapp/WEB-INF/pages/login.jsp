@@ -29,7 +29,6 @@
     </nav>
 </div>
 <main>
-    <a href="${pageContext.request.contextPath}/controller?command=sdfsd">Goooo</a>
     <article>
         <div class="server-answer">
             <p class="infos">${sessionScope.parametersInfo}</p>
@@ -38,7 +37,7 @@
         <div class="user">
 
             <header class="sign_up_header">
-                <img src="${pageContext.servletContext.contextPath}/resource/images/book2.png"
+                <img src="${pageContext.servletContext.contextPath}/resource/images/book.png"
                      height="50" width="50" alt="Sign up (book)"/>
 
                 <h1 class="sign_up_title">

@@ -95,5 +95,3 @@ public class EmployeeRepository extends AbstractRepository<Employee> {
     }
 
 }
-//map<Str, obj> fields
-// fields.put(NAME_OF_COLUMN, employee.getId);

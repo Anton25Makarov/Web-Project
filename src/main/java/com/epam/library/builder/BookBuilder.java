@@ -1,8 +1,8 @@
 package com.epam.library.builder;
 
 import com.epam.library.model.Author;
-import com.epam.library.model.BookGenre;
 import com.epam.library.model.Book;
+import com.epam.library.model.BookGenre;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

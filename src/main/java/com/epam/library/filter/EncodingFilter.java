@@ -1,9 +1,13 @@
 package com.epam.library.filter;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import javax.servlet.*;
 import java.io.IOException;
 
 public class EncodingFilter implements Filter {
+    private static final Logger LOGGER = LogManager.getLogger(EncodingFilter.class.getName());
     private String code;
 
     @Override
@@ -21,7 +25,8 @@ public class EncodingFilter implements Filter {
             }
             chain.doFilter(request, response);
         } catch (ServletException | IOException e) {
-            throw new RuntimeException("Cannot set language encoding", e); //Log
+            LOGGER.error("Cannot set language encoding", e);
+            throw new RuntimeException("Cannot set language encoding", e);
         }
     }
 

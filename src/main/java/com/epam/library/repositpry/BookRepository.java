@@ -3,11 +3,15 @@ package com.epam.library.repositpry;
 import com.epam.library.builder.BookBuilder;
 import com.epam.library.builder.Builder;
 import com.epam.library.exception.RepositoryException;
-import com.epam.library.specification.SqlSpecification;
 import com.epam.library.model.Book;
+import com.epam.library.specification.SqlSpecification;
 
-import java.sql.*;
-import java.util.*;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 public class BookRepository extends AbstractRepository<Book> {
     private static final String SELECT_QUERY = "select * from book\n";

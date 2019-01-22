@@ -3,6 +3,7 @@ package com.epam.library.command.save;
 import com.epam.library.command.Command;
 import com.epam.library.command.CommandResult;
 import com.epam.library.exception.ServiceException;
+import com.epam.library.jsp.JspPageRedirectPath;
 import com.epam.library.model.Reader;
 import com.epam.library.service.EmployeeService;
 import com.epam.library.service.ReaderService;
@@ -38,12 +39,12 @@ public class SaveReaderCommand implements Command {
         ResourceBundle rb = getResourceBundle(session);
         if (!stringUtil.areNotNull(name, surname, login, password, telephone)) {
             session.setAttribute("parametersInfo", rb.getString(WRONG_OPERATION_KEY));
-            return CommandResult.redirect("/controller?command=getReadersWindow");
+            return CommandResult.redirect(JspPageRedirectPath.ADMIN_READERS_PAGE);
         }
 
         if (login.length() < MIN_LOGIN_LENGTH) {
             session.setAttribute("correctLoginInfo", rb.getString(WRONG_LOGIN_KEY));
-            return CommandResult.redirect("/controller?command=getReadersWindow");
+            return CommandResult.redirect(JspPageRedirectPath.ADMIN_READERS_PAGE);
         }
 
         Reader reader = new Reader(name, surname, login, password, telephone);
@@ -52,13 +53,13 @@ public class SaveReaderCommand implements Command {
         ReaderService readerService = new ReaderService();
 
         if (employeeService.isEmployeeExist(login) || readerService.isReaderExist(login)) {
-            return CommandResult.redirect("/controller?command=getReadersWindow");//page - const
+            return CommandResult.redirect(JspPageRedirectPath.ADMIN_READERS_PAGE);//page - const
         } else {
             readerService.save(reader);
         }
 
         session.setAttribute("saveStatusInfo", rb.getString(SAVE_SUCCESSFUL_KEY));
-        return CommandResult.redirect("/controller?command=getReadersWindow");
+        return CommandResult.redirect(JspPageRedirectPath.ADMIN_READERS_PAGE);
     }
 
     private ResourceBundle getResourceBundle(HttpSession session) {

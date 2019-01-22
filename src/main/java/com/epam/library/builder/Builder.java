@@ -5,7 +5,6 @@ import com.epam.library.model.Entity;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-
 /**
  * Interface representing a builder. Builders are objects that are used to
  * construct other objects.

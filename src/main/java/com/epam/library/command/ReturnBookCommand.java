@@ -1,6 +1,7 @@
 package com.epam.library.command;
 
 import com.epam.library.exception.ServiceException;
+import com.epam.library.jsp.JspPageRedirectPath;
 import com.epam.library.model.Book;
 import com.epam.library.model.Order;
 import com.epam.library.service.BookService;
@@ -33,7 +34,7 @@ public class ReturnBookCommand implements Command {
         StringUtil stringUtil = new StringUtil();
         if (!stringUtil.areNumbers(bookIdParameter, orderIdParameter)) {
             session.setAttribute("parametersInfo", rb.getString(WRONG_OPERATION_KEY));
-            return CommandResult.redirect("/controller?command=readersBooks");
+            return CommandResult.redirect(JspPageRedirectPath.READER_BOOKS_PAGE);
         }
 
         Long bookId = Long.valueOf(bookIdParameter);
@@ -56,7 +57,7 @@ public class ReturnBookCommand implements Command {
         }
 
         session.setAttribute("bookReturnInfo", rb.getString(SUCCESSFUL_RETURN_BOOK_KEY));
-        return CommandResult.redirect("/controller?command=readersBooks");
+        return CommandResult.redirect(JspPageRedirectPath.READER_BOOKS_PAGE);
     }
 
     private ResourceBundle getResourceBundle(HttpSession session) {

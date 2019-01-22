@@ -56,7 +56,9 @@
 
     <article>
         <div>
-            <h3><i>You are Welcome!</i></h3><br>
+            <h3 class="page-title">
+                <fmt:message bundle="${loc}" key="label.welcome"/>
+            </h3>
         </div>
     </article>
 </main>

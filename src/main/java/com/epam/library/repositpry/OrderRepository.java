@@ -46,8 +46,6 @@ public class OrderRepository extends AbstractRepository<Order> {
         }
     }
 
-    //map<Str, obj> fields
-    // fields.put(NAME_OF_COLUMN, employee.getId);
     @Override
     public Optional<Order> queryForSingleResult(SqlSpecification specification) throws RepositoryException {
         try {
@@ -59,11 +57,6 @@ public class OrderRepository extends AbstractRepository<Order> {
             throw new RepositoryException("Cannot execute query for single result" + e);
         }
     }
-
-    protected Builder<Order> getBuilder() {
-        return new OrderBuilder();
-    }
-
 
     @Override
     public void save(Order order) throws RepositoryException {
@@ -96,4 +89,7 @@ public class OrderRepository extends AbstractRepository<Order> {
         throw new UnsupportedOperationException("Operation 'remove' is not defined");
     }
 
+    protected Builder<Order> getBuilder() {
+        return new OrderBuilder();
+    }
 }

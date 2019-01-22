@@ -3,6 +3,7 @@ package com.epam.library.command.save;
 import com.epam.library.command.Command;
 import com.epam.library.command.CommandResult;
 import com.epam.library.exception.ServiceException;
+import com.epam.library.jsp.JspPageRedirectPath;
 import com.epam.library.model.Employee;
 import com.epam.library.service.EmployeeService;
 import com.epam.library.service.ReaderService;
@@ -38,12 +39,12 @@ public class SaveLibrarianCommand implements Command {
         ResourceBundle rb = getResourceBundle(session);
         if (!stringUtil.areNotNull(login, password, name, surname)) {
             session.setAttribute("parametersInfo", rb.getString(WRONG_OPERATION_KEY));
-            return CommandResult.redirect("/controller?command=getLibrariansWindow");
+            return CommandResult.redirect(JspPageRedirectPath.ADMIN_LIBRARIANS_PAGE);
         }
 
         if (login.length() < MIN_LOGIN_LENGTH) {
             session.setAttribute("correctLoginInfo", rb.getString(WRONG_LOGIN_KEY));
-            return CommandResult.redirect("/controller?command=getLibrariansWindow");
+            return CommandResult.redirect(JspPageRedirectPath.ADMIN_LIBRARIANS_PAGE);
         }
 
         Employee librarian = new Employee(name, surname, login, password, IS_ADMIN);
@@ -52,7 +53,7 @@ public class SaveLibrarianCommand implements Command {
         EmployeeService employeeService = new EmployeeService();
         ReaderService readerService = new ReaderService();
         if (employeeService.isEmployeeExist(login) || readerService.isReaderExist(login)) {
-            return CommandResult.redirect("/controller?command=getLibrariansWindow");
+            return CommandResult.redirect(JspPageRedirectPath.ADMIN_LIBRARIANS_PAGE);
         } else {
             employeeService.save(librarian);
         }

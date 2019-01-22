@@ -3,6 +3,7 @@ package com.epam.library.command.remove;
 import com.epam.library.command.Command;
 import com.epam.library.command.CommandResult;
 import com.epam.library.exception.ServiceException;
+import com.epam.library.jsp.JspPageRedirectPath;
 import com.epam.library.model.Reader;
 import com.epam.library.service.ReaderService;
 import com.epam.library.util.StringUtil;
@@ -29,7 +30,7 @@ public class RemoveReaderCommand implements Command {
         ResourceBundle rb = getResourceBundle(session);
         if (!stringUtil.isNumber(readerIdParameter)) {
             session.setAttribute("parametersInfo", rb.getString(WRONG_OPERATION_KEY));
-            return CommandResult.redirect("/controller?command=getReadersWindow");
+            return CommandResult.redirect(JspPageRedirectPath.ADMIN_READERS_PAGE);
         }
 
         Long readerId = Long.valueOf(readerIdParameter);
@@ -39,7 +40,7 @@ public class RemoveReaderCommand implements Command {
         readerService.remove(reader);
 
         session.setAttribute("removeStatusInfo", rb.getString(REMOVE_SUCCESSFUL_KEY));
-        return CommandResult.redirect("/controller?command=getReadersWindow");
+        return CommandResult.redirect(JspPageRedirectPath.ADMIN_READERS_PAGE);
     }
 
     private ResourceBundle getResourceBundle(HttpSession session) {

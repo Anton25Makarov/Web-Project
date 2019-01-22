@@ -3,6 +3,7 @@ package com.epam.library.command.save;
 import com.epam.library.command.Command;
 import com.epam.library.command.CommandResult;
 import com.epam.library.exception.ServiceException;
+import com.epam.library.jsp.JspPageRedirectPath;
 import com.epam.library.model.BookGenre;
 import com.epam.library.service.BookGenreService;
 import com.epam.library.util.StringUtil;
@@ -30,7 +31,7 @@ public class SaveGenreCommand implements Command {
         ResourceBundle rb = getResourceBundle(session);
         if (stringUtil.isNullOrEmpty(bookGenre)) {
             session.setAttribute("parametersInfo", rb.getString(WRONG_OPERATION_KEY));
-            return CommandResult.redirect("/controller?command=addBookWindow");
+            return CommandResult.redirect(JspPageRedirectPath.ADMIN_BOOKS_PAGE);
         }
 
         BookGenre genre = new BookGenre(bookGenre);
@@ -39,7 +40,7 @@ public class SaveGenreCommand implements Command {
         genreService.save(genre);
 
         session.setAttribute("saveStatusInfo", rb.getString(SAVE_SUCCESSFUL_KEY));
-        return CommandResult.redirect("/controller?command=addBookWindow");
+        return CommandResult.redirect(JspPageRedirectPath.ADMIN_BOOKS_PAGE);
     }
 
     private ResourceBundle getResourceBundle(HttpSession session) {

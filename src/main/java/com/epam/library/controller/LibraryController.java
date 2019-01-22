@@ -16,13 +16,11 @@ import java.io.IOException;
 
 public class LibraryController extends HttpServlet {
     private static final long serialVersionUID = -1550596778941759867L;
+    private static final Logger LOGGER = LogManager.getLogger(LibraryController.class.getName());
     private static final String PARAMETER_COMMAND = "command";
-    private static final Logger LOGGER = LogManager.getLogger();
-    private static final String ERROR_PAGE = "";
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        LOGGER.error("Hello doGet");
         process(req, resp);
     }
 

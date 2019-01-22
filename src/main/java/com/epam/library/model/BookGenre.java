@@ -16,7 +16,6 @@ public class BookGenre extends Entity {
         super(id);
     }
 
-
     public String getGenre() {
         return genre;
     }

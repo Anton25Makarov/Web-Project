@@ -3,6 +3,7 @@ package com.epam.library.command.remove;
 import com.epam.library.command.Command;
 import com.epam.library.command.CommandResult;
 import com.epam.library.exception.ServiceException;
+import com.epam.library.jsp.JspPageRedirectPath;
 import com.epam.library.model.Employee;
 import com.epam.library.service.EmployeeService;
 import com.epam.library.util.StringUtil;
@@ -30,7 +31,7 @@ public class RemoveLibrarianCommand implements Command {
         StringUtil stringUtil = new StringUtil();
         if (!stringUtil.isNumber(librarianIdParameter)) {
             session.setAttribute("parametersInfo", rb.getString(WRONG_OPERATION_KEY));
-            return CommandResult.redirect("/controller?command=getLibrariansWindow");
+            return CommandResult.redirect(JspPageRedirectPath.ADMIN_LIBRARIANS_PAGE);
         }
 
         Long librarianId = Long.valueOf(librarianIdParameter);
@@ -41,7 +42,7 @@ public class RemoveLibrarianCommand implements Command {
         employeeService.remove(employee);
 
         session.setAttribute("removeStatusInfo", rb.getString(REMOVE_SUCCESSFUL_KEY));
-        return CommandResult.redirect("/controller?command=getLibrariansWindow");
+        return CommandResult.redirect(JspPageRedirectPath.ADMIN_LIBRARIANS_PAGE);
     }
 
     private ResourceBundle getResourceBundle(HttpSession session) {

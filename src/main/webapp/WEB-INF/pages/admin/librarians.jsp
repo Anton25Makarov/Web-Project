@@ -121,7 +121,7 @@
                   action="${pageContext.servletContext.contextPath}/controller?command=saveLibrarian">
                 <div class="imgContainer">
                     <span class="close modalCross" title="Close">&times;</span>
-                    <img src="${pageContext.servletContext.contextPath}/resource/images/add-book.png"
+                    <img src="${pageContext.servletContext.contextPath}/resource/images/add-user-librarian.png"
                          alt="Add librarian"
                          class="addingImage"/>
                     <h1 style="text-align:center">
@@ -143,8 +143,7 @@
                            pattern="[a-zA-Zа-яА-Я0-9]{2,15}">
                     <fmt:message bundle="${loc}" key="label.password" var="password"/>
                     <input type="password" placeholder="${password}" name="password" required  title="${textWaring}"
-                           pattern="[a-zA-Zа-яА-Я0-9]{2,15}">
-
+                           pattern="[a-zA-Zа-яА-Я 0-9]{2,15}">
                     <button type="submit">
                         <fmt:message bundle="${loc}" key="label.save"/>
                     </button>

@@ -1,6 +1,8 @@
 package com.epam.library.builder;
 
-import com.epam.library.model.*;
+import com.epam.library.model.Book;
+import com.epam.library.model.Order;
+import com.epam.library.model.Reader;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

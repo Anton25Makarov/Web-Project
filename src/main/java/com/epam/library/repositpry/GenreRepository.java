@@ -35,8 +35,6 @@ public class GenreRepository extends AbstractRepository<BookGenre> {
         }
     }
 
-    //map<Str, obj> fields
-    // fields.put(NAME_OF_COLUMN, employee.getId);
     @Override
     public Optional<BookGenre> queryForSingleResult(SqlSpecification specification) throws RepositoryException {
         try {
@@ -48,11 +46,6 @@ public class GenreRepository extends AbstractRepository<BookGenre> {
             throw new RepositoryException("Cannot execute query for single result" + e);
         }
     }
-
-    protected Builder<BookGenre> getBuilder() {
-        return new GenreBuilder();
-    }
-
 
     @Override
     public void save(BookGenre genre) throws RepositoryException {
@@ -72,4 +65,7 @@ public class GenreRepository extends AbstractRepository<BookGenre> {
         throw new UnsupportedOperationException("Operation 'remove' is not defined");
     }
 
+    protected Builder<BookGenre> getBuilder() {
+        return new GenreBuilder();
+    }
 }

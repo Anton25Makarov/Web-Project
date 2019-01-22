@@ -160,7 +160,7 @@
                     <fmt:message bundle="${loc}" key="warning.input.text" var="textWaring"/>
                     <input type="text" placeholder="${title}" name="bookTitle" required
                            title="${textWaring}"
-                           pattern="[a-zA-Zа-яА-Я0-9]{2,15}"/>
+                           pattern="[a-zA-Zа-яА-Я0-9 ]{2,15}"/>
                     <label>
                         <select name="selectedGenreId" required>
                             <c:forEach items="${requestScope.genres}" var="genre">
@@ -243,7 +243,7 @@
                 <div class="container">
                     <fmt:message bundle="${loc}" key="label.book.genre" var="genre"/>
                     <input type="text" placeholder="${genre}" name="bookGenre" required
-                           title="${textWaring}" pattern="[a-zA-Zа-яА-Я0-9]{2,15}">
+                           title="${textWaring}" pattern="[a-zA-Zа-яА-Я 0-9]{2,15}">
                     <button type="submit">
                         <fmt:message bundle="${loc}" key="label.save"/>
                     </button>

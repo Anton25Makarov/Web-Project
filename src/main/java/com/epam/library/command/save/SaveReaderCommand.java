@@ -21,6 +21,7 @@ public class SaveReaderCommand implements Command {
     private static final String WRONG_OPERATION_KEY = "answer.wrong.operation";
     private static final String WRONG_LOGIN_KEY = "answer.wrong.login";
     private static final String SAVE_SUCCESSFUL_KEY = "answer.info.save.success";
+    private static final String USER_ALREADY_EXIST_KEY = "answer.info.save.user.exist";
 
 
     @Override
@@ -53,7 +54,8 @@ public class SaveReaderCommand implements Command {
         ReaderService readerService = new ReaderService();
 
         if (employeeService.isEmployeeExist(login) || readerService.isReaderExist(login)) {
-            return CommandResult.redirect(JspPageRedirectPath.ADMIN_READERS_PAGE);//page - const
+            session.setAttribute("saveStatusInfo", rb.getString(USER_ALREADY_EXIST_KEY));
+            return CommandResult.redirect(JspPageRedirectPath.ADMIN_READERS_PAGE);
         } else {
             readerService.save(reader);
         }

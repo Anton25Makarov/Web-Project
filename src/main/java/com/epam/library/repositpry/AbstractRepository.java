@@ -48,7 +48,7 @@ public abstract class AbstractRepository<T extends Entity> implements Repository
                 preparedStatement.setString(i++, parameter);
             }
 
-            ResultSet resultSet = preparedStatement.executeQuery(); //close?
+            ResultSet resultSet = preparedStatement.executeQuery();
 
             Builder<T> builder = getBuilder();
             List<T> entities = new ArrayList<>();

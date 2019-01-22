@@ -20,6 +20,7 @@ public class SaveLibrarianCommand implements Command {
     private static final String WRONG_OPERATION_KEY = "answer.wrong.operation";
     private static final String WRONG_LOGIN_KEY = "answer.wrong.login";
     private static final String SAVE_SUCCESSFUL_KEY = "answer.info.save.success";
+    private static final String USER_ALREADY_EXIST_KEY = "answer.info.save.user.exist";
     private static final int MIN_LOGIN_LENGTH = 4;
     private static final boolean IS_ADMIN = false;
 
@@ -53,6 +54,7 @@ public class SaveLibrarianCommand implements Command {
         EmployeeService employeeService = new EmployeeService();
         ReaderService readerService = new ReaderService();
         if (employeeService.isEmployeeExist(login) || readerService.isReaderExist(login)) {
+            session.setAttribute("saveStatusInfo", rb.getString(USER_ALREADY_EXIST_KEY));
             return CommandResult.redirect(JspPageRedirectPath.ADMIN_LIBRARIANS_PAGE);
         } else {
             employeeService.save(librarian);
@@ -60,7 +62,7 @@ public class SaveLibrarianCommand implements Command {
 
 
         session.setAttribute("saveStatusInfo", rb.getString(SAVE_SUCCESSFUL_KEY));
-        return CommandResult.redirect("/controller?command=getLibrariansWindow");//page - const
+        return CommandResult.redirect("/controller?command=getLibrariansWindow");
     }
 
     private ResourceBundle getResourceBundle(HttpSession session) {

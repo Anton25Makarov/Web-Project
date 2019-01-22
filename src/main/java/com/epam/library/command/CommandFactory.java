@@ -11,7 +11,7 @@ import org.apache.logging.log4j.Logger;
 public class CommandFactory {
     private static final Logger LOGGER = LogManager.getLogger();
 
-    public static Command create(String command) { // class for commands
+    public static Command create(String command) {
         switch (command) {
             case "login":
                 return new LoginCommand();

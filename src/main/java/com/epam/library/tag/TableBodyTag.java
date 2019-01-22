@@ -26,7 +26,7 @@ public class TableBodyTag extends TagSupport {
             out.write("<tbody>");
 
 
-            if (objects != null && objects.get(0) instanceof Order) {
+            if (objects != null && !objects.isEmpty() && objects.get(0) instanceof Order) {
                 writeBodyOrder();
             }
 

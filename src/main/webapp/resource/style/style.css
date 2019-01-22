@@ -378,6 +378,7 @@ td:has(input) {
     position: relative;
     list-style-type: none;
     padding: 0 0 7px;
+    margin-bottom: 0;
 }
 
 .swControls {

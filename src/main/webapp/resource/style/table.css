@@ -422,16 +422,16 @@ table.dataTable, table.dataTable th, table.dataTable td {
     }
 }
 
-#table_filter input{
+#table_filter input {
     border-radius: 4px;
     padding: 2px;
 }
 
-#table_filter{
+#table_filter {
     padding-top: 10px;
 }
 
-.dataTables_length{
+.dataTables_length {
     margin: 10px;
 }
 

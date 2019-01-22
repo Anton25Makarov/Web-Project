@@ -15,10 +15,7 @@ option, select {
 .container button, #saveBookButton,
 #addAuthorButton, #addGenreButton,
 #saveLibrarianButton, #saveReaderButton {
-    /*background-color: #ABA194;*/
-    /*color: white;*/
     padding: 5px 10px;
-    /*margin: 8px 26px;*/
     border: none;
     cursor: pointer;
     /*width: 90%;*/
@@ -130,6 +127,9 @@ form .container select {
     margin: 20px 100px 0 -6px;
 }
 
+#saveBookButton {
+    margin: 20px 100px 0 -8px;
+}
 
 /* Add Zoom Animation */
 .animate {

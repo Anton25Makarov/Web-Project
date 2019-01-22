@@ -20,16 +20,6 @@ $(document).ready(function () {
 
     let table = $('#table').DataTable();
 
-   /* $('#table tbody').on('click', '.saveEditBookButton', function () {
-        let data = table.row($(this).parents('tr')).data();
-        let inputs = $('#modal-wrapper-book input');
-        inputs[0].value = data[1]; // title
-        inputs[1].value = data[5]; // count
-        inputs[2].value = data[4]; // year
-        // inputs[3].value = data[0]; // id
-        $('#modal-wrapper-book').css('display', 'block');
-    });*/
-
     $('#table tbody').on('click', '.saveEditBookButton', function () {
         let data = table.row($(this).parents('tr')).data();
         let inputs = $('#modal-wrapper-book-insert input');

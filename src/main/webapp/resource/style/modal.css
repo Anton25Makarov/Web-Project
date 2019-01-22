@@ -112,7 +112,7 @@ form .container select {
 #saveBookButton, #addAuthorButton, #addGenreButton {
     width: 200px;
     max-height: 50px;
-    margin: 10px;
+    margin: 21px 10px 0 15px;
 }
 
 #saveLibrarianButton {
@@ -127,9 +127,6 @@ form .container select {
     margin: 20px 100px 0 -6px;
 }
 
-#saveBookButton {
-    margin: 20px 100px 0 -8px;
-}
 
 /* Add Zoom Animation */
 .animate {

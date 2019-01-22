@@ -134,16 +134,16 @@
                     <fmt:message bundle="${loc}" key="warning.input.text" var="textWaring"/>
                     <fmt:message bundle="${loc}" key="label.author.name" var="name"/>
                     <input type="text" placeholder="${name}" name="name" required  title="${textWaring}"
-                           pattern="[a-zA-Zа-яА-Я0-9]{2,15}">
+                           pattern="[a-zA-Zа-яА-Я0-9]{2,30}">
                     <fmt:message bundle="${loc}" key="label.author.surname" var="surname"/>
                     <input type="text" placeholder="${surname}" name="surname" required  title="${textWaring}"
-                           pattern="[a-zA-Zа-яА-Я0-9]{2,15}">
+                           pattern="[a-zA-Zа-яА-Я0-9]{2,30}">
                     <fmt:message bundle="${loc}" key="label.login" var="login"/>
                     <input type="text" placeholder="${login}" name="login" required  title="${textWaring}"
-                           pattern="[a-zA-Zа-яА-Я0-9]{2,15}">
+                           pattern="[a-zA-Zа-яА-Я0-9]{2,30}">
                     <fmt:message bundle="${loc}" key="label.password" var="password"/>
                     <input type="password" placeholder="${password}" name="password" required  title="${textWaring}"
-                           pattern="[a-zA-Zа-яА-Я 0-9]{2,15}">
+                           pattern="[a-zA-Zа-яА-Я 0-9]{2,30}">
                     <button type="submit">
                         <fmt:message bundle="${loc}" key="label.save"/>
                     </button>

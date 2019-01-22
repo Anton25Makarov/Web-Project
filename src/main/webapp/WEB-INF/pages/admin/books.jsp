@@ -160,7 +160,7 @@
                     <fmt:message bundle="${loc}" key="warning.input.text" var="textWaring"/>
                     <input type="text" placeholder="${title}" name="bookTitle" required
                            title="${textWaring}"
-                           pattern="[a-zA-Zа-яА-Я0-9 ]{2,15}"/>
+                           pattern="[a-zA-Zа-яА-Я0-9 ]{2,30}"/>
                     <label>
                         <select name="selectedGenreId" required>
                             <c:forEach items="${requestScope.genres}" var="genre">
@@ -213,11 +213,11 @@
                     <fmt:message bundle="${loc}" key="label.author.name" var="name"/>
                     <input type="text" placeholder="${name}" name="authorBookName" required
                            title="${textWaring}"
-                           pattern="[a-zA-Zа-яА-Я0-9]{2,15}">
+                           pattern="[a-zA-Zа-яА-Я0-9]{2,30}">
                     <fmt:message bundle="${loc}" key="label.author.surname" var="surname"/>
                     <input type="text" placeholder="${surname}" name="authorBookSurname" required
                            title="${textWaring}"
-                           pattern="[a-zA-Zа-яА-Я0-9]{2,15}">
+                           pattern="[a-zA-Zа-яА-Я0-9]{2,30}">
                     <button type="submit">
                         <fmt:message bundle="${loc}" key="label.save"/>
                     </button>
@@ -243,7 +243,7 @@
                 <div class="container">
                     <fmt:message bundle="${loc}" key="label.book.genre" var="genre"/>
                     <input type="text" placeholder="${genre}" name="bookGenre" required
-                           title="${textWaring}" pattern="[a-zA-Zа-яА-Я 0-9]{2,15}">
+                           title="${textWaring}" pattern="[a-zA-Zа-яА-Я 0-9]{2,30}">
                     <button type="submit">
                         <fmt:message bundle="${loc}" key="label.save"/>
                     </button>
